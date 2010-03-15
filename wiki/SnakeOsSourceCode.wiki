@@ -7,7 +7,6 @@ SNAKE firmware for Str8132-Based NAS
 Licence GNU GPL.
 Owner Douglas Gazineu
 
-
 = Details =
 
 SNAKE firmware for Str8132-Based NAS
@@ -17,6 +16,11 @@ Release info:
     Version 1.0.0
 What's new:
     - IMPROVEMENTS
+
+If you need a compiled version ready for firmware upgrade - use this link:
+
+http://groups.google.com/group/dealextreme-nas-/web/snake-os---v1-0-0
+
 
     NEW: Added Busybox "split" command
 Changed firmware checking scheme. Does not have the need to generate "optimized" firmwares anymore, altough SnakeOS accepts both types when updating. This version will be last to have a "from-snake" variant.
