@@ -103,11 +103,12 @@ http://groups.google.com/group/dealextreme-nas-/web/nas-832-flash-chip-relocatio
   Besides enabling ftp, you will have to adjust the `*`nix permissions if using an ext2/ext3 drive. This can be done by using ssh to access the NAS.
  
   Tip: If you want only to rely on ftp users, use the command 
+
   `chmod 777/usb/PATH-TO-FOLDER`
 
 *Q How to copy files from one mounted partition to another mounted partition?*
   Answer: 
-Connect with SSH and run the command below. It will copy the files of source_folder to dest_folder and log the output to log.txt (place outside the involved folders). 
+  Connect with SSH and run the command below. It will copy the files of source_folder to dest_folder and log the output to log.txt (place outside the involved folders). 
 
   `nohup cp -av /usb/diska/source_folder  /usb/diskb/dest_folder > /usb/diska/log.txt `
 
