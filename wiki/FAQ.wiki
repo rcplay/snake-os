@@ -56,11 +56,11 @@ http://groups.google.com/group/dealextreme-nas-/web/nas-832-flash-chip-relocatio
 
 *Q: Hey guys it is great, How can I compile my own one?
   Short answer:
-  Download source, 
-  Extract tar -xvjf  snake-os-sdk_0.9.tar.bz2
-  cd kernel folder
-  make menuconfig.
-  make
+  # Download source, 
+  # Extract tar -xvjf  snake-os-sdk_0.9.tar.bz2
+  # cd kernel folder
+  # make menuconfig.
+  # make
 
   But it will compile zimage only, which is not enough to boot in the NAS, only to check are the binaries and modules compiled either for ARM.
 
