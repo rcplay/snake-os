@@ -17,7 +17,7 @@ Release info:
 What's new:
     - IMPROVEMENTS
 
-If you need a compiled version ready for firmware upgrade - use this link:
+  *If you need a compiled version ready for firmware upgrade - use download section or use this link:*
 
 http://groups.google.com/group/dealextreme-nas-/web/snake-os---v1-0-0
 
