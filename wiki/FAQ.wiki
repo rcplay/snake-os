@@ -11,11 +11,11 @@
 
 *Q2: Can I upgrade my NS-K330 or WLX-652 with SnakeOS ?*
 
-Answer: Yes. Definitly. Recommended. More stable, and more functions.
+  Answer: Yes. Definitly. Recommended. More stable, and more functions.
 
 *Q: Where is user documentation?*
 
-*Answer1:*  Douglas not even made this firmware but documented it! 
+  Answer1:  Douglas not even made this firmware but documented it! 
 Authors are: Douglas Gazineu,  Jarko, José Maciel,  Miguel Moreto
 You can read it in download section.
 
