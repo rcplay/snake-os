@@ -18,8 +18,9 @@ What's new:
     - IMPROVEMENTS
 
 *If you need a compiled version ready for firmware upgrade* 
-*use download section or use this link:*
+*use http://snake-os.googlecode.com/files/snakeos-V1.0.0-20091027-from-original.zip* 
 
+or use this link:
 http://groups.google.com/group/dealextreme-nas-/web/snake-os---v1-0-0
 
 
