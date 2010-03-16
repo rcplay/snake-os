@@ -22,8 +22,7 @@
 
 *Q: Device lost all connectivity, no answer for ping, ssh, http, ftp. What can I do?*
 
-Answer1:
-  Reset it.
+  Answer1:  Reset it.
 
   NS-K330 has a reset button. Push it while powering on, with the reset button
   held in for 45 seconds (counted to 60 just in case).
@@ -32,9 +31,9 @@ Answer1:
 
 *Q: Reset was not enough - device not respond.*
 
-*Answer2:* If you are not lucky with reset, second chance you are able to serial connect to device and telnet via the rs452 direct connect.
-Picture and description here:
-http://groups.google.com/group/dealextreme-nas-/web/serial-connection-how-to
+  Answer2: If you are not lucky with reset, second chance you are able to serial connect to device and telnet via the rs452 direct connect.
+  Picture and description here:
+  http://groups.google.com/group/dealextreme-nas-/web/serial-connection-how-to
 
 *Q: Serial connect was not allowed - device not respond/boot.*
 
