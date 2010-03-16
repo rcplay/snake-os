@@ -14,11 +14,11 @@ Yes. Definitly. Recommended. More stable, and more functions.
 
 *Q2:* Device lost all connectivity, no answer for ping, ssh, http, ftp. What can I do?
 
-*Answer1:*  Reset it.
-NS-K330 has a reset button. Push it while powering on, with the reset button
-held in for 45 seconds (counted to 60 just in case).
-After it showed up under the default IP (or at least the one assigned by the
-DHCP server), by the MAC address.  
+* *Answer1:*  Reset it.
+*NS-K330 has a reset button. Push it while powering on, with the reset button
+*held in for 45 seconds (counted to 60 just in case).
+*After it showed up under the default IP (or at least the one assigned by the
+*DHCP server), by the MAC address.  
 
 *Answer2:* If you are not lucky with reset, second chance you are able to serial connect to device and telnet via the rs452 direct connect.
 Picture and description here:
