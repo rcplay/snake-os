@@ -88,8 +88,7 @@ http://groups.google.com/group/dealextreme-nas-/web/nas-832-flash-chip-relocatio
 
 *Q: Write permissions problem. *
 
-  I have activated samba and FTP. In FTP with anonymous acces and read & write
-permssion.
+  I have activated samba and FTP. In FTP with anonymous acces and read & write permssion.
  
   Through samba i can read and write but by FTP i can only read. I haven't got write permissions even though I have configured it in Snake OS.
  
