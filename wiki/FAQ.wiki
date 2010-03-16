@@ -75,7 +75,7 @@ http://groups.google.com/group/dealextreme-nas-/web/nas-832-flash-chip-relocatio
   # (apt-get install upx-nrv).
   # export PATH to point to arm compiler. 
     export PATH=/images/snake-os-sdk_0.9/tools/arm-uclibc-3.4.6/bin:$PATH 
-  # Execute ./mk_snakeos_image.sh *twice!*
+  # Execute ./mk_snakeos_image.sh *twice!* For some reason run it *two times*.(2x)
 
   It will create writable firmware on
   /images/snake-os-sdk_0.9/snake_os/release/ and tftp-capable image on /images/snake-os-sdk_0.9/output
