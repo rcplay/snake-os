@@ -5,7 +5,7 @@
 
 = Details =
 
-*Q1: Where is the firmware /binary ?  *
+  *#Q: Where is the firmware /binary ?  *
 
   Answer: 
 
