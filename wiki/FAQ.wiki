@@ -63,24 +63,25 @@ http://groups.google.com/group/dealextreme-nas-/web/nas-832-flash-chip-relocatio
   But it will compile zimage only, which is not enough to boot in the NAS, only to check are the binaries and modules compiled either for ARM.
 
   Douglas made a script which compile the kernel and make root file system for JFFS, compress the binaries with UPX (which makes on the fly decompiled binary)
-  But this script uses kernel konfigs based on "/images/snake-os-sdk_0.9/configs".
+
+  But this script uses kernel konfigs based on *"/images/snake-os-sdk_0.9/configs".*
 
   Steps: 
-    Extract tar -xvjf  snake-os-sdk_0.9.tar.bz2
-    Install upx-nrv, jffs and all the packages reported missing during compile.
-    (apt-get install upx-nrv).
-    export PATH to point to arm compiler: 
-    export PATH=/images/snake-os-sdk_0.9/tools/arm-uclibc-3.4.6/bin:$PATH 
+  Extract tar -xvjf  snake-os-sdk_0.9.tar.bz2
+  Install upx-nrv, jffs and all the packages reported missing during compile.
+  (apt-get install upx-nrv).
+  export PATH to point to arm compiler: 
+  export PATH=/images/snake-os-sdk_0.9/tools/arm-uclibc-3.4.6/bin:$PATH 
 
-    Execute ./mk_snakeos_image.sh *twice*
-    It will create writable firmware on
-    /images/snake-os-sdk_0.9/snake_os/release/ and tftp-capable image on
-    /images/snake-os-sdk_0.9/output
+  Execute ./mk_snakeos_image.sh *twice*
+  It will create writable firmware on
+  /images/snake-os-sdk_0.9/snake_os/release/ and tftp-capable image on
+  /images/snake-os-sdk_0.9/output
 
-    If you change something on your kernel options, run "make clean" on your kernel dir again and start over the steps above:
+  If you change something on your kernel options, run "make clean" on your kernel dir again and start over the steps above:
 
-    Go to kernel folder, run "make clean"
-    Go to /images/snake-os-sdk_0.9/ folder, run "make clean".
+  Go to kernel folder, run "make clean"
+  Go to /images/snake-os-sdk_0.9/ folder, run "make clean".
  
 
 *Q: I have activated samba and FTP. In FTP with anonymous acces and read & write
