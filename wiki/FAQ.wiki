@@ -1,7 +1,7 @@
-FAQ 
+* FAQ * 
 = Introduction =
 
-Questions and answers.
+*Questions and answers.*
 
 = Details =
 
