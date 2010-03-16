@@ -16,6 +16,7 @@ Answer: Yes. Definitly. Recommended. More stable, and more functions.
 *Q: Where is user documentation?*
 
 *Answer1:*  Douglas not even made this firmware but documented it! 
+Authors are: Douglas Gazineu,  Jarko, José Maciel,  Miguel Moreto
 Here you can read:
 
 
