@@ -16,13 +16,13 @@
 *Q: Where is user documentation?*
 
   Answer1:  Douglas not even made this firmware but documented it! 
-Authors are: Douglas Gazineu,  Jarko, José Maciel,  Miguel Moreto
-You can read it in download section.
+  Authors are: Douglas Gazineu,  Jarko, José Maciel,  Miguel Moreto
+  You can read it in download section.
 
 
 *Q: Device lost all connectivity, no answer for ping, ssh, http, ftp. What can I do?*
 
-*Answer1:*  
+Answer1:
   Reset it.
 
   NS-K330 has a reset button. Push it while powering on, with the reset button
