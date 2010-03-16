@@ -16,7 +16,9 @@
 *Q: Where is user documentation?*
 
   Answer1:  Douglas not even made this firmware but documented it! 
+
   Authors are: Douglas Gazineu,  Jarko, José Maciel,  Miguel Moreto
+
   You can read it in download section.
 
 
@@ -66,17 +68,24 @@ http://groups.google.com/group/dealextreme-nas-/web/nas-832-flash-chip-relocatio
 
   But this script uses kernel konfigs based on *"/images/snake-os-sdk_0.9/configs".*
 
-  Steps: 
+  Steps:
+ 
   Extract tar -xvjf  snake-os-sdk_0.9.tar.bz2
+
   Install upx-nrv, jffs and all the packages reported missing during compile.
+
   (apt-get install upx-nrv).
+
   export PATH to point to arm compiler: 
+
   export PATH=/images/snake-os-sdk_0.9/tools/arm-uclibc-3.4.6/bin:$PATH 
 
   Execute ./mk_snakeos_image.sh *twice*
+
   It will create writable firmware on
-  /images/snake-os-sdk_0.9/snake_os/release/ and tftp-capable image on
-  /images/snake-os-sdk_0.9/output
+  /images/snake-os-sdk_0.9/snake_os/release/ and 
+
+  tftp-capable image on /images/snake-os-sdk_0.9/output
 
   If you change something on your kernel options, run "make clean" on your kernel dir again and start over the steps above:
 
