@@ -86,19 +86,20 @@ http://groups.google.com/group/dealextreme-nas-/web/nas-832-flash-chip-relocatio
   # Go to /images/snake-os-sdk_0.9/ folder, run "make clean".
  
 
-*Q: I have activated samba and FTP. In FTP with anonymous acces and read & write
-permssion.*
- 
-Through samba i can read and write but by FTP i can only read. I haven't got
-write permissions even though I have configured it in Snake OS.
- 
-*Answer:* 
+*Q: Write permissions problem. *
 
-Besides enabling ftp, you will have to adjust the `*`nix permissions if using
+  I have activated samba and FTP. In FTP with anonymous acces and read & write
+permssion.
+ 
+  Through samba i can read and write but by FTP i can only read. I haven't got write permissions even though I have configured it in Snake OS.
+ 
+  Answer:
+
+  Besides enabling ftp, you will have to adjust the `*`nix permissions if using
 an ext2/ext3 drive. This can be done by using ssh to access the NAS.
  
-Tip: If you want only to rely on ftp users, use the command 
-`chmod 777/usb/PATH-TO-FOLDER`
+  Tip: If you want only to rely on ftp users, use the command 
+  `chmod 777/usb/PATH-TO-FOLDER`
 
 *Q*
 
