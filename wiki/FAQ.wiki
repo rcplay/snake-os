@@ -5,7 +5,7 @@
 
 = Details =
 
-  *#Q: Where is the firmware /binary ?  *
+  *# Q: Where is the firmware /binary ?  *
 
   Answer: 
 
@@ -15,7 +15,7 @@
   Download the *from original* 
 
 
-*Q2: Can I upgrade my NS-K330 or WLX-652 with SnakeOS ?*
+  *# Q: Can I upgrade my NS-K330 or WLX-652 with SnakeOS ?*
 
   Answer: Yes. Definitly. Recommended. More stable, and more functions.
 
