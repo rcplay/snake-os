@@ -17,8 +17,7 @@ Answer: Yes. Definitly. Recommended. More stable, and more functions.
 
 *Answer1:*  Douglas not even made this firmware but documented it! 
 Authors are: Douglas Gazineu,  Jarko, José Maciel,  Miguel Moreto
-Here you can read:
-
+Here you can read it in download section.
 
 
 *Q: Device lost all connectivity, no answer for ping, ssh, http, ftp. What can I do?*
@@ -52,6 +51,24 @@ http://groups.google.com/group/dealextreme-nas-/web/nas-832-flash-chip-relocatio
 
 *Q: Default user and password for the web interface ?*
 
-  *Answer:*admin/snake
+*Answer: admin/snake *
 
-*Q3:* 
+*Q: Hey guys it is great, How can I compile my own one?
+*Answer:*
+
+*Q: have activated samba and FTP. In FTP with anonymous acces and read & write
+permssion.*
+ 
+Through samba i can read and write but by FTP i can only read. I haven't got
+write permissions even though I have configured it in Snake OS.
+ 
+* Answer * 
+Besides enabling ftp, you will have to adjust the *nix permissions if using
+an ext2/ext3 drive.
+This can be done by using ssh to access the NAS.
+ 
+Tip: If you want only to rely on ftp users, use the command "chmod 777
+/usb/<PATH-TO-FOLDER>"
+ 
+
+ 
