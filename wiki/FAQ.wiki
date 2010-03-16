@@ -67,11 +67,13 @@ write permissions even though I have configured it in Snake OS.
 *Answer:* 
 
 Besides enabling ftp, you will have to adjust the `*`nix permissions if using
-an ext2/ext3 drive.
-This can be done by using ssh to access the NAS.
+an ext2/ext3 drive. This can be done by using ssh to access the NAS.
  
-Tip: If you want only to rely on ftp users, use the command "chmod 777
-/usb/<PATH-TO-FOLDER>"
+Tip: If you want only to rely on ftp users, use the command {{{chmod 777
+/usb/PATH-TO-FOLDER}}}
+
+*Q*
+
  
 
  
