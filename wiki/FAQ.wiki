@@ -13,7 +13,14 @@ Answer: http://groups.google.com/group/dealextreme-nas-/web/snake-os---v1-0-0
 
 Answer: Yes. Definitly. Recommended. More stable, and more functions.
 
-*Q3: Device lost all connectivity, no answer for ping, ssh, http, ftp. What can I do?*
+*Q: Where is user documentation?*
+
+*Answer1:*  Douglas not even made this firmware but documented it! 
+Here you can read:
+
+
+
+*Q: Device lost all connectivity, no answer for ping, ssh, http, ftp. What can I do?*
 
 *Answer1:*  
   Reset it.
