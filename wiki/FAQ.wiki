@@ -7,7 +7,7 @@
 
 *Q1: Where is the firmware /binary ?  *
 
-Answer: http://groups.google.com/group/dealextreme-nas-/web/snake-os---v1-0-0
+  Answer: http://groups.google.com/group/dealextreme-nas-/web/snake-os---v1-0-0
 
 *Q2: Can I upgrade my NS-K330 or WLX-652 with SnakeOS ?*
 
