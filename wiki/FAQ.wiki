@@ -27,6 +27,11 @@
 
   You can read it in download section.
 
+*Q: Where to ask questions?*
+
+  Answer: Read the forum and PAGES on the right side of 
+
+http://groups.google.com/group/dealextreme-nas-/topics?hl=en
 
 *Q: Device lost all connectivity, no answer for ping, ssh, http, ftp. What can I do?*
 
