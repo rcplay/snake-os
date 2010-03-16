@@ -14,26 +14,31 @@ Yes. Definitly. Recommended. More stable, and more functions.
 
 *Q2:* Device lost all connectivity, no answer for ping, ssh, http, ftp. What can I do?
 
-* *Answer1:*  Reset it.
-*NS-K330 has a reset button. Push it while powering on, with the reset button
-*held in for 45 seconds (counted to 60 just in case).
-*After it showed up under the default IP (or at least the one assigned by the
-*DHCP server), by the MAC address.  
+*Answer1:*  
+  Reset it.
+
+  NS-K330 has a reset button. Push it while powering on, with the reset button
+  held in for 45 seconds (counted to 60 just in case).
+  After it showed up under the default IP (or at least the one assigned by the
+  DHCP server), by the MAC address.  
 
 *Answer2:* If you are not lucky with reset, second chance you are able to serial connect to device and telnet via the rs452 direct connect.
 Picture and description here:
 http://groups.google.com/group/dealextreme-nas-/web/serial-connection-how-to
 
-*Answer3:* If you not enough lucky with serial connection either, third chance to write and replace Flash. Flash contains the boot, and root partitions. (BIOS and Operation system together.)
-1. flash write,
-http://groups.google.com/group/dealextreme-nas-/browse_thread/thread/08df34f7df625832?hl=en 
+*Answer3:* If you not enough lucky with serial connection either, third chance to write 
+  and replace Flash. Flash contains the boot, and root partitions. 
+  (BIOS and Operation system together.)
 
-2. And replace flash
+  1. flash write,
+  http://groups.google.com/group/dealextreme-nas-/browse_thread/thread/08df34f7df625832?hl=en 
+
+  2. And replace flash
 http://groups.google.com/group/dealextreme-nas-/web/nas-832-flash-chip-relocation-tutorial
 
 
 *Q2:* Default user and password for the web interface ?
 
-*Answer:*admin/snake
+  *Answer:*admin/snake
 
 *Q3:* 
