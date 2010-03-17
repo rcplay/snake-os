@@ -78,7 +78,7 @@
   # make clean && make menuconfig
   # Adjust your kernel settings. 
   # Copy snake-os-sdk/kernels/linux/.config back to snake-os-sdk/configs/str... file 
-  # Execute ./mk_snakeos_image.sh *twice!* For some reason run it *two times*.(2x)
+  # Execute ./mk_snakeos_image.sh *twice!* For some reason run it, *two times*.(2x)
 
   Probably you need some package installed to have development environment. 
   For example: apt-get install build-essential,kernel-headers, upx-nrv,    and more .... all reported during compile as missing.
