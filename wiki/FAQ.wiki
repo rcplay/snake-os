@@ -122,7 +122,7 @@
 *Q: Where is the source code / SDK of the STAR STR8131. 
 
   Answer:
-  LSDK sources from cnusers forum: http://www.cnusers.org/index.php?  option=com_remository&Itemid=32&func... 
+  LSDK sources from cnusers forum: `http://www.google.com/url?sa=D&q=http://www.cnusers.org/index.php%3Foption%3Dcom_remository%26Itemid%3D32%26func%3Dselect%26id%3D41&usg=AFQjCNG0ObniQndt925mDZmmjajggCPnmg`
 
   It needs free registration, which takes sometimes a few days.
   
