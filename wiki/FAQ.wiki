@@ -111,7 +111,7 @@
 
   `chmod 777/usb/PATH-TO-FOLDER`
 
-*Q How to copy files from one mounted partition to another mounted partition?*
+*Q: How to copy files from one mounted partition to another mounted partition?*
   Answer: 
   Connect with SSH and run the command below. It will copy the files of source_folder to dest_folder and log the output to log.txt (place outside the involved folders). 
 
@@ -119,6 +119,15 @@
 
   This way, you can even disconnect the SSH client and the transfer will continue. 
 
+*Q: Where is the source code / SDK of the STAR STR8131. 
+
+  Answer:
+  LSDK sources from cnusers forum: http://www.cnusers.org/index.php?  option=com_remository&Itemid=32&func... 
+
+  It needs free registration, which takes sometimes a few days.
+  
+  Or download from here:
+  http://www.megafileupload.com/en/file/206928/CNS2100-LSDK-6-8-2-zip.html
  
 
  
