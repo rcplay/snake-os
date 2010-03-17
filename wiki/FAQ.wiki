@@ -80,20 +80,16 @@
   # Copy snake-os-sdk/kernels/linux/.config back to snake-os-sdk/configs/str... file 
   # Execute ./mk_snakeos_image.sh *twice!* For some reason run it *two times*.(2x)
 
-  Probably you need some package installed to have development environment. For example: 
-  upx-nrv, jffs and all the packages reported missing during compile.
-  # (apt-get install upx-nrv).
+  Probably you need some package installed to have development environment. 
+  For example: apt-get install build-essential,kernel-headers, upx-nrv,    and more .... all reported during compile as missing.
 
-  Douglas made a script which compile the kernel and make root file system for JFFS, compress the binaries with UPX (which makes on the fly decompiled binary)
+  mk_snakeos_image.sh script was made by Douglas which compile the kernel and make root file system for JFFS, compress the binaries with UPX (which makes on the fly decompiled binary)
 
-  It will create writable firmware on
+  Compiled firmware is here: 
+
   /images/snake-os-sdk_0.9/snake_os/release/ and tftp-capable image on /images/snake-os-sdk_0.9/output
 
-  If you change something on your kernel options, run "make clean" on your kernel dir again and start over the steps above:
-
-  # Go to kernel folder, run "make clean"
-  # Go to /images/snake-os-sdk_0.9/ folder, run "make clean".
- 
+  You could upgrade your NAS with your newly created custom firmware, under the http://nasaddress/ under system/firmware menu
 
 *Q: Write permissions problem. *
 
