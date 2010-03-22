@@ -69,6 +69,7 @@
 
   Answer:
   # Download source, 
+  # sudo su  - became root
   # Extract tar -xvjf snake-os-sdk_0.9.tar.bz2
   # Backup "/images/snake-os-sdk_0.9/configs"
   # Copy one of snake-os-sdk/configs/str... files to snake-os-sdk/kernels/linux/.config 
