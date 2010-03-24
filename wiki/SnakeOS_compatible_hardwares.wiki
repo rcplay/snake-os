@@ -8,4 +8,4 @@ Any str8132 board based embedded system
 
   * 650 BT LAN STORAGE DIRtec -  works perfect.
 
-  * Agestar NAS NSB3AST / NSB3AS - works.
+  * Agestar NAS NSB3AST / NSB3AS - ??
