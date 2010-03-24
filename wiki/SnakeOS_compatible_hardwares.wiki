@@ -7,3 +7,5 @@ Any str8132 board based embedded system
   * WLXKJ652  - 100% compatible
 
   * 650 BT LAN STORAGE DIRtec -  works perfect.
+
+  * Agestar NAS NSB3AST / NSB3AS - works.
