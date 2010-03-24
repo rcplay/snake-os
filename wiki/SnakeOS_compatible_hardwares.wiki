@@ -1,6 +1,6 @@
 = Hardwares compatible with SnakeOS =
 
-= Any str8132 board based embedded system =
+Any str8132 board based embedded system
 
   NS-K330   - 100% compatible
 
