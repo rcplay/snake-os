@@ -1,13 +1,7 @@
+= Hardwares compatible with SnakeOS =
 
-= Introduction =
+= Any str8132 board based embedded system =
 
-Hardwares compatible with SnakeOS.
-
-
-= Details =
-
-Any str8132 board based embedded system. 
-
-NS-K330  -100% compatible
-
+NS-K330   - 100% compatible
+WLXKJ652  - 100% compatible
 650 BT LAN STORAGE DIRtec -  works perfect.
