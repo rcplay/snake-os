@@ -1,6 +1,6 @@
 = Hardwares compatible with SnakeOS =
 
-Any str8132 board based embedded system
+Most of str8132 board based embedded systems.
 
   * *NS-K330   - 100% compatible*
   
@@ -9,15 +9,15 @@ Any str8132 board based embedded system
    PCI clock at 33M
  
 
-  * WLXKJ652  - *100% compatible*
+  * *WLXKJ652  - 100% compatible*
 
    CPU clock at 250MHz, CPU: FA526id(wb)(ARMv4)
    Memory: 32MB = 32MB total
    PCI clock at 33M
 
 
-  * 650 BT LAN STORAGE DIRtec -  works perfect.
+  * *650 BT LAN STORAGE DIRtec -  works perfect.*
 
-  * Agestar NAS NSB3AST / NSB3AS - ??
+  * *Agestar NAS NSB3AST / NSB3AS - ??*
 
-  * NAS ME-747ANS - NO 
+  * *NAS ME-747ANS - NO *
