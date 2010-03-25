@@ -71,14 +71,15 @@
   # Download source, 
   # sudo su  - became root
   # Extract tar -xvjf snake-os-sdk_0.9.tar.bz2
-  # Backup "/images/snake-os-sdk_0.9/configs"
-  # Copy one of snake-os-sdk/configs/str... files to snake-os-sdk/kernels/linux/.config 
+  # Backup "/snake-os-sdk_0.9/configs"
+  # cp /snake-os-sdk/configs/str8132_defconfig_jffs2 /snake-os-sdk/kernels/linux/.config 
   # cd snake-os-sdk/kernels/linux folder
   # export PATH to point to arm compiler. 
     export PATH=/snake-os-sdk_0.9/tools/arm-uclibc-3.4.6/bin:$PATH 
   # make clean && make menuconfig
   # Adjust your kernel settings. 
-  # Copy snake-os-sdk/kernels/linux/.config file back to the previously used snake-os-sdk/configs/str... file. 
+  # Copy back /snake-os-sdk/kernels/linux/.config file to /snake-os-sdk/configs/str8132_defconfig_jffs2 file. 
+  # cd /snake-os-sdk
   # Execute ./mk_snakeos_image.sh *First*  First will definitely fail, run it again.
   # Execute ./mk_snakeos_image.sh *Second time*  Second time should run without error.  
 
