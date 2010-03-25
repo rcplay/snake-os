@@ -79,7 +79,6 @@
   # make clean && make menuconfig
   # Adjust your kernel settings. 
   # Copy snake-os-sdk/kernels/linux/.config file back to the previously used snake-os-sdk/configs/str... file. 
-
   # Execute ./mk_snakeos_image.sh *First*  First will definitely fail, run it again.
   # Execute ./mk_snakeos_image.sh *Second time*  Second time should run without error.  
 
