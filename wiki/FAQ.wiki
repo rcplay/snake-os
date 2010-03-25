@@ -78,10 +78,12 @@
     export PATH=/snake-os-sdk_0.9/tools/arm-uclibc-3.4.6/bin:$PATH 
   # make clean && make menuconfig
   # Adjust your kernel settings. 
-  # Copy snake-os-sdk/kernels/linux/.config back to snake-os-sdk/configs/str... file 
-  # Execute ./mk_snakeos_image.sh *twice!* For some reason run it, *two times*.(2x)
+  # Copy snake-os-sdk/kernels/linux/.config file back to the previously used snake-os-sdk/configs/str... file. 
 
-  Probably you need some package installed to have development environment. 
+  # Execute ./mk_snakeos_image.sh *First*  First will definitely fail, run it again.
+  # Execute ./mk_snakeos_image.sh *Second time*  Second time should run without error.  
+
+  If second run has error messages, probably you need some package installed to have development environment. 
   For example: apt-get install build-essential,kernel-headers, upx-nrv,    and more .... all reported during compile as missing.
 
   mk_snakeos_image.sh script was made by Douglas which compile the kernel and make root file system for JFFS, compress the binaries with UPX (which makes on the fly decompiled binary)
