@@ -90,7 +90,7 @@
 
   Compiled firmware is here: 
 
-  /images/snake-os-sdk_0.9/snake_os/release/ and tftp-capable image on /images/snake-os-sdk_0.9/output
+  /snake-os-sdk_0.9/snake_os/release/ and tftp-capable image on /snake-os-sdk_0.9/output
 
   You could upgrade your NAS with your newly created custom firmware, under the http://nasaddress/ under system/firmware menu
 
