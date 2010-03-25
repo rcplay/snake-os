@@ -2,7 +2,7 @@
 
 Any str8132 board based embedded system
 
-  * NS-K330   - 100% compatible
+  * NS-K330   - 100% compatible http://snake-os.googlecode.com/files/NS_K330_PCB_FRONT.jpg
 
   * WLXKJ652  - 100% compatible
 
