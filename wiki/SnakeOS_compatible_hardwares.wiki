@@ -2,14 +2,14 @@
 
 Any str8132 board based embedded system
 
-  * NS-K330   - 100% compatible 
+  * NS-K330   - *100% compatible*
   
    CPU clock at 250MHz, CPU: FA526id(wb)(ARMv4)
    Memory: 32MB = 32MB total
    PCI clock at 33M
  
 
-  * WLXKJ652  - 100% compatible
+  * WLXKJ652  - *100% compatible*
 
    CPU clock at 250MHz, CPU: FA526id(wb)(ARMv4)
    Memory: 32MB = 32MB total
