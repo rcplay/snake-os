@@ -45,6 +45,7 @@
 *Q: Reset was not enough - device not respond.*
 
   Answer2: If you are not lucky with reset, second chance you are able to serial connect to device and telnet via the RS232-TTL converter direct connect.
+You also have to connect nas with the rj45 cable for TFTP access.  
   Picture and description here:
   http://groups.google.com/group/dealextreme-nas-/web/serial-connection-how-to
 
