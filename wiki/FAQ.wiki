@@ -65,6 +65,12 @@
 
   Answer: admin/snake 
 
+
+*Q: Compile. What are known external dependencies for the source?*
+  Answer:
+  # upx-nrv
+  # libcurl3-openssl-dev
+
 *Q: Compile. Hey guys it is great, How can I make my own one?*
 
   Answer:
