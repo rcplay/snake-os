@@ -16,7 +16,9 @@ Most of str8132 board based embedded systems.
    PCI clock at 33M
 
 
-  * *650 BT LAN STORAGE DIRtec -  works perfect.*
+  * *650 BT LAN STORAGE (w or w/o DIRtec brand) - 100% compatible*
+
+   CPU clock at 250MHz, CPU: FA526id(wb)(ARMv4) Memory: 32MB = 32MB total PCI clock at 33M
 
   * *Agestar NAS NSB3AST / NSB3AS - ??*
 
