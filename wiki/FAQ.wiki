@@ -70,6 +70,7 @@
   Answer:
   # upx-nrv
   # libcurl3-openssl-dev
+  # liblzo2-2
 
 *Q: Compile. Hey guys it is great, How can I make my own one?*
 
