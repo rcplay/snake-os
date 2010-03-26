@@ -134,9 +134,9 @@
   Or download from here:
   http://www.megafileupload.com/en/file/206928/CNS2100-LSDK-6-8-2-zip.html
 
-*Q: Transmission 1.92 is available in SnakeOs?
+*Q: Transmission 1.92 is available in SnakeOs? *
 
-  Answer: Thanks to Stefan, yes. 
+  Answer: Thanks to sTefAnO sTe, yes. 
   Download the firmware from download section. 
 
 *Q: How can I getsource of SnakeOs1.0 updated with transmission-1.92?*
