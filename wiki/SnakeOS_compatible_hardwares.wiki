@@ -7,6 +7,8 @@ Most of str8132 board based embedded systems.
    CPU clock at 250MHz, CPU: FA526id(wb)(ARMv4)
    Memory: 32MB = 32MB total
    PCI clock at 33M
+
+   Link: http://www.dealextreme.com/details.dx/sku.26320
  
 
   * *WLXKJ652  - 100% compatible*
@@ -15,6 +17,8 @@ Most of str8132 board based embedded systems.
    Memory: 32MB = 32MB total
    PCI clock at 33M
 
+   Link: http://www.dealextreme.com/details.dx/sku.20383
+
 
   * *650 BT LAN STORAGE (w or w/o DIRtec brand) - 100% compatible*
 
@@ -22,4 +26,6 @@ Most of str8132 board based embedded systems.
 
   * *Agestar NAS NSB3AST / NSB3AS - ??*
 
-  * *NAS ME-747ANS - NO *
+  * *NAS ME-747ANS*
+
+   Not compatible.
