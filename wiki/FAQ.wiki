@@ -148,9 +148,10 @@
 
 *Q: What is the SMB performance. *
 
-  3-5 Mbyte/s some improvement can be achieved if you modify smb.conf. 
+  Measured: write 2-3MB/s read 3-4,5 Mbyte/s. 
+  Reported some small improvement can be achieved if you modify smb.conf. 
   Beware! The oplocks option should be disabled for networks that require multiple users concurrently accessing the same file such as a database. 
-  But most of the users should be happy with this because of better performance.
+  But most of the users should be happy with the original or with this:
  
   smb.conf
   socket options = SO_KEEPALIVE TCP_NODELAY IPTOS_LOWDELAY SO_RCVBUF=65536
