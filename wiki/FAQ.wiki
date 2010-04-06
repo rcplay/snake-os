@@ -146,20 +146,8 @@
   cat snake-os-1.0+transmission-1.92.tar.bz2`*` > snake-os-1.0+transmission-1.92.tar.bz2
 
 
-*Q: What is the SMB performance. *
+*Q: What is the FTP. SMB performance. *
 
-  Measured: write 2-3MB/s read 3-4,5 Mbyte/s. 
-  Reported some small improvement can be achieved if you modify smb.conf. 
-  Beware! The oplocks option should be disabled for networks that require multiple users concurrently accessing the same file such as a database. 
-  But most of the users should be happy with the original or with this:
- 
-  smb.conf
-  socket options = SO_KEEPALIVE TCP_NODELAY IPTOS_LOWDELAY SO_RCVBUF=65536
-  SO_SNDBUF=65536
-  log level = 1
-  read raw = yes
-  write raw = yes
-  oplocks = yes
-  max xmit = 65535
-  dead time = 15
-  getwd cache = yes
+  FTP: Write 3 - 4 MB/s read 4 - 6 Mbyte/s.
+  SMB: Write 2 - 3MB/s read  3 - 4,5 Mbyte/s. 
+
