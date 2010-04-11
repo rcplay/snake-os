@@ -157,18 +157,15 @@
   ftp://priede.bf.lu.lv/pub/Arhivatori/RAR/unrar/unrar-arm.tar.bz2
 
 
-  or here in download: 
+  or here in download section: 
 
 
   # tar -xvf unrar-arm.tar.bz2
-  # copy unrar to nas sda1 root via windows share 
+  # copy unrar to nas sda1 root (/usb/sda1/) via windows share 
   # ssh to snake
-  # cd to directory where do you want to unrar 
-  # run unrar : 
+  # cd to directory where do you want to unrar files
+  # nohup /usb/sda1/unrar e -r *.r*   
 
-   nohup /usb/sda1/unrar e -r *.r*   
   it will extract all rar files from all subdirectories! nohup allows to leave ssh session (without needing to be online.)
 
-  # exit 
-   leaving ssh.
-
+  6. exit    -  leaving ssh.
