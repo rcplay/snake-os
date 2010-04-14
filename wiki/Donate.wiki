@@ -1,0 +1,18 @@
+#summary Donate via PayPal
+
+= Donate =
+
+Do you want to say thanks for our time and efforts? Don have spare time or just don't know how else to collaborate?
+
+[https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=dgazineu%40gmail%2ecom&lc=BR&item_name=Snake%20OS&item_number=snakeos&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted  https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif]
+
+
+Time is priceless and if you have some to spare then there is no other better way to help an open source project than to get involved at one level or another. Contributions are appreciated and needed in any of the following ways:
+
+    * Help diagnose and report problems
+    * Suggest fixes by sending in patches
+    * Improve the code
+    * Help with unit and end-to-end testing
+    * Provide peer support on mailing lists, forums or newsgroups
+    * Publish an article on your blog (send the link) or elsewhere (e.g., community sites) to educate others regarding some aspect of the project
+    * Help with missing documentation 
