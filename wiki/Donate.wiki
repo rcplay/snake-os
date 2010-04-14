@@ -3,7 +3,7 @@
 
 = Donate =
 
-Do you want to say thanks for our time and efforts? Don have spare time or just don't know how else to collaborate?
+Do you want to say thanks for our time and efforts? Don't have spare time or just don't know how else to collaborate?
 
 [https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=dgazineu%40gmail%2ecom&lc=BR&item_name=Snake%20OS&item_number=snakeos&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted  https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif]
 
