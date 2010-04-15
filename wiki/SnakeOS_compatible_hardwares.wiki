@@ -20,6 +20,15 @@ Most of str8132 board based embedded systems.
    Link: http://www.dealextreme.com/details.dx/sku.20383
 
 
+  * *WLXKJ651  - NOT compatible*
+
+   CPU clock at 250MHz, CPU: ??
+   Memory: 32MB = 32MB total
+   PCI clock at 33M
+
+   Link: 
+
+
   * *650 BT LAN STORAGE (w or w/o DIRtec brand) - 100% compatible*
 
    CPU clock at 250MHz, CPU: FA526id(wb)(ARMv4) Memory: 32MB = 32MB total PCI clock at 33M
