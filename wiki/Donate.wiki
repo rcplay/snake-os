@@ -17,3 +17,12 @@ Time is priceless and if you have some to spare then there is no other better wa
     * Provide peer support on mailing lists, forums or newsgroups
     * Publish an article on your blog (send the link) or elsewhere (e.g., community sites) to educate others regarding some aspect of the project
     * Help with missing documentation 
+
+
+== Donors ==
+|| *Date*      || *Donor*        ||
+|| 16 Apr 2010 || Robert Marcoux ||
+|| 16 Apr 2010 || Kerry Davis    ||
+|| 16 Apr 2010 || Robert Szabo   ||
+|| 14 Apr 2010 || FARUK CELIK    ||
+|| 14 Apr 2010 || Larry Pinney   ||
