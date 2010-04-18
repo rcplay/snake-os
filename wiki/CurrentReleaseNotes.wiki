@@ -31,7 +31,7 @@ Version 1.1.0 (2010-04-18)
 
  * Fix for issue #5: Added time zone for Adelaide ( Australia/South: CST-9:30CST-10:30,M10.4.0/2,M3.3.0/3 )
 
-    
+ * Fix for issue #13: Webserver root folder cannot be configured in web interface   
 
 
 ===Features:===
@@ -259,4 +259,3 @@ back to Services->Transmission, hit Apply and go to System->Config and Save.
 
 
 Grab it from:  <font size="4"><a href="http://code.google.com/p/snake-os">http://code.google.com/p/snake-os</a> 
-
