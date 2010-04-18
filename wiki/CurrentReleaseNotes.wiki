@@ -125,9 +125,7 @@ In the SNAKE firmware, it will ask you to have a drive connected as sda1 for the
  * SSH user/password: root/snake
 
    
- * After the first boot, the system will be slow for 1 to 3 minutes, because
-it is creating the initial SSH keys. Save the config  (wich contains the
-SSH key) before rebooting and after the CPU gets low again, and this will not occur anymore. To do this, go to System->Config in web page.
+ * After the first boot, the system will be slow for 1 to 3 minutes, because it is creating the initial SSH keys. Save the config  (wich contains the SSH key) before rebooting and after the CPU gets low again, and this will not occur anymore. To do this, go to System->Config in web page.
 
 
 
@@ -160,51 +158,32 @@ timezone here, too.
 
 
 
- * *Disks->Diskname:* Disk n<span>aming option, it will recognize a disk "uuid+label" (will call it signature) and *optionally*
-specify a mount point with a custom name. It will ease with sharing
-setup, when the order that disks are mounted used to matter.
+ * *Disks->Diskname:* Disk n<span>aming option, it will recognize a disk "uuid+label" (will call it signature) and *optionally* specify a mount point with a custom name. It will ease with sharing setup, when the order that disks are mounted used to matter.
 
- * *Disks->Format:*
-The format setting used will be ext3, with only one partition across
+ * *Disks->Format:* The format setting used will be ext3, with only one partition across
 the entire disk. It has be chosen because of performance and stability
 in tests. Note: If you wish a different partitioning, will have to
 format outside the device in the moment.
 
- * *Disks->Partition:*
-To verify on which mount point one partition is/will be mounted. If you
-wish to properly disconnect a device, please umount it here first. A
-running service may avoid one partition to be umounted. Stop these
-services and try again, if possible. If a mounted partition use
-ext3/ext2 filesystem, error checking and correction options will be
-available.
+ * *Disks->Partition:* To verify on which mount point one partition is/will be mounted. If you wish to properly disconnect a device, please umount it here first. A running service may avoid one partition to be umounted. Stop these services and try again, if possible. If a mounted partition use ext3/ext2 filesystem, error checking and correction options will be available.
 
 
 
- * *Services->DDNS:*
-Manage the dynamic dns client service.
+ * *Services->DDNS:* Manage the dynamic dns client service.
 
- * *Services->FTP:*
-Manage the ftp sharing service and set permission mode.
+ * *Services->FTP:* Manage the ftp sharing service and set permission mode.
 
- * *Services->Samba:*
-Manage the file sharing service and set permission mode. All files will
-be owned by root on ext2/3 filesystems.
+ * *Services->Samba:* Manage the file sharing service and set permission mode. All files will be owned by root on ext2/3 filesystems.
 
- * *Services->SFTP/SSHD: *Manage
-the SFTP/SSH Daemon service and optionally regenerate the keys, if they
-where compromised, for example. Note: A new key is generated on the
+ * *Services->SFTP/SSHD: *Manage the SFTP/SSH Daemon service and optionally regenerate the keys, if they where compromised, for example. Note: A new key is generated on the
 first device boot, so dealing with this will not be needed, generally.
 
  * *Services->Swapfile:* Manage the Swapping service. *ALWAYS USE IT*.
 
  * *Services->Telnet:* Manage the telnetd for remote access to shell of the NAS.
 
- * *Services->Transmission: *Manage
-the BitTorrent service. Create your folder before setting it. The
-Transmission service will create a drop folder inside called "_torrentwatch_",
-where you can copy a .torrent file and the files will be automatically
-downloaded. Also possible to control startup and alternate transmission
-speed from here (will restart the service).
+ * *Services->Transmission: *Manage the BitTorrent service. Create your folder before setting it. The Transmission service will create a drop folder inside called "_torrentwatch_", where you can copy a .torrent file and the files will be automatically
+downloaded. Also possible to control startup and alternate transmission speed from here (will restart the service).
 
  * *Services->Syslog:* Manage internal/external Syslog daemon.
  
@@ -222,13 +201,13 @@ speed from here (will restart the service).
 
 
 
- * *System->Config:* Save device config to file/flash or restore the default configuration.
+ * *System->Config:* Save device config to file/flash or restore the default  configuration.
 
  * *System->Status:* General device status and reboot.
 
  * *System->Log:* System message log.
 
- * *System->Monitor:* Monitor CPU, memory and disk space usage.*
+ * *System->Monitor:* Monitor CPU, memory and disk space usage.
 
  * *System->Firmware:* Upgrade (or downgrade) your firmware. The process check the file integrity before write.
 
@@ -238,7 +217,7 @@ speed from here (will restart the service).
 
 
 
- * * Transmission: *Link to Transmission web admin. As a separate process, will ask for login info again. Will default to http://IP:9091. When transmission saves config, it keeps the changes only in memory until transmission restart. You will need to save it,
+ * *Transmission:* Link to Transmission web admin. As a separate process, will ask for login info again. Will default to http://IP:9091. When transmission saves config, it keeps the changes only in memory until transmission restart. You will need to save it,
 back to Services->Transmission, hit Apply and go to System->Config and Save.
 
 
