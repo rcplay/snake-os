@@ -256,6 +256,4 @@ back to Services->Transmission, hit Apply and go to System->Config and Save.
 ===Download:===
 * If you are already running *SNAKE OS beta2 or later*, prefer the _*from-snake*_ version, otherwise, use the _*from-original*_ version. 
 
-
-
 Grab it from:  <font size="4"><a href="http://code.google.com/p/snake-os">http://code.google.com/p/snake-os</a> 
