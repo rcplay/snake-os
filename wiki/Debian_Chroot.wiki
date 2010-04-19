@@ -3,7 +3,7 @@ Howto Debian environment within SnakeOs.
 = Introduction =
 
 Very simple way to have Debian and its huge number of packages. 
-(chroot is a kind of sandbox where you have debian libraries, and environment within SnakeOS host.)
+(chroot is shell (a kind of sandbox) where you have debian libraries, and environment within SnakeOS host.)
 
 = Details =
 
