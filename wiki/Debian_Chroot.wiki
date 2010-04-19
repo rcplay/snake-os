@@ -1,4 +1,4 @@
-Debian environment within SnakeOs.
+Howto Debian environment within SnakeOs.
 
 = Introduction =
 
@@ -11,8 +11,9 @@ Very simple way to have Debian and its huge number of packages.
   # SSH to SnakeOs. 
     mkdir /usb/sda1/debian
     cd /usb/sda1/debian
+    copy debian.tar.bz2 to /usb/sda1/debian via share or ftp.
     bunzip debian-etch-base.tar.bz2
-    tar -xvf debian-etch-base.tar
+    tar -xvf debian-etch-base.tar    /exctract files./
   # Mount dev and proc, you can use fstab if yo whish: 
     mount -o bind /proc /usb/sda1/debian/proc 
     mount -o bind /dev /usb/sda1/debian/dev 
@@ -23,3 +24,5 @@ Very simple way to have Debian and its huge number of packages.
   # to have tons of debian packages use APT:) 
     edit /etc/resolv.conf if you need.
   # apt-get install mc.
+  # mkdir /mnt/sda1
+  # mount /dev/sda1 /mnt/sda1
