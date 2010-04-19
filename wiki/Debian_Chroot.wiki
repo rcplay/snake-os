@@ -1,0 +1,18 @@
+Debian environment within SnakeOs.
+
+= Introduction =
+
+Add your content here.
+
+
+= Details =
+
+Download http://rapidshare.com/files/145917668/debian-etch-base.tar.bz2 
+Unpak in a usb folder for example debian., use a linux for unpak, if 
+you use winrar in windows not work. 
+Mount dev and proc, you can use fstap if yo whish: 
+mount -o bind /proc /usb/sda1/debian/proc 
+mount -o bind /dev /usb/sda1/debian/dev 
+Run chrooted sh 
+chroot /usb/sda1/debian/. 
+To exit debian use "exit" command or reboot. 
