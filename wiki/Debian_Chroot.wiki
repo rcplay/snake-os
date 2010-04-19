@@ -10,15 +10,15 @@ You only need to have an USB device attached. (No serial connection needed.)
 = Details =
 
   # ssh to NAS - or putty from win 
-  # cd /usb/sda1
+  # `#`cd /usb/sda1
   # Download chroot debian
      `#` wget http://snake-os.googlecode.com/files/debian.tar.gz
-  # tar -xvf debian.tar.gz    
-  # tar -xvf debian.tar
-  # mount -o bind /proc /usb/sda1/debian/proc 
-  # mount -o bind /dev /usb/sda1/debian/dev 
-     Mount dev and proc, you can use fstab if yo whish.
-  # chroot /usb/sda1/debian/ 
+  # `#`tar -xvf debian.tar.gz    
+  # `#`tar -xvf debian.tar
+  # `#`mount -o bind /proc /usb/sda1/debian/proc 
+  # `#`mount -o bind /dev /usb/sda1/debian/dev 
+    
+  # `#`chroot /usb/sda1/debian/ 
 
 Now you are in chrooted debian shell.
 
@@ -35,3 +35,5 @@ Now you are in chrooted debian shell.
   * apt-get install packagename       
 
   * edit /etc/resolv.conf if you need.
+
+  * Mount dev and proc, you can use fstab if yo whish.
