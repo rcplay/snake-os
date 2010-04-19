@@ -12,9 +12,8 @@ You only need to have an USB device attached. (No serial connection needed.)
   # ssh to NAS - or putty from win 
   # `#`cd /usb/sda1
   # Download chroot debian with wget:
-  `#` wget http://snake-os.googlecode.com/files/debian.tar.gz
-  # `#`tar -xvf debian.tar.gz    
-  # `#`tar -xvf debian.tar
+  `#` wget http://snake-os.googlecode.com/files/debian.tgz
+  # `#`tar -xvf debian.tgz    
   # `#`mount -o bind /proc /usb/sda1/debian/proc 
   # `#`mount -o bind /dev /usb/sda1/debian/dev 
     
