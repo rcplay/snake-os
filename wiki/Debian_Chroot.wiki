@@ -23,12 +23,12 @@ Now you are in chrooted debian shell.
 
 *Some useful thing:*
 
-  # mkdir /mnt/sda1
-  # mount /dev/sda1 /mnt/sda1
+  * mkdir /mnt/sda1
+  * mount /dev/sda1 /mnt/sda1
 
-  # mc
+  * mc
 
     to have tons of debian packages use APT:) 
-  # apt-get install packagename       
+  * apt-get install packagename       
 
-  # edit /etc/resolv.conf if you need.
+  * edit /etc/resolv.conf if you need.
