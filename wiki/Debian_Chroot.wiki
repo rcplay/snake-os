@@ -12,15 +12,18 @@ Very simple way to have Debian and its huge number of packages.
   # wget http://snake-os.googlecode.com/files/debian.tar.gz
   # tar -xvf debian.tar.gz    
   # tar -xvf debian.tar
-  # Mount dev and proc, you can use fstab if yo whish: 
-    mount -o bind /proc /usb/sda1/debian/proc 
-    mount -o bind /dev /usb/sda1/debian/dev 
-  # Run chrooted sh 
-    chroot /usb/sda1/debian/ 
-  To exit debian use "exit" command or reboot. 
+  # mount -o bind /proc /usb/sda1/debian/proc 
+  # mount -o bind /dev /usb/sda1/debian/dev 
+     Mount dev and proc, you can use fstab if yo whish.
+  # chroot /usb/sda1/debian/ 
 
-  # to have tons of debian packages use APT:) 
-    edit /etc/resolv.conf if you need.
-  # apt-get install mc    (  it is already installed.:)    
+Now you are in chrooted debian shell.
+
+   To exit debian use "exit" command or reboot. 
+
   # mkdir /mnt/sda1
   # mount /dev/sda1 /mnt/sda1
+  # mc
+  # to have tons of debian packages use APT:) 
+    edit /etc/resolv.conf if you need.
+  # apt-get install packagename       
