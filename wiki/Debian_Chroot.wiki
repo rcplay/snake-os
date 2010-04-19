@@ -5,11 +5,14 @@ Howto Debian environment within SnakeOs.
 Very simple way to have Debian and its huge number of packages. 
 (chroot is shell (a kind of sandbox) where you have debian libraries, and environment within SnakeOS host.)
 
+You only need have an USB device attached. (No serial connection needed.)
+
 = Details =
 
   # ssh to NAS - or putty from win 
   # cd /usb/sda1
-  # wget http://snake-os.googlecode.com/files/debian.tar.gz
+  # Download chroot debian
+     wget http://snake-os.googlecode.com/files/debian.tar.gz
   # tar -xvf debian.tar.gz    
   # tar -xvf debian.tar
   # mount -o bind /proc /usb/sda1/debian/proc 
