@@ -2,17 +2,24 @@ Debian environment within SnakeOs.
 
 = Introduction =
 
-Very simple way to have Debian and its packages.
+Very simple way to have Debian and its huge number of packages. 
+(chroot is a kind of sandbox where you have debian libraries, and environment within SnakeOS host.)
 
 = Details =
 
-  # Download http://rapidshare.com/files/145917668/debian-etch-base.tar.bz2 or 
-  # from here http://code.google.com/p/snake-os/downloads/list
-  # Unpak in a usb folder for example debian., use a linux for unpak, if 
-    you use winrar in windows not work. 
+  # Download from here http://code.google.com/p/snake-os/downloads/list
+  # SSH to SnakeOs. 
+    mkdir /usb/sda1/debian
+    cd /usb/sda1/debian
+    bunzip debian-etch-base.tar.bz2
+    tar -xvf debian-etch-base.tar
   # Mount dev and proc, you can use fstab if yo whish: 
     mount -o bind /proc /usb/sda1/debian/proc 
     mount -o bind /dev /usb/sda1/debian/dev 
   # Run chrooted sh 
     chroot /usb/sda1/debian/. 
   To exit debian use "exit" command or reboot. 
+
+  # to have tons of debian packages use APT:) 
+    edit /etc/resolv.conf if you need.
+  # apt-get install mc.
