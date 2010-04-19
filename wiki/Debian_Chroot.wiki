@@ -21,9 +21,13 @@ Now you are in chrooted debian shell.
 
    To exit debian use "exit" command or reboot. 
 
+  Some useful thing:
+
   # mkdir /mnt/sda1
   # mount /dev/sda1 /mnt/sda1
+
   # mc
+
     to have tons of debian packages use APT:) 
   # apt-get install packagename       
 
