@@ -7,7 +7,7 @@ Very simple way to have Debian and its huge number of packages.
 
 = Details =
 
-  # SSH to SnakeOs. 
+  # SSH to NAS - SnakeOs 
   # cd /usb/sda1
   # wget http://snake-os.googlecode.com/files/debian.tar.gz
   # tar -xvf debian.tar.gz    
