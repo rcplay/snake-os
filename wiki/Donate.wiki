@@ -21,7 +21,7 @@ Time is priceless and if you have some to spare then there is no other better wa
 
 == Donors ==
 || *Date*      || *Donor*        ||
-|| 22 Apr 2010 || ||
+|| 22 Apr 2010 || Bruno Guilherme Amui ||
 || 19 Apr 2010 || Nicolas Ritouet||
 || 18 Apr 2010 || Frank Gilbert  ||
 || 16 Apr 2010 || Robert Marcoux ||
