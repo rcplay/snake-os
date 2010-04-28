@@ -2,6 +2,9 @@
 
 SnakeOS v1.0 source code.
 
+Here: http://snake-os.googlecode.com/files/snake-os-sdk_0.9.tar.bz2
+
+
 SNAKE firmware for Str8132-Based NAS
 
 Licence GNU GPL.
