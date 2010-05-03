@@ -25,13 +25,15 @@ Now you are in chrooted debian shell.
 
 *Some useful - "must have"  thing: *
 
-  * mkdir /mnt/sda1
-  * mount /dev/sda1 /mnt/sda1
+  * Mount USB HDD within Chrooted debian: 
+    mkdir /mnt/sda1; mount /dev/sda1 /mnt/sda1
+
+  * to have tons of debian packages use APT:) 
+  * apt-get install packagename       
 
   * mc
-
-    to have tons of debian packages use APT:) 
-  * apt-get install packagename       
+  * plowdown <--- downloading from hosting servicees like rapdishare and megaupload ( from http://code.google.com/p/plowshare/downloads/list 
+  * screen <--- It allows you to run "virtual terminals" with the added benefit that closing the connection the process keep running, so no need to do 10 ssh sessions, or using nohup
 
   * edit /etc/resolv.conf if you need.
 
