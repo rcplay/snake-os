@@ -31,9 +31,9 @@ Now you are in chrooted debian shell.
   * to have tons of debian packages use APT:) 
   * apt-get install packagename       
 
-  * mc
-  * plowdown <--- downloading from hosting servicees like rapdishare and megaupload ( from http://code.google.com/p/plowshare/downloads/list 
-  * screen <--- It allows you to run "virtual terminals" with the added benefit that closing the connection the process keep running, so no need to do 10 ssh sessions, or using nohup
+  * mc  - Midnight Commander - feature full file commander. Just run: mc
+  * plowdown <--- downloading from hosting servicees like rapdishare and megaupload ( from http://code.google.com/p/plowshare/downloads/list. apt-get install plowdown.
+  * screen <--- It allows you to run "virtual terminals" with the added benefit that closing the connection the process keep running, so no need to do 10 ssh sessions, or using nohup.  apt-get install screen.
 
   * edit /etc/resolv.conf if you need.
 
