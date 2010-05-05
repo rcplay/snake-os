@@ -21,7 +21,7 @@ Time is priceless and if you have some to spare then there is no other better wa
 
 == Donors ==
 || *Date*      || *Donor*        ||
-|| 04 May 2010 || Nhu Lam Nguyen ||
+|| 05 May 2010 || Nhu Lam Nguyen ||
 || 04 May 2010 || Anderson Ferreira Fernandes ||
 || 30 Apr 2010 || Gerard Stutje ||
 || 24 Apr 2010 || Patrick Aspinall ||
