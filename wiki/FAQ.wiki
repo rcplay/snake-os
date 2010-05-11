@@ -161,7 +161,7 @@
 *Q: What is chroot? Why I need? *
 
 You can run hundreds of linux applications which are missing in the 
-present SnakeOs.  chroot is shell (a kind of sandbox) where you have debian libraries, and environment within SnakeOS host.
+present SnakeOs.  (chroot is shell (a kind of sandbox) where you have debian libraries, and environment within SnakeOS host.)
 
 How can I do?: 
 
