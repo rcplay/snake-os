@@ -60,6 +60,7 @@
   2. And replace flash
   http://groups.google.com/group/dealextreme-nas-/web/nas-832-flash-chip-relocation-tutorial
 
+  Most of the user don't need flash replace. Most of them have local network related problems. (ex.:  router don't give new IP address) So try first to shut down all network elements before try to replace flash.
 
 *Q: Default user and password for the web interface ?*
 
