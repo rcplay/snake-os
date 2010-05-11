@@ -9,11 +9,10 @@
 
   Answer: 
 
-  Use download section.   snakeos-V1.0.0-20091027-from-original.zip
+  Use download section.  
+  Actual one is:  http://code.google.com/p/snake-os/downloads/detail?name=snakeos-V1.1.0-20100418-from-snake.zip&can=2&q=
 
-  or http://groups.google.com/group/dealextreme-nas-/web/snake-os---v1-0-0
-  Download the *from original stock firmware* 
-
+  *Be aware! from snake and from original stock firm is different!*
 
 *Q: Can I upgrade my NS-K330 or WLX-652 with SnakeOS ?*
 
@@ -78,12 +77,12 @@
   Answer:
   # Download source, 
   # sudo su  - became root
-  # Extract tar -xvjf snake-os-sdk_0.9.tar.bz2
-  # Backup "/snake-os-sdk_0.9/configs"
+  # Extract tar -xvjf snake-os-sdk_x.x.tar.bz2
+  # Backup "/snake-os-sdk_x.x/configs"
   # cp /snake-os-sdk/configs/str8132_defconfig_jffs2 /snake-os-sdk/kernels/linux/.config 
   # cd snake-os-sdk/kernels/linux folder
   # export PATH to point to arm compiler. 
-    export PATH=/snake-os-sdk_0.9/tools/arm-uclibc-3.4.6/bin:$PATH 
+    export PATH=/snake-os-sdk_x.x/tools/arm-uclibc-3.4.6/bin:$PATH 
   # make clean && make menuconfig
   # Adjust your kernel settings. 
   # Copy back /snake-os-sdk/kernels/linux/.config file to /snake-os-sdk/configs/str8132_defconfig_jffs2 file. 
@@ -98,7 +97,7 @@
 
   Compiled firmware is here: 
 
-  /snake-os-sdk_0.9/snake_os/release/ and tftp-capable image on /snake-os-sdk_0.9/output
+  /snake-os-sdk_x.x/snake_os/release/ and tftp-capable image on /snake-os-sdk_x.x/output
 
   You could upgrade your NAS with your newly created custom firmware, under the http://nasaddress/ under system/firmware menu
 
@@ -134,22 +133,11 @@
   Or download from here:
   http://www.megafileupload.com/en/file/206928/CNS2100-LSDK-6-8-2-zip.html
 
-*Q: Transmission 1.92 is available in SnakeOs? *
-
-  Answer: Thanks to sTefAnO sTe, yes. 
-  Download the firmware from download section. 
-
-*Q: How can I getsource of SnakeOs1.0 updated with transmission-1.92?*
-
-  Download the two source file from download section and merge them. (split was necessary because of 100MB file size limit.)
-
-  cat snake-os-1.0+transmission-1.92.tar.bz2`*` > snake-os-1.0+transmission-1.92.tar.bz2
-
 
 *Q: What is the FTP. SMB performance. *
 
-  FTP: Write 3 - 4 MB/s read 4 - 6 Mbyte/s.
-  SMB: Write 2 - 3MB/s read  3 - 4,5 Mbyte/s. 
+  ||FTP: Write 3 - 4 MB/s        || read 4 - 6 Mbyte/s.
+  ||SMB: Write 2 - 3MB/s         || read  3 - 4,5 Mbyte/s. 
 
 *Q: How can unrar files? Can I leave ssh session during unrar? *
 
