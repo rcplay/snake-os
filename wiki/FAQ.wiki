@@ -165,5 +165,6 @@ present SnakeOs.  (chroot is shell (a kind of sandbox) where you have debian lib
 
 How can I do?: 
 
-Installation needs ~ 200MB disk space on attached USB and only 5 easy steps to set up. 
-See document here: http://code.google.com/p/snake-os/wiki/Debian_Chroot 
+Installation needs ~200MB disk space on attached USB and only 5 easy steps to set up. 
+
+See documents here: http://code.google.com/p/snake-os/wiki/Debian_Chroot 
