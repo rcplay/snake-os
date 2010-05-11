@@ -152,8 +152,18 @@
   # copy unrar to nas sda1 root (/usb/sda1/) via windows share 
   # ssh to snake
   # cd to directory where do you want to unrar files
-  # nohup /usb/sda1/unrar e -r *.r*   
+  # nohup /usb/sda1/unrar e -r `*.r*`   
 
   it will extract all rar files from all subdirectories! nohup allows to leave ssh session (without needing to be online.)
 
   6. exit    -  leaving ssh.
+
+*Q: What is chroot? Why I need? *
+
+You can run hundreds of linux applications which are missing in the 
+present SnakeOs.  chroot is shell (a kind of sandbox) where you have debian libraries, and environment within SnakeOS host.
+
+How can I do?: 
+
+Installation needs ~ 200MB disk space on attached USB and only 5 easy steps to set up. 
+See document here: http://code.google.com/p/snake-os/wiki/Debian_Chroot 
