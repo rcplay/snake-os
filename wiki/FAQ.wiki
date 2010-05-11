@@ -12,7 +12,7 @@
   Use download section.  
   Actual one is:  http://code.google.com/p/snake-os/downloads/detail?name=snakeos-V1.1.0-20100418-from-snake.zip&can=2&q=
 
-  *Be aware! from snake and from original stock firm is different!*
+  * Be aware! from snake and from original stock firm is different!*
 
 *Q: Can I upgrade my NS-K330 or WLX-652 with SnakeOS ?*
 
