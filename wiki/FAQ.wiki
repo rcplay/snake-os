@@ -138,6 +138,10 @@
 
   ||FTP: || Write 3 - 4 MB/s        || read 4 - 6 Mbyte/s.   ||
   ||SMB: || Write 2 - 3MB/s         || read  3 - 4,5 Mbyte/s.|| 
+  on ext3 filesystem. 
+
+  On NTFS the speed is _MUCH_SLOWER!. 
+  On FAT almost as ext3 but not recommended.
 
 *Q: How can unrar files? Can I leave ssh session during unrar? *
 
