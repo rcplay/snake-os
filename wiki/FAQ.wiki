@@ -68,8 +68,8 @@ Be aware: *from snake and from original stock firm is different! *
   Answer: admin/snake 
 
 
-*Q: Compile. What are known external dependencies for the source?*
-  Answer:
+*Q: Compile - dependences. What are known external dependencies for the source compile?*
+
   # upx-nrv, libcurl3-openssl-dev, liblzo2-2, build-essential, kernel-headers.
 
 *Q: Compile. Hey guys it is great, How can I make my own one?*
