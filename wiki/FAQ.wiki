@@ -134,11 +134,11 @@ Be aware: *from snake and from original stock firm is different! *
   http://www.megafileupload.com/en/file/206928/CNS2100-LSDK-6-8-2-zip.html
 
 
-*Q: What is the FTP. SMB performance. *
-  ||    .|| Write            .|| Read           .||
-  ||FTP: || 3 - 4 MB/s        || 4 - 6 Mbyte/s.  ||
-  ||SMB: || 2 - 3MB/s         || 3 - 4,5 Mbyte/s.|| 
-  on ext3 filesystem. 
+*Q: What is the FTP/SMB performance on ext3 filesystem? *
+
+|| Type || Write MB/s|| Read MB/s||
+|| FTP: || 3 - 4 || 4 - 6 ||
+|| SMB: || 2 - 3 || 3 - 4,5 || 
 
   On NTFS the speed is _MUCH_SLOWER!. 
   On FAT almost as ext3 but not recommended.
