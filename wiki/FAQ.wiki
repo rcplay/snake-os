@@ -135,9 +135,9 @@ Be aware: *from snake and from original stock firm is different! *
 
 
 *Q: What is the FTP. SMB performance. *
-
-  ||FTP: || Write 3 - 4 MB/s        || read 4 - 6 Mbyte/s.   ||
-  ||SMB: || Write 2 - 3MB/s         || read  3 - 4,5 Mbyte/s.|| 
+  ||     || Write             || Read            ||
+  ||FTP: || 3 - 4 MB/s        || 4 - 6 Mbyte/s.  ||
+  ||SMB: || 2 - 3MB/s         || 3 - 4,5 Mbyte/s.|| 
   on ext3 filesystem. 
 
   On NTFS the speed is _MUCH_SLOWER!. 
