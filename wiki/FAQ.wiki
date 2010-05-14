@@ -1,4 +1,3 @@
-* FAQ * 
 = Introduction =
 
 This is the Open Source SnakeOS FAQ. 
