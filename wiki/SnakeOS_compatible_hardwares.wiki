@@ -18,6 +18,7 @@ Most of str8132 board based embedded systems.
    PCI clock at 33M
 
    Link: http://www.dealextreme.com/details.dx/sku.20383
+   _NOTE: There is a different version based on a RDC chip being delivered from Dealextreme, as reported on May/2010, that is incompatible with Snake OS. It is marked as WLXKJ652R. Prefer to buy the NS-K330 or another model, for increased chances to run Snake OS_
 
 
   * *WLXKJ651  - NOT compatible*
