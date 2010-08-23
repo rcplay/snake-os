@@ -2,10 +2,14 @@ Howto Debian environment within SnakeOs.
 
 = Introduction =
 
-Very simple way to have Debian and its huge number of packages. 
-(chroot is shell (a kind of sandbox) where you have debian libraries, and environment within SnakeOS host.)
+Very simple way to have Debian (and its huge number of packages). 
+Chroot is a shell (embedded system within a linux) where you have debian libraries, and environment within SnakeOS host.)
 
 You only need to have an USB device attached. (No serial connection needed.)
+
+UPDATE! 2010.08.23. A newest updated chrooted Debian package - created by Pinguino7  - is available, I recommend it.  :) 
+
+http://wlx652.discoversweb.com.ar/index.php?topic=80.0 
 
 = Details =
 
