@@ -21,6 +21,7 @@ Time is priceless and if you have some to spare then there is no other better wa
 
 == Donors ==
 || *Date*      || *Donor*        ||
+|| 24 Aug 2010 || Manolis Vouros ||
 || 22 Aug 2010 || Juarez Pedra ||
 || 05 Aug 2010 || Timothy Merrell ||
 || 02 Aug 2010 || Joao Carlos Lima ||
