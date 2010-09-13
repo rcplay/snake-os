@@ -146,7 +146,7 @@ Be aware: *from snake and from original stock firm is different! *
   http://www.megafileupload.com/en/file/206928/CNS2100-LSDK-6-8-2-zip.html
 
 
-*Q: How to acces data of USB hard drive?
+*Q: How to acces data of USB hard drive? *
 
   1. SMB via NAS (hdd is attached to NAS USB and NAS is accessed via SMB)
   2. FTP - with any ftp klient. ex. Fireftp.
