@@ -40,19 +40,23 @@ Be aware: *from snake and from original stock firm is different! *
 
 *Q: Device lost all connectivity, no answer for ping, ssh, http, ftp. What can I do?*
 
-  Answer1:  Reset it.
+  Answer1:  Hard Reset it.
 
   NS-K330 has a reset button. Push it while powering on, with the reset button
   held in for 45 seconds (counted to 60 just in case).
   After it showed up under the default IP (or at least the one assigned by the
   DHCP server), by the MAC address.  
+  Some people reported that router must be power off also during NAS reset.
+  Some other people suggest to directly connect NAS to PC via the ethernet cable, not via router.
 
-*Q: Reset was not enough - device not respond.*
+*Q: Reset was not enough - device not respond yet.*
 
-  Answer2: If you are not lucky with reset, second chance you are able to serial connect to device and telnet via the RS232-TTL converter direct connect.
+  Answer2: If you are not lucky with hard reset, second chance you are able to serial connect to device and telnet via the RS232-TTL converter direct connect.
   You also have to connect nas with the rj45 cable for TFTP access.  
   Picture and description here:
   http://groups.google.com/group/dealextreme-nas-/web/serial-connection-how-to
+  or 
+  http://groups.google.com/group/dealextreme-nas-/web/serialconnectionhowto-ns-k330?hl=en
 
 *Q: Serial connect was not allowed - device not respond/boot.*
 
