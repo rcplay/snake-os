@@ -160,6 +160,7 @@ Be aware: *from snake and from original stock firm is different! *
 || SMB: || 2 - 3 || 3 - 4,5 || 
 
   On NTFS the speed is _MUCH_SLOWER!. 
+
   Speed on FAT almost as ext3, but not recommended.
   Use ext3 because it is fastest and safest, and SMB will hide which filesystem is under it.
 
