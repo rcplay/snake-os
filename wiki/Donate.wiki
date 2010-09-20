@@ -21,6 +21,7 @@ Time is priceless and if you have some to spare then there is no other better wa
 
 == Donors ==
 || *Date*      || *Donor*        ||
+|| 19 Sep 2010 || Tomas Francisco Linares Moreno ||
 || 15 Sep 2010 || Edwin van Egmond ||
 || 15 Sep 2010 || Eduardo Habkost ||
 || 12 Sep 2010 || Shlomo Dalal ||
