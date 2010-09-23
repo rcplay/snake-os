@@ -17,20 +17,22 @@ This device usually have 2 USB and one RJ45 Network connector.
   Use download section.  
   Actual one is:  http://code.google.com/p/snake-os/downloads/detail?name=snakeos-V1.1.0-20100418-from-snake.zip&can=2&q=
 
-Be aware: *from snake and from original stock firm is different! *
+Be aware: *from snake and from original stock firm is different! Many people reporting that they upgraded with wrong firmware and then it is bricked.*
 
+snakeos-V1.2.0-20100621-from-original.zip means upgrade this firmware if you have original stock firmware.
+snakeos-V1.2.0-20100621-from-snake.zip use this if you have a previous version of snake already installed.
 
 *Q: Can I upgrade my NS-K330 or WLX-652 with SnakeOS ?*
 
-  Answer: Yes. Definitly. Recommended. More stable, and more functions.
+  Answer: Yes. Definitely. Recommended. More stable, and more functions.
 
 *Q: Where is user documentation?*
 
-  Answer1:  Douglas not even made this firmware but documented it! 
+  Answer1:    You can read it in download section.
 
   Authors are: Douglas Gazineu,  Jarko, José Maciel,  Miguel Moreto
 
-  You can read it in download section.
+
 
 *Q: Where to ask questions?*
 
