@@ -115,19 +115,20 @@ snakeos-V1.2.0-20100621-from-snake.zip use this if you have a previous version o
 
   You could upgrade your NAS with your newly created custom firmware, under the http://nasaddress/ under system/firmware menu
 
-*Q: Write permissions problem. *
+*Q: FTP Write permissions problem for anonymous. *
 
-  I have activated samba and FTP. In FTP with anonymous acces and read & write permssion.
+  I have activated FTP. In FTP with anonymous only with write permssion.
  
   Through samba i can read and write but by FTP i can only read. I haven't got write permissions even though I have configured it in Snake OS.
  
   Answer:
 
-  Besides enabling ftp, you will have to adjust the `*`nix permissions if using an ext2/ext3 drive. This can be done by using ssh to access the NAS.
+  VSFTP root folder must have 755 but any sub folder for ftp write should have 777. 
  
-  Tip: If you want only to rely on ftp users, use the command 
-
+  This can be done by using ssh to access the NAS and  
+  
   `chmod 777/usb/PATH-TO-FOLDER`
+ 
 
 *Q: How to copy files from one mounted partition to another mounted partition?*
   Answer: 
