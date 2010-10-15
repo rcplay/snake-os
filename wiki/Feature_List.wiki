@@ -6,7 +6,7 @@ Hi this is a list of features of SnakeOs.
 = Standard SnakeOs =
 
 || Name         || Description || Further info||
-|| Filesystem|| ext2,ext3, FAT, NTFS||See User Guide http://snake-os.googlecode.com/files/SNAKE_OS_V1_20091027_User_Manual.pdf ||
+|| Filesystem|| ext2,ext3, FAT, NTFS||See [User Guide] http://snake-os.googlecode.com/files/SNAKE_OS_V1_20091027_User_Manual.pdf ||
 || Network filesystem|| Samba 1.1 ||See User Guide, ||
 || Transmission 2.0 || Torrent Client ||See User Guide, ||
 
