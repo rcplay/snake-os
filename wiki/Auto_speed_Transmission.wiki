@@ -30,8 +30,8 @@ the script runs every 10 minutes.
   else
        echo "Transmission speed up" >> /var/messages
        /usb/hd1/transmission-remote localhost:9091 -n admin:pass -D -U
-  fi;}}}
-
+  fi;
+}}}
 
 
 *exmalpe of computers.txt*
