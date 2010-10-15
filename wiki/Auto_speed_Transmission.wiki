@@ -9,10 +9,9 @@ Developped by Rodrigo Lanes published by Robert1968
 
 = Details =
 
-
 *crontab*
 
-`*/10 * * * * sh /usb/hd1/scripts/auto_speed_TR.sh`
+*/10 * * * * sh /usb/hd1/scripts/auto_speed_TR.sh`
 
 the script runs every 10 minutes.
 
@@ -32,12 +31,18 @@ else
        echo "Transmission speed up" >> /var/messages
        /usb/hd1/transmission-remote localhost:9091 -n admin:pass -D -U
 fi;
-`
+
+
+
 *exmalpe of computers.txt*
 
+
 10.0.0.10
+
 10.0.0.100
+
 10.0.0.101
+
 10.0.0.102
 
 
