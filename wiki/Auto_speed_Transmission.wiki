@@ -36,10 +36,13 @@ the script runs every 10 minutes.
 
 *exmalpe of computers.txt*
 
-`10.0.0.10
+10.0.0.10
+
 10.0.0.100
+
 10.0.0.101
-10.0.0.102`
+
+10.0.0.102
 
 
 --
