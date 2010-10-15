@@ -2,6 +2,7 @@
 = Feature list =
 
 Hi this is a list of Snake-Os features.
+
 The goal to have knowledge of SnakeOs programs, scripts, enhancements workarounds.
 
 Feel free to extend this list.
@@ -14,7 +15,8 @@ Feel free to extend this list.
 || Transmission 2.0 || Torrent Client ||See [http://snake-os.googlecode.com/files/SNAKE_OS_V1_20091027_User_Manual.pdf User Manual] ||
 || Magusmod||Start stop script improvements ||http://groups.google.com/group/dealextreme-nas-/web/magus-mod?hl=en Magusmod ||
 || Transmission auto speed ||a script to auto reduce transmission speed ||[http://code.google.com/p/snake-os/wiki/Auto_speed_Transmission Auto_speed_Transmission] ||
-
+||Browse your external HD via webpages||web based file browser|| ||[http://code.google.com/p/snake-os/issues/detail?id=50 web based file browser]
+||
 = Chroot Debian =
 
 || Name || Description || Further info||
