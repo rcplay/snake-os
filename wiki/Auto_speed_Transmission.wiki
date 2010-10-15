@@ -11,39 +11,35 @@ Developped by Rodrigo Lanes published by Robert1968
 
 *crontab*
 
-*/10 * * * * sh /usb/hd1/scripts/auto_speed_TR.sh`
+  `*/10 * * * * sh /usb/hd1/scripts/auto_speed_TR.sh`
 
 the script runs every 10 minutes.
 
 *auto_speed_TR.sh * Shell scipt 
 
-`found=0;
-computers=/usb/hd1/scripts/computers.txt;
+  found=0;
+  computers=/usb/hd1/scripts/computers.txt;
 
-for ip in `cat $computers`; do ping -c 1 $ip>/dev/null; [ $? -eq 0 ] && echo "$ip UP" && found=1 && break || echo "$ip DOWN" ; done
+  for ip in `cat $computers`; do ping -c 1 $ip>/dev/null; [ $? -eq 0 ] && echo "$ip UP" &&   found=1 && break || echo "$ip DOWN" ; done
 
-if [ $found -eq 1 ] 
-then
+  if [ $found -eq 1 ] 
+  then
     echo "Transmission speed down" >> /var/messages;
     /usb/hd1/transmission-remote localhost:9091 -n admin:pass -d 10 -u 10
 
-else
+  else
        echo "Transmission speed up" >> /var/messages
        /usb/hd1/transmission-remote localhost:9091 -n admin:pass -D -U
-fi;
+  fi;
 
 
 
 *exmalpe of computers.txt*
 
-
-10.0.0.10
-
+`10.0.0.10
 10.0.0.100
-
 10.0.0.101
-
-10.0.0.102
+10.0.0.102`
 
 
 --
