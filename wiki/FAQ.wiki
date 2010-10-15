@@ -168,7 +168,7 @@ snakeos-V1.2.0-20100621-from-snake.zip use this if you have a previous version o
 
   Speed is much worst via wlan!  less than 1MB/s !!
 
-*  Use ext3* because it is fastest and safest, and SMB will hide which filesystem is under it.
+  _Use ext3_ because it is fastest and safest, and SMB will hide which filesystem is under it.
 
 
 *Q: How can unrar files? Can I leave ssh session during unrar? *
