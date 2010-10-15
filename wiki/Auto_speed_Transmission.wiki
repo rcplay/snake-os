@@ -1,0 +1,45 @@
+#labels Phase-Implementation
+#Setting Auto speed for Transmission
+
+= Introduction =
+
+When you appear on your local network, this script automatically decrease transmission speed. 
+
+
+= Details =
+
+Hi ,
+
+1. My crontab
+
+*/10 * * * * sh /usb/hd1/scripts/checaComputadores.sh
+
+the script runs every 10 minutes.
+
+2. The file is attached
+
+3. I think this translation is better
+
+found=0;
+computers=/usb/hd1/scripts/computers.txt;
+
+for ip in `cat $computers`; do ping -c 1 $ip>/dev/null; [ $? -eq 0 ] && echo "$ip UP" && found=1 && break || echo "$ip DOWN" ; done
+
+if [ $found -eq 1 ] 
+then
+    echo "Transmission speed down" >> /var/messages;
+    /usb/hd1/transmission-remote localhost:9091 -n admin:pass -d 10 -u 10
+
+else
+       echo "Transmission speed up" >> /var/messages
+       /usb/hd1/transmission-remote localhost:9091 -n admin:pass -D -U
+fi;
+
+4. The correct setting is in red in the above script
+
+Please, if you publish the script do not forget to mention my name as creator.
+
+[]'s
+
+--
+Rodrigo Lanes
