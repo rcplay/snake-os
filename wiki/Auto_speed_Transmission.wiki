@@ -11,12 +11,12 @@ Developped by Rodrigo Lanes published by Robert1968
 
 *crontab*
 
-  {{{*/10 * * * * sh /usb/hd1/scripts/auto_speed_TR.sh`
+  */10 * * * * sh /usb/hd1/scripts/auto_speed_TR.sh`
 
 the script runs every 10 minutes.
 
 *auto_speed_TR.sh *  - Shell scipt :
-
+{{{
   found=0;
   computers=/usb/hd1/scripts/computers.txt;
 
