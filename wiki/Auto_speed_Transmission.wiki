@@ -18,7 +18,7 @@ the script runs every 10 minutes.
 
 *auto_speed_TR.sh * Shell scipt 
 
-found=0;
+`found=0;
 computers=/usb/hd1/scripts/computers.txt;
 
 for ip in `cat $computers`; do ping -c 1 $ip>/dev/null; [ $? -eq 0 ] && echo "$ip UP" && found=1 && break || echo "$ip DOWN" ; done
@@ -32,8 +32,9 @@ else
        echo "Transmission speed up" >> /var/messages
        /usb/hd1/transmission-remote localhost:9091 -n admin:pass -D -U
 fi;
-
+`
 *exmalpe of computers.txt*
+
 10.0.0.10
 10.0.0.100
 10.0.0.101
