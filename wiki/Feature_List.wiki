@@ -7,11 +7,15 @@ Hi this is a list of features of SnakeOs.
 
 || Name         || Description || Further info||
 || Filesystem|| ext2,ext3, FAT, NTFS||See [http://snake-os.googlecode.com/files/SNAKE_OS_V1_20091027_User_Manual.pdf User Manual]||
-|| Network filesystem|| Samba 1.1 ||See User Guide, ||
-|| Transmission 2.0 || Torrent Client ||See User Guide, ||
+|| Network filesystem|| Samba 1.1 ||See [http://snake-os.googlecode.com/files/SNAKE_OS_V1_20091027_User_Manual.pdf User Manual] ||
+|| Transmission 2.0 || Torrent Client ||See [http://snake-os.googlecode.com/files/SNAKE_OS_V1_20091027_User_Manual.pdf User Manual] ||
+|| Magusmod||Start stop script improvements ||http://groups.google.com/group/dealextreme-nas-/web/magus-mod?hl=en Magusmod ||
+|| webtransmission auto speed limit ||a script to auto reduce transmission speed ||[http://code.google.com/p/snake-os/wiki/Auto_speed_Transmission Auto_speed_Transmission] ||
 
 = Chroot Debian =
 
 || Name || Description || Further info||
-|| Samba 2.0 ||Description || Further info||
+||Chroot howto || Howto make chroot|| http://code.google.com/p/snake-os/wiki/Debian_Chroot Debian_Chroot||
+|| Samba 2.0 ||Newer Samba Server|| http://groups.google.com/group/dealextreme-nas-/msg/6cb133c8126d5bcd?hl=en||
 || rtorrent ||Torrent Client ||See http://groups.google.com/group/dealextreme-nas-/msg/dcb96cdfe132adfa?hl=en ||
+|| 
