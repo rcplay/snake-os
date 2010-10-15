@@ -13,6 +13,8 @@ Feel free to extend this list.
 || Filesystem|| ext2,ext3, FAT, NTFS||See [http://snake-os.googlecode.com/files/SNAKE_OS_V1_20091027_User_Manual.pdf User Manual]||
 || Network filesystem|| Samba 1.1 ||See [http://snake-os.googlecode.com/files/SNAKE_OS_V1_20091027_User_Manual.pdf User Manual] ||
 || Transmission 2.0 || Torrent Client ||See [http://snake-os.googlecode.com/files/SNAKE_OS_V1_20091027_User_Manual.pdf User Manual] ||
+|| FTP server|| VSFTP server ||See  [http://snake-os.googlecode.com/files/SNAKE_OS_V1_20091027_User_Manual.pdf User Manual] ||
+
 
 = Standard Snake-Os features enhancements=
 
