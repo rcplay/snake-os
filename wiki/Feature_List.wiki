@@ -26,7 +26,7 @@ Feel free to extend this list.
 = Chroot Debian based enhancements=
 
 || Name || Description || Further info||
-||Chroot howto || Howto make chroot|| http://code.google.com/p/snake-os/wiki/Debian_Chroot Debian_Chroot||
-|| Samba 2.0 ||Newer Samba Server|| http://groups.google.com/group/dealextreme-nas-/msg/6cb133c8126d5bcd?hl=en||
-|| rtorrent ||Torrent Client ||See http://groups.google.com/group/dealextreme-nas-/msg/dcb96cdfe132adfa?hl=en ||
+||Chroot howto || Howto make chroot|| [http://code.google.com/p/snake-os/wiki/Debian_Chroot Debian Chroot ]||
+|| Samba 2.0 ||Newer Samba Server|| [http://groups.google.com/group/dealextreme-nas-/msg/6cb133c8126d5bcd?hl=en Samba2 ]||
+|| rtorrent ||Torrent Client ||[See http://groups.google.com/group/dealextreme-nas-/msg/dcb96cdfe132adfa?hl=en Rtorrent]||
 || 
