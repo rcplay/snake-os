@@ -18,7 +18,7 @@ Feel free to extend this list.
 
 = Standard Snake-Os features enhancements=
 
-|| Magusmod||Start stop script improvements ||http://groups.google.com/group/dealextreme-nas-/web/magus-mod?hl=en Magusmod ||
+|| Magusmod||Start stop script improvements ||[http://groups.google.com/group/dealextreme-nas-/web/magus-mod?hl=en Magusmod] ||
 ||Browse your external HD via webpages||web based file browser||[http://code.google.com/p/snake-os/issues/detail?id=50 web based file browser]||
 || Transmission auto speed ||a script to auto reduce transmission speed ||[http://code.google.com/p/snake-os/wiki/Auto_speed_Transmission Auto_speed_Transmission] ||
 
