@@ -32,4 +32,4 @@ Feel free to extend this list.
 || 
 ||mc || Midnight Commander feature full file commander|| [http://code.google.com/p/snake-os/wiki/Debian_Chroot DebChroot ]||
 ||plowdown || downloading from hosting servicees like rapdishare and megaupload||[http://code.google.com/p/snake-os/wiki/Debian_Chroot DebChroot ]||
-||screen || multi virtual terminals with nohup features || [http://code.google.com/p/snake-os/wiki/Debian_Chroot Debian Chroot ]||
+||screen || multi virtual terminals with nohup features || [http://code.google.com/p/snake-os/wiki/Debian_Chroot DebChroot ]||
