@@ -1,0 +1,17 @@
+= Feature list =
+
+Hi this is a list of features of SnakeOs.
+
+
+= Standard SnakeOs =
+
+|| Name         || Description || Further info||
+|| Filesystem|| ext2,ext3, FAT, NTFS||See User Guide ||
+|| Network filesystem|| Samba 1.1 ||See User Guide, ||
+|| Transmission 2.0 || Torrent Client ||See User Guide, ||
+
+= Chroot Debian =
+
+|| Name || Description || Further info||
+|| Samba 2.0 ||Description || Further info||
+|| rtorrent ||Torrent Client ||See http://groups.google.com/group/dealextreme-nas-/msg/dcb96cdfe132adfa?hl=en ||
