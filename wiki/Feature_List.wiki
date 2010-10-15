@@ -1,10 +1,12 @@
 #labels Phase-Implementation
 = Feature list =
 
-Hi this is a list of features of SnakeOs.
+Hi this is a list of Snake-Os features.
+The goal to have knowledge of SnakeOs programs, scripts, enhancements workarounds.
 
+Feel free to extend this list.
 
-= Standard SnakeOs =
+= Standard SnakeOs features=
 
 || Name         || Description || Further info||
 || Filesystem|| ext2,ext3, FAT, NTFS||See [http://snake-os.googlecode.com/files/SNAKE_OS_V1_20091027_User_Manual.pdf User Manual]||
