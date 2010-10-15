@@ -30,3 +30,6 @@ Feel free to extend this list.
 || Samba 2.0 ||Newer Samba Server|| [http://groups.google.com/group/dealextreme-nas-/msg/6cb133c8126d5bcd?hl=en Samba2 ]||
 || rtorrent ||Torrent Client ||See [http://groups.google.com/group/dealextreme-nas-/msg/dcb96cdfe132adfa?hl=en Rtorrent]||
 || 
+||mc || Midnight Commander feature full file commander|| [http://code.google.com/p/snake-os/wiki/Debian_Chroot DebChroot ]||
+||plowdown || downloading from hosting servicees like rapdishare and megaupload||[http://code.google.com/p/snake-os/wiki/Debian_Chroot DebChroot ]||
+||screen || multi virtual terminals with nohup features || [http://code.google.com/p/snake-os/wiki/Debian_Chroot Debian Chroot ]||
