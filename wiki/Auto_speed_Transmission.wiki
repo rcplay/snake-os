@@ -15,7 +15,7 @@ Developped by Rodrigo Lanes published by Robert1968
 
 the script runs every 10 minutes.
 
-*auto_speed_TR.sh * Shell scipt 
+*auto_speed_TR.sh *  - Shell scipt :
 
   found=0;
   computers=/usb/hd1/scripts/computers.txt;
@@ -35,14 +35,11 @@ the script runs every 10 minutes.
 
 
 *exmalpe of computers.txt*
-
+{{{
 10.0.0.10
-
 10.0.0.100
-
 10.0.0.101
-
 10.0.0.102
-
+}}}
 
 --
