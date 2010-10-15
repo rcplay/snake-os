@@ -4,7 +4,8 @@ Setting Auto speed for Transmission
 = Introduction =
 
 When you appear on your local network, this script automatically decrease transmission speed. 
-Developped by Rodrigo Lanes published by Robert1968
+
+Developped by Rodrigo Lanes, published by Robert1968
 
 
 = Details =
