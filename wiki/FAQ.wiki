@@ -121,7 +121,7 @@ snakeos-V1.2.0-20100621-from-snake.zip use this if you have a previous version o
  
   Through samba i can read and write but by FTP i can only read. I haven't got write permissions even though I have configured it in Snake OS.
  
-  Answer:
+*  Answer:*
 
   VSFTP root folder must have 755 but any sub folder for ftp write should have 777. 
  
@@ -138,7 +138,7 @@ snakeos-V1.2.0-20100621-from-snake.zip use this if you have a previous version o
 
   This way, you can even disconnect the SSH client and the transfer will continue. 
 
-*Q: Where is the source code / SDK of the STAR STR8131. 
+*Q: Where is the source code / SDK of the STAR STR8131. *
 
   Answer:
   LSDK sources from cnusers forum: http://www.cnusers.org/
