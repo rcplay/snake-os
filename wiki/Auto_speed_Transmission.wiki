@@ -12,7 +12,7 @@ Developped by Rodrigo Lanes
 
 *crontab*
 
-*/10 * * * * sh /usb/hd1/scripts/auto_speed_TR.sh
+`*/10 * * * * sh /usb/hd1/scripts/auto_speed_TR.sh`
 
 the script runs every 10 minutes.
 
