@@ -165,6 +165,9 @@ snakeos-V1.2.0-20100621-from-snake.zip use this if you have a previous version o
   On NTFS the speed is _MUCH_SLOWER!. 
 
   Speed on FAT almost as ext3, but not recommended.
+
+  Speed is much worst via wlan!  less than 1MB/s !!
+
   Use ext3 because it is fastest and safest, and SMB will hide which filesystem is under it.
 
 
