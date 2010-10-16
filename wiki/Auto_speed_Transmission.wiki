@@ -43,4 +43,6 @@ the script runs every 10 minutes.
 10.0.0.102
 }}}
 
+Console based Transmission Remote can be downloaded from here:
+[http://snake-os.googlecode.com/files/transmission-remote transmission-remote]
 --
