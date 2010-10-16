@@ -19,6 +19,7 @@ Feel free to extend this list.
 
 = Standard Snake-Os features enhancements, hotfixes=
 
+|| Name || Description || Further info||
 || Magusmod||Start stop script improvements ||[http://groups.google.com/group/dealextreme-nas-/web/magus-mod?hl=en Magusmod] ||
 ||Browse your external HD via webpages||web based file browser||[http://code.google.com/p/snake-os/issues/detail?id=50 web based file browser]||
 || Transmission auto speed ||a script to auto reduce transmission speed ||[http://code.google.com/p/snake-os/wiki/Auto_speed_Transmission Auto_speed_Transmission] ||
@@ -38,3 +39,7 @@ Feel free to extend this list.
 ||screen || multi virtual terminals with nohup features || [http://code.google.com/p/snake-os/wiki/Debian_Chroot DebChroot ]||
 ||SVN server|| SVN server|| [http://inf.ufrgs.br/~rgsilva/dokuwiki/doku.php?id=public:software:nas_debian:svn SVN] ||
 || SSH || Secure shell||[http://inf.ufrgs.br/~rgsilva/dokuwiki/doku.php?id=public:software:nas_debian:ssh SSH]||
+
+=Hardware=
+|| Name || Description || Further info||
+||TTL Serial || TTL Serial interface|| [http://groups.google.com/group/dealextreme-nas-/web/serialconnectionhowto-ns-k330 Serial connection NS-K330], [http://groups.google.com/group/dealextreme-nas-/web/serial-connection-how-to NAS 652] ||
