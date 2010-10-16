@@ -26,11 +26,12 @@ Feel free to extend this list.
 = Chroot Debian based enhancements=
 
 || Name || Description || Further info||
-||Chroot howto || Howto make chroot|| [http://code.google.com/p/snake-os/wiki/Debian_Chroot Debian Chroot ]||
-|| Samba 2.0 ||Newer Samba Server|| [http://groups.google.com/group/dealextreme-nas-/msg/6cb133c8126d5bcd?hl=en Samba2 ]||
+||Chroot howto || Howto make chroot|| [http://code.google.com/p/snake-os/wiki/Debian_Chroot Debian Chroot ], [http://inf.ufrgs.br/~rgsilva/dokuwiki/doku.php?id=public:software:nas_debian:intro chroot] ||
+|| Samba 2.0 ||Newer Samba Server|| [http://groups.google.com/group/dealextreme-nas-/msg/6cb133c8126d5bcd?hl=en Samba2] , [ http://inf.ufrgs.br/~rgsilva/dokuwiki/doku.php?id=public:software:nas_debian:samba samba ]||
 || NFSD || user space NFS Server|| [http://groups.google.com/group/dealextreme-nas-/msg/8cde74af5740d8c3?hl=en NFS ]||
-|| rtorrent ||Torrent Client ||See [http://groups.google.com/group/dealextreme-nas-/msg/dcb96cdfe132adfa?hl=en Rtorrent]||
+|| rtorrent ||Torrent Client ||See [http://groups.google.com/group/dealextreme-nas-/msg/dcb96cdfe132adfa?hl=en Rtorrent], [http://inf.ufrgs.br/~rgsilva/dokuwiki/doku.php?id=public:software:nas_debian:rtorrent rtorrent] ||
 || 
 ||mc || Midnight Commander feature full file commander|| [http://code.google.com/p/snake-os/wiki/Debian_Chroot DebChroot ]||
 ||plowdown || downloading from hosting servicees like rapdishare and megaupload||[http://code.google.com/p/snake-os/wiki/Debian_Chroot DebChroot ]||
 ||screen || multi virtual terminals with nohup features || [http://code.google.com/p/snake-os/wiki/Debian_Chroot DebChroot ]||
+||SVN server|| SVN server|| [http://inf.ufrgs.br/~rgsilva/dokuwiki/doku.php?id=public:software:nas_debian:svn SVN] ||
