@@ -44,8 +44,10 @@ the script runs every 10 minutes.
 }}}
 
 
-=Download Transmission Remote=
+*Download Transmission Remote*
 
 Console based Transmission Remote can be downloaded from here:
-
 [http://snake-os.googlecode.com/files/transmission-remote transmission-remote]
+
+cd /usb/hd1
+wget http://snake-os.googlecode.com/files/transmission-remote 
