@@ -42,4 +42,4 @@ Feel free to extend this list.
 
 =Hardware=
 || Name || Description || Further info||
-||TTL Serial || TTL Serial interface|| [http://groups.google.com/group/dealextreme-nas-/web/serialconnectionhowto-ns-k330 Serial connection NS-K330], [http://groups.google.com/group/dealextreme-nas-/web/serial-connection-how-to NAS 652] ||
+||TTL Serial || TTL Serial interface|| [http://groups.google.com/group/dealextreme-nas-/web/serialconnectionhowto-ns-k330 NS-K330], [http://groups.google.com/group/dealextreme-nas-/web/serial-connection-how-to NAS 652] ||
