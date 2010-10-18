@@ -7,6 +7,8 @@ SnakeOS is the best firmware for NS-K330 / WLX-652 and similar small NAS devices
 This device usually have 2 USB and one RJ45 Network connector. 
 
 
+Written by Robert Szabo
+
 
 = Questions and answers=
 
