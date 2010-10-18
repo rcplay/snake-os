@@ -7,6 +7,9 @@ The goal to have knowledge of SnakeOs programs, scripts, enhancements workaround
 
 Feel free to extend this list.
 
+Written by Robert Szabo
+
+
 = Standard Snake-Os features=
 
 || Name         || Description || Further info||
