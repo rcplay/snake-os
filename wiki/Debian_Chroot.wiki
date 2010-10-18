@@ -1,4 +1,5 @@
 Howto Debian environment within SnakeOs.
+Written by Robert Szabo.
 
 = Introduction =
 
