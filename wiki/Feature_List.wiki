@@ -19,6 +19,10 @@ Written by Robert Szabo
 || FTP server|| VSFTP server ||See  [http://snake-os.googlecode.com/files/SNAKE_OS_V1_20091027_User_Manual.pdf User Manual] ||
 || SSH || Secure shell||[http://snake-os.googlecode.com/files/SNAKE_OS_V1_20091027_User_Manual.pdf User Manual] ||
 || Telnet || Remote console||[http://snake-os.googlecode.com/files/SNAKE_OS_V1_20091027_User_Manual.pdf User Manual] ||
+|| Webserver || Webserver ||[http://snake-os.googlecode.com/files/SNAKE_OS_V1_20091027_User_Manual.pdf User Manual] ||
+|| NTP, DDNS, Syslog, Swap || Network Time, Dynamic DNS  ||[http://snake-os.googlecode.com/files/SNAKE_OS_V1_20091027_User_Manual.pdf User Manual] ||
+
+
 
 = Standard Snake-Os features enhancements, hotfixes=
 
