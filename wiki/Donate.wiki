@@ -21,6 +21,7 @@ Time is priceless and if you have some to spare then there is no other better wa
 
 == Donors ==
 || *Date*      || *Donor*        ||
+|| 19 Dec 2010 || Jan Bormans ||
 || 16 Dec 2010 || Andrea Ragnini ||
 || 11 Dec 2010 || Benito Vergara Montero || 
 || 04 Dec 2010 || Roberto Yoldi Garatea ||
