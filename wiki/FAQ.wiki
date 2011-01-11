@@ -64,11 +64,18 @@ snakeos-V1.2.0-20100621-from-snake.zip use this if you have a previous version o
   or 
   http://groups.google.com/group/dealextreme-nas-/web/serialconnectionhowto-ns-k330?hl=en
 
-*Q: Serial connect was not allowed - device not respond/boot.*
+*Q: FLASHing - *
+  
+  Serial connect was not allowed - device not respond/boot. Seems bricked. :(
 
-  Answer3: If you not enough lucky with serial connection either, third chance to write 
+  Answer3: If you not enough lucky with serial connection either, next chance to write 
   and replace Flash. Flash contains the boot, and root partitions. 
   (BIOS and Operation system together.)
+
+  There is a smart (and cheap) flash writer using parallel port + 4 resistor + 1 condensator. 
+  See detailes here http://rayer.ic.cz/elektro/spipgm.htm
+  
+  With this you can reprogram your flash. (Or ask guys from the forum here to do for you.)
 
   1. flash write,
   http://groups.google.com/group/dealextreme-nas-/browse_thread/thread/08df34f7df625832?hl=en 
