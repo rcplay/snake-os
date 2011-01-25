@@ -13,7 +13,7 @@ You only need to have an USB device attached. (No serial connection needed.)
 
 http://wlx652.com/index.php?topic=80.0 
 
-Use ext2 or ext3 file system to debian. (On FAT it will be extracted, but wont work.)
+Use ext2 or ext3 file system to extract files below. (On FAT it will be extracted, but wont work.)
 
 = Details =
 
