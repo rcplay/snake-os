@@ -21,7 +21,8 @@ Time is priceless and if you have some to spare then there is no other better wa
 
 == Donors ==
 || *Date*      || *Donor*        ||
-|| 22 Jan 2011 ||Alexandre Ferreira Jourdan ||
+|| 03 Feb 2011 || Gabriel Fernandes de Almeida ||
+|| 22 Jan 2011 || Alexandre Ferreira Jourdan ||
 || 17 Jan 2011 || Umut Tasdemir ||
 || 04 Jan 2011 || Greg Snook ||
 || 01 Jan 2011 || Filippo Comati ||
