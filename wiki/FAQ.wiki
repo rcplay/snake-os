@@ -208,3 +208,9 @@ snakeos-V1.2.0-20100621-from-snake.zip use this if you have a previous version o
   Installation needs ~200MB disk space on attached USB and only 5 easy steps to set up. 
 
   See documents here: http://code.google.com/p/snake-os/wiki/Debian_Chroot 
+
+*Q: How to save config in command line?  *
+
+
+/usr/share/snake/config save 
+
