@@ -21,6 +21,11 @@ Time is priceless and if you have some to spare then there is no other better wa
 
 == Donors ==
 || *Date*      || *Donor*        ||
+|| 22 Apr 2011 || Alejandro Brusa ||
+|| 13 Apr 2011 || Lyubomir Nikolov ||
+|| 12 Apr 2011 || Mendel Gusmao ||
+|| 26 Mar 2011 || Felipe Kellermann ||
+|| 11 Mar 2011 || Victor Pereira Gonçalves ||
 || 03 Feb 2011 || Gabriel Fernandes de Almeida ||
 || 22 Jan 2011 || Alexandre Ferreira Jourdan ||
 || 17 Jan 2011 || Umut Tasdemir ||
