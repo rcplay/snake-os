@@ -21,6 +21,8 @@ Time is priceless and if you have some to spare then there is no other better wa
 
 == Donors ==
 || *Date*      || *Donor*        ||
+|| 17 May 2011 || Xavier Mancho Ferreras ||
+|| 14 May 2011 || Paul Hayes ||
 || 07 May 2011 || Guido Lehwalder ||
 || 22 Apr 2011 || Alejandro Brusa ||
 || 13 Apr 2011 || Lyubomir Nikolov ||
