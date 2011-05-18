@@ -92,7 +92,7 @@ snakeos-V1.2.0-20100621-from-snake.zip use this if you have a previous version o
 
 *Q: Compile - dependences. What are known external dependencies for the source compile?*
 
-  # upx-nrv, libcurl3-openssl-dev, liblzo2-2, build-essential, kernel-headers.
+  # upx-nrv, libcurl3-openssl-dev, liblzo2-2, build-essential, kernel-headers, mtd-tools.
 
 *Q: Compile. Hey guys it is great, How can I make my own one?*
 
@@ -213,4 +213,3 @@ snakeos-V1.2.0-20100621-from-snake.zip use this if you have a previous version o
 
 
 /usr/share/snake/config save 
-
