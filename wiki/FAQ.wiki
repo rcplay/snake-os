@@ -109,7 +109,7 @@ snakeos-V1.2.0-20100621-from-snake.zip use this if you have a previous version o
   # Adjust your kernel settings. 
   # Copy back /snake-os-sdk/kernels/linux/.config file to /snake-os-sdk/configs/str8132_defconfig_jffs2 file. 
   # cd /snake-os-sdk
-  # Execute ./mk_snakeos_image.sh *First*  First will definitely fail, run it again.
+  # Execute ./mk_snakeos_image.sh *First*  First will definitely fail.
   # Execute make rootfs - Should generate the rootfs.jffs2 file
   # Execute ./mk_snakeos_image.sh *Second time*  Second time should run without error.  
 
