@@ -97,7 +97,7 @@ snakeos-V1.2.0-20100621-from-snake.zip use this if you have a previous version o
 *Q: Compile. Hey guys it is great, How can I make my own one?*
 
   Answer:
-  # Download source, 
+  # Download source, (from Subversion at http://code.google.com/p/snake-os/source)
   # sudo su  - became root
   # Extract tar -xvjf snake-os-sdk_x.x.tar.bz2
   # Backup "/snake-os-sdk_x.x/configs"
@@ -110,6 +110,7 @@ snakeos-V1.2.0-20100621-from-snake.zip use this if you have a previous version o
   # Copy back /snake-os-sdk/kernels/linux/.config file to /snake-os-sdk/configs/str8132_defconfig_jffs2 file. 
   # cd /snake-os-sdk
   # Execute ./mk_snakeos_image.sh *First*  First will definitely fail, run it again.
+  # Execute make rootfs - Should generate the rootfs.jffs2 file
   # Execute ./mk_snakeos_image.sh *Second time*  Second time should run without error.  
 
   If second run has error messages, probably you need some package installed to have development environment. 
