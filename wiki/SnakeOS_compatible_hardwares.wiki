@@ -3,7 +3,7 @@
 Most of str8132 board based embedded systems.
 
 30 USD: 
-ZAP-LN-86BT 
+  * * ZAP-LN-86BT - 100% compatible*
 
 http://www.dealextreme.com/p/standalone-bittorrent-bt-downloader-usb-printer-sharing-network-lan-server-57591
 
