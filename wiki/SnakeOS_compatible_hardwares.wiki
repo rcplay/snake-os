@@ -2,6 +2,13 @@
 
 Most of str8132 board based embedded systems.
 
+30 USD: 
+ZAP-LN-86BT 
+
+http://www.dealextreme.com/p/standalone-bittorrent-bt-downloader-usb-printer-sharing-network-lan-server-57591
+
+
+40 USD:
   * *NS-K330   - 100% compatible*
   
    CPU clock at 250MHz, CPU: FA526id(wb)(ARMv4)
@@ -10,7 +17,7 @@ Most of str8132 board based embedded systems.
 
    Link: http://www.dealextreme.com/details.dx/sku.26320
  
-
+39 USD
   * *WLXKJ652  - 100% compatible*
 
    CPU clock at 250MHz, CPU: FA526id(wb)(ARMv4)
