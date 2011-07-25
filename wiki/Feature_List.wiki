@@ -33,7 +33,7 @@ Written by Robert Szabo
 || Samba Code-page hotfix ||Hotfix for non West EU letters in filename ||[http://groups.google.com/group/dealextreme-nas-/browse_thread/thread/4b25246b5423bc36 Samba hotfix] ||
 ||IP Camera||IP Camera|| [http://groups.google.com/group/dealextreme-nas-/web/ipcam-on-nas-make-you-nas-to-a-nvr-station?pli=1 IPCAM]||
 ||MLDonkey|| donkey type peer to peer kliens ||[http://groups.google.com/group/dealextreme-nas-/web/mldonkey-working-in-snakeos-rc1-mini-how-to?hl=en MLDonkey]||
-||MiniDLNA||More useful than Ushare and mediatomb (mainly due to thumbnails on PS3). ||  ||
+||MiniDLNA||More useful than Ushare and mediatomb (mainly due to thumbnails on PS3). || [http://code.google.com/p/snake-os/wiki/MiniDLNA MiniDLNA]||
 
 = Chroot Debian based enhancements=
 
