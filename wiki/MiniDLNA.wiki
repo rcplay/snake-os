@@ -1,0 +1,34 @@
+David Mills compiled mini DLNA for SNAKE V1.3
+He compiled minidlna as He found it to be more useful than Ushare and mediatomb (mainly due to thumbnails on PS3).
+
+Compiled file is here: in Download section and here http://www.megaupload.com/?d=FLU54WJI
+
+Source:
+http://sourceforge.net/projects/minidlna/
+
+Reasons why its better/worse than media tomb:
+http://blog.flexion.org/2009/12/18/mediatomb-minidlna/
+
+Setup:
+
+chmod +x minidlna
+chmod +x start
+./start
+or ./minidlna -f minidlna.conf
+
+Force Scan
+./minidlna -f minidlna.conf -R
+
+{FILENAME.EXT}.cover.jpg works as well as all those in the config file.
+
+Static Libs:
+vorbis
+ogg 
+sqlite3 
+exif 
+jpeg 
+FLAC
+id3tag 
+avformat 
+avutil 
+avcodec 
