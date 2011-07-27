@@ -20,7 +20,10 @@ Setup:
 
 Copy MiniDLNA [http://snake-os.googlecode.com/files/minidlna file] to your HDD.
 
+
 Use putty or SSH to access your NAS, ssh into it.
+
+
 ssh 192.168.1.20 
 cd /usb/hda1/
 chmod +x minidlna
