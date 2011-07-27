@@ -1,7 +1,13 @@
 David Mills compiled mini DLNA for SNAKE V1.3
+
+Thanks David :)
+
+
 He compiled minidlna as He found it to be more useful than Ushare and mediatomb (mainly due to thumbnails on PS3).
 
+
 Compiled file is here: in Download section and here http://www.megaupload.com/?d=FLU54WJI
+
 
 Source:
 http://sourceforge.net/projects/minidlna/
