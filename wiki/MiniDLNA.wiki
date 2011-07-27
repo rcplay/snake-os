@@ -6,7 +6,7 @@ Thanks David :)
 He compiled minidlna as He found it to be more useful than Ushare and mediatomb (mainly due to thumbnails on PS3).
 
 
-Compiled file is here: in Download section and here http://www.megaupload.com/?d=FLU54WJI
+Compiled [http://snake-os.googlecode.com/files/minidlna MINIDLNA] file is here: in Download section and here http://www.megaupload.com/?d=FLU54WJI
 
 
 Source:
