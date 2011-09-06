@@ -21,6 +21,7 @@ Time is priceless and if you have some to spare then there is no other better wa
 
 == Donors ==
 || *Date*      || *Donor*        ||
+|| 05 Sep 2011 || Claudio Heckler ||
 || 02 Sep 2011 || Thomas Stegemann ||
 || 22 Aug 2011 || Eliahy Rosenblum  ||
 || 12 Aug 2011 || Christophe Candillier || 
