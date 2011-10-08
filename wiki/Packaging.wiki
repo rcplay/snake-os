@@ -1,0 +1,60 @@
+= Overview =
+
+The svn version of Snake OS has basic support for installing Opkg packages. This makes it possible to easily and safely add new programs to the system.
+
+Note: Package support is still fairly early and subject to changes. Suggestions and critique welcome.
+
+= Usage = 
+
+To enable the Opkg service, navigate to Services -> Opkg in the web interface, check the "Enable opkg" box and select the disk that will hold the package data. Packages will be installed to the .optware directory on the specified disk.
+
+Save your config to make the changes persistent.
+
+
+== Package installation == 
+
+To install a package download its .opk file and upload it from System -> Opkg. It may be necesary to reboot the system to afterwards. 
+
+*Warning: Packages have to be specifially built for Snake OS. Installing packages for other systems can break things!*
+
+== Package removal ==
+
+Uninstall packages from System -> Opkg.
+
+== Troubleshooting ==
+
+Reseting the Snake OS config will disable any Opkg services.
+
+To get rid of all packages delete the .optware directory on the Opkg disk. 
+
+
+= Package creation =
+
+The opk format is based on the one used by Debian. It's an "ar" archive containing:
+  * data.tar.gz - with the files to install
+  * control.tar.gz - with package information and installation scripts
+  * debian-binary - a text file with the string "2.0"
+
+A pretty nice guide for creating packages can be found here:
+http://inportb.com/2010/10/19/making-an-opkg-package/
+
+
+== Structure of data.tar.gz ==
+The files in data.tar.gz will be installed in the /opt/ directory. So "bin/hello" in data.tar.gz ends up as "/opt/bin/hello" when installed. Keep that in mind when creating package and startup scripts.
+
+  * etc/init.d/ - Similar to /etc/init.d/. Scripts in this directory will be run with the "start" parameter when the system is started (it actually happens when the Opkg disk is attached but that's usually the same) and with "stop" on shutdown.
+
+  * etc/automount.d/ - Scripts in this directory will be run when disks are added/removed. The parameters are "mountpoint add|remove" 
+(TODO: what happens if the Opkg disk is mounted after one that a package requires)
+
+
+  * share/www-service/ - Service pages for the web interface. These are haserl scripts that output html pages. Very similar to the ones in /usr/share/www/cgi-bin/.
+  When a menu entry is clicked opkg-config-service.cgi is run with the name of the script as parameter. Like this: http://192.168.0.240/cgi-bin/opkg-config-service.cgi?page=transmission
+
+  The only change a /usr/share/www/cgi-bin/ script needs to work from a package is to pass the script name in forms. For transmission that means changing:
+  <form id=trans name=trans action="<%= ${SCRIPT_NAME} %>" method="POST"  onsubmit="return validateAction(this);">
+  to
+  <form id=trans name=trans action="<%= ${SCRIPT_NAME} %>?page=transmission" method="POST"  onsubmit="return validateAction(this);">
+
+
+  * share/www/ - Toplevel menu entries in the web interface. Same as www-service scripts. 
