@@ -99,28 +99,25 @@ snakeos-V1.2.0-20100621-from-snake.zip use this if you have a previous version o
   Answer:
   # Download source, (from Subversion at http://code.google.com/p/snake-os/source)
   # sudo su  - became root
-  # Extract tar -xvjf snake-os-sdk_x.x.tar.bz2
-  # Backup "/snake-os-sdk_x.x/configs"
-  # cp /snake-os-sdk/configs/str8132_defconfig_jffs2 /snake-os-sdk/kernels/linux/.config 
-  # cd snake-os-sdk/kernels/linux folder
-  # export PATH to point to arm compiler. 
-    export PATH=/snake-os-sdk_x.x/tools/arm-uclibc-3.4.6/bin:$PATH 
-  # make clean && make menuconfig
-  # Adjust your kernel settings. 
-  # Copy back /snake-os-sdk/kernels/linux/.config file to /snake-os-sdk/configs/str8132_defconfig_jffs2 file. 
-  # cd /snake-os-sdk
-  # Execute ./mk_snakeos_image.sh *First*  First will definitely fail.
-  # Execute make rootfs - Should generate the rootfs.jffs2 file
-  # Execute ./mk_snakeos_image.sh *Second time*  Second time should run without error.  
 
-  If second run has error messages, probably you need some package installed to have development environment. 
-  For example: apt-get install build-essential,kernel-headers, upx-nrv, liblz2-2,   and more .... all reported during compile as missing.
+  * *Optional* To adjust your kernel config: 
+    # Backup the "configs" folder
+    # cp configs/str8132_defconfig_jffs2 kernels/linux/.config 
+    # cd kernels/linux folder
+    # Export PATH to point to arm compiler. export PATH="path-to-source"/tools/arm-uclibc-3.4.6/bin:$PATH 
+    # make clean && make menuconfig
+    # Adjust your kernel settings. 
+    # Copy back kernels/linux/.config file to configs/str8132_defconfig_jffs2 file. 
+
+  # Execute "sh ./mk_snakeos_image.sh" in the top level directory
+
+  If the script aborts with any error messages you probably need some packages installed to have development environment. See "Compile - dependencies" above for a list of required packages.
 
   mk_snakeos_image.sh script was made by Douglas which compile the kernel and make root file system for JFFS, compress the binaries with UPX (which makes on the fly decompiled binary)
 
   Compiled firmware is here: 
 
-  /snake-os-sdk_x.x/snake_os/release/ and tftp-capable image on /snake-os-sdk_x.x/output
+  snake_os/release/ and tftp-capable image on output/
 
   You could upgrade your NAS with your newly created custom firmware, under the http://nasaddress/ under system/firmware menu
 
