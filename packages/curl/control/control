@@ -1,0 +1,10 @@
+Package: curl
+Version: 7.19.6
+Description: Curl binary
+Section: snakeos/applications
+Priority: optional
+Maintainer: 
+Architecture: all
+Homepage: 
+Source:
+Depends:

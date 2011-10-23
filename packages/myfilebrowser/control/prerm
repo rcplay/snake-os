@@ -1,0 +1,6 @@
+#!/bin/sh
+
+if [ -x /opt/etc/init.d/myfilebrowser ]; then
+    echo "stopping myfilebrowser"
+    /opt/etc/init.d/myfilebrowser stop
+fi
