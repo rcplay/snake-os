@@ -21,6 +21,7 @@ Time is priceless and if you have some to spare then there is no other better wa
 
 == Donors ==
 || *Date*      || *Donor*        ||
+|| 29 Oct 2011 || David Dobson ||
 || 10 Oct 2011 || Jeffrey Maurer ||
 || 05 Oct 2011 || Gergely Pődör ||
 || 28 Sep 2011 || Josivan de Souza ||
