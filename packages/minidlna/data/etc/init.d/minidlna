@@ -1,0 +1,62 @@
+#!/bin/sh
+#
+
+KIND="minidlna"
+
+PARAM="-f /opt/etc/minidlna.conf"
+
+# always enabled
+ENABLE=$(grep "^enabled=" /opt/etc/config/minidlna | cut -d = -f 2)
+
+start() {
+    if [ $ENABLE -eq 1 ] ; then
+	PID=$(pgrep -f "/opt/bin/minidlna ${PARAM}")
+	if [ ${PID:-empty} = "empty" ] ; then
+	    echo "Starting $KIND service..."
+	    /opt/bin/minidlna ${PARAM}
+	fi
+    fi
+}
+
+stop() {
+    echo "Shutting down $KIND service..."
+    pkill -9 -f "/opt/bin/minidlna ${PARAM}"
+}
+
+restart() {
+    stop
+    sleep 1
+    start
+}
+
+webstatus(){
+    PID=$(pgrep -f "/opt/bin/minidlna ${PARAM}")
+    if [ ${PID:-empty} = "empty" ] ; then
+	echo -n "$KIND is not running"
+    else
+    	echo -n "$KIND is running"
+    fi
+}
+
+case "$1" in
+    start)
+  	start
+	;;
+    stop)
+  	stop
+	;;
+    restart)
+  	restart
+	;;
+    reload)
+  	restart
+	;;
+    webstatus)
+	webstatus
+	;;
+    *)
+	echo "Usage: $0 {start|stop|restart|reload}"
+	exit 1
+esac
+
+

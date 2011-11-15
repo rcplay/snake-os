@@ -1,0 +1,10 @@
+Package: minidlna
+Version: cvs-1
+Description: dlna server
+Section: snakeos/applications
+Priority: optional
+Maintainer: 
+Architecture: all
+Homepage: 
+Source:
+Depends:

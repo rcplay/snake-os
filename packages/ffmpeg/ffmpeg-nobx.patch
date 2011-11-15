@@ -1,0 +1,13 @@
+--- ffmpeg-src/libavcodec/arm/dsputil_arm.S	2011-09-07 15:34:40.000000000 +0200
++++ ffmpeg-src-new/libavcodec/arm/dsputil_arm.S	2011-11-14 16:15:02.634488259 +0100
+@@ -708,5 +708,10 @@
+         bne             1b
+ 
+         pop             {r4-r10}
++#if defined(__ARM_ARCH_2__) || defined(__ARM_ARCH_3__) \
++	|| defined(__ARM_ARCH_3M__) || defined(__ARM_ARCH_4__)
++ 	mov		pc, lr
++#else
+         bx              lr
++#endif
+ endfunc

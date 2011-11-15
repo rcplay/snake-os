@@ -1,5 +1,11 @@
 
-all: transmission curl myfilebrowser
+all: transmission curl myfilebrowser minidlna
+
+export TOPDIR=$(PWD)
+export CFLAGS_COMMON=-Os -s -pipe -march=armv4
+
+PATH+=:$(TOPDIR)/snake-os/tools/arm-uclibc-3.4.6/bin/
+
 
 
 snake-os: snake-os/output/rootfs.jffs2
@@ -21,3 +27,15 @@ myfilebrowser: output/myfilebrowser.opk
 output/myfilebrowser.opk:
 	make -C myfilebrowser
 	cp myfilebrowser/myfilebrowser.opk output/myfilebrowser.opk
+
+
+MINIDLNA_DEPS=libjpeg libexif libogg libvorbis libsqlite3 libFLAC libid3tag libiconv ffmpeg
+
+.PHONY: ${MINIDLNA_DEPS}
+${MINIDLNA_DEPS}:
+	make -C $@
+
+minidlna: output/minidlna.opk
+output/minidlna.opk: snake-os ${MINIDLNA_DEPS}
+	make -C minidlna
+	cp minidlna/minidlna.opk output/minidlna.opk
