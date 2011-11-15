@@ -1,11 +1,17 @@
 #!/bin/sh
 #
 
+# XXX: hack
+# opkg services start before networking is ready
+# minidlna fails to start without configured network
+# try to rerun the script after 60 seconds
+# TODO: snake needs to restart opkg services when network changes
+
+
 KIND="minidlna"
 
 PARAM="-f /opt/etc/minidlna.conf"
 
-# always enabled
 ENABLE=$(grep "^enabled=" /opt/etc/config/minidlna | cut -d = -f 2)
 
 start() {
@@ -14,6 +20,11 @@ start() {
 	if [ ${PID:-empty} = "empty" ] ; then
 	    echo "Starting $KIND service..."
 	    /opt/bin/minidlna ${PARAM}
+	    
+	    sleep 2 
+	    if [ empty"$(pgrep -f "/opt/bin/minidlna ${PARAM}")" = empty ] ; then
+		sleep 60 && /opt/etc/init.d/minidlna start &
+	    fi
 	fi
     fi
 }
@@ -21,6 +32,7 @@ start() {
 stop() {
     echo "Shutting down $KIND service..."
     pkill -9 -f "/opt/bin/minidlna ${PARAM}"
+    pkill -9 -f "sh /opt/etc/init.d/minidlna start"
 }
 
 restart() {
