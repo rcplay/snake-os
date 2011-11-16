@@ -1,6 +1,6 @@
 = Overview =
 
-The svn version of Snake OS has basic support for installing Opkg packages. This makes it possible to easily and safely add new programs to the system.
+Snake OS has basic support for installing Opkg packages. This makes it possible to easily and safely add new programs to the system.
 
 Note: Package support is still fairly early and subject to changes. Suggestions and critique welcome.
 
@@ -51,10 +51,7 @@ The files in data.tar.gz will be installed in the /opt/ directory. So "bin/hello
   * share/www-service/ - Service pages for the web interface. These are haserl scripts that output html pages. Very similar to the ones in /usr/share/www/cgi-bin/.
   When a menu entry is clicked opkg-config-service.cgi is run with the name of the script as parameter. Like this: http://192.168.0.240/cgi-bin/opkg-config-service.cgi?page=transmission
 
-  The only change a /usr/share/www/cgi-bin/ script needs to work from a package is to pass the script name in forms. For transmission that means changing:
-  <form id=trans name=trans action="<%= ${SCRIPT_NAME} %>" method="POST"  onsubmit="return validateAction(this);">
-  to
+  Forms in a service script must pass the script name to the action parameter. For transmission that's:
   <form id=trans name=trans action="<%= ${SCRIPT_NAME} %>?page=transmission" method="POST"  onsubmit="return validateAction(this);">
-
 
   * share/www/ - Toplevel menu entries in the web interface. Same as www-service scripts. 
