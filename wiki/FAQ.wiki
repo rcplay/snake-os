@@ -211,3 +211,9 @@ snakeos-V1.2.0-20100621-from-snake.zip use this if you have a previous version o
 
 
 /usr/share/snake/config save 
+
+
+*Q: How to make OPKG package ?   *
+
+
+http://code.google.com/p/snake-os/wiki/Packaging
