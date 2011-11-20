@@ -70,7 +70,7 @@ etc/dnsmasq.conf
 etc/init.d/dnsmasq
 }}}
 
-All files will be inside /opt/ after they're loaded into SnakeOS. If you need to for example reference some configuration, you must use /opt/etc/file.conf.
+All files will be inside /opt/ after they're loaded into SnakeOS. If you need to, for example reference some configuration file, you must use /opt/etc/file.conf.
 
 
 === Script directories ===
