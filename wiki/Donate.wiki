@@ -21,6 +21,7 @@ Time is priceless and if you have some to spare then there is no other better wa
 
 == Donors ==
 || *Date*      || *Donor*        ||
+|| 27 Nov 2011 || Christophe Candillier ||
 || 11 Nov 2011 || Mark McCarthy ||
 || 29 Oct 2011 || David Dobson ||
 || 10 Oct 2011 || Jeffrey Maurer ||
