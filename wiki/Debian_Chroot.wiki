@@ -17,7 +17,7 @@ Use ext2 or ext3 file system to extract files below.
   # ssh to NAS - or putty from win 
   # `#`cd /usb/sda1
   # Download chroot debian with wget:
-  # `#` wget http://snake-os.googlecode.com/files/debian.tgz
+  # `#` wget http://snake-os.googlecode.com/files/debian_chroot.tgz
   #  backup your earlier debian config files if needed.
   # `#` rm -R debian  * ! This will erase previous debian directory!*  
   # `#`tar -xvf debian.tgz    
