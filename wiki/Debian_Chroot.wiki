@@ -18,6 +18,8 @@ Use ext2 or ext3 file system to extract files below.
   # `#`cd /usb/sda1
   # Download chroot debian with wget:
   # `#` wget http://snake-os.googlecode.com/files/debian.tgz
+  #  backup your earlier debian config files if needed.
+  # `#` rm -R debian  * this will erase previous debian directory!  
   # `#`tar -xvf debian.tgz    
   # `#`mount -o bind /proc /usb/sda1/debian/proc 
   # `#`mount -o bind /dev /usb/sda1/debian/dev 
