@@ -36,6 +36,6 @@ ${MINIDLNA_DEPS}:
 	make -C $@
 
 minidlna: output/minidlna.opk
-output/minidlna.opk: snake-os ${MINIDLNA_DEPS}
+output/minidlna.opk: ${MINIDLNA_DEPS}
 	make -C minidlna
 	cp minidlna/minidlna.opk output/minidlna.opk
