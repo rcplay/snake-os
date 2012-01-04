@@ -10,7 +10,7 @@
 
 KIND="minidlna"
 
-PARAM="-f /opt/etc/minidlna.conf"
+PARAM="-f /opt/etc/minidlna.conf -R"
 
 ENABLE=$(grep "^enabled=" /opt/etc/config/minidlna | cut -d = -f 2)
 

@@ -5,7 +5,8 @@ BUILDVER=1
 all: minidlna-src/minidlna minidlna.opk
 
 minidlna-src/minidlna:
-	cd minidlna-src && ./configure --host=arm-linux --with-staticbin --disable-nls CFLAGS="${CFLAGS_COMMON} -static-libgcc " \
+	cd minidlna-src && ./configure --host=arm-linux --with-staticbin --disable-nls CFLAGS="${CFLAGS_COMMON} -static-libgcc -DHAVE_INOTIFY" \
+		--with-logpath=/opt/var/log/ --with-dbpath=/opt/var/cache/minidlna --with-osname="SnakeOS"  --with-osver="1.3.2" --with-osurl="http://code.google.com/p/snake-os/" --with-tivo \
 		CPPFLAGS=" -I${TOPDIR}/libjpeg/libjpeg-src/ \
 			-I${TOPDIR}/libexif/libexif-src/ \
 			-I${TOPDIR}/libogg/libogg-src/include/ \

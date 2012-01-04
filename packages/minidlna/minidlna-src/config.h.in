@@ -208,6 +208,12 @@
 /* Define to 1 if you have the <sqlite3.h> header file. */
 #undef HAVE_SQLITE3_H
 
+/* Define to 1 if the sqlite3_malloc function exists. */
+#undef HAVE_SQLITE3_MALLOC
+
+/* Define to 1 if the sqlite3_prepare_v2 function exists. */
+#undef HAVE_SQLITE3_PREPARE_V2
+
 /* Define to 1 if stdbool.h conforms to C99. */
 #undef HAVE_STDBOOL_H
 
