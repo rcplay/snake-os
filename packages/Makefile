@@ -39,3 +39,8 @@ minidlna: output/minidlna.opk
 output/minidlna.opk: ${MINIDLNA_DEPS}
 	make -C minidlna
 	cp minidlna/minidlna.opk output/minidlna.opk
+
+minidlna-release: output/minidlna-release.opk
+output/minidlna-release.opk: ${MINIDLNA_DEPS}
+	make -C minidlna-release
+	cp minidlna-release/minidlna-release.opk output/minidlna-release.opk

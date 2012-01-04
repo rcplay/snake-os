@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ -x /opt/etc/init.d/minidlna ]; then
+    echo "Stopping minidlna"
+    /opt/etc/init.d/minidlna stop
+fi
+
+exit 0
