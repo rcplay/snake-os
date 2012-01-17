@@ -1,5 +1,5 @@
 Package: myfilebrowser
-Version: 1.0
+Version: 1.1
 Description: Web based file browser. http://code.google.com/p/snake-os/issues/detail?id=50
 Section: snakeos/applications
 Priority: optional

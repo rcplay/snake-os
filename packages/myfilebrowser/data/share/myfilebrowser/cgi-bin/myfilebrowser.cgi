@@ -146,7 +146,7 @@ fi
 
 %>
 
-<form id=folderlist name=folderlist action="<%= ${SCRIPT_NAME} %>" method="POST">
+<form id=folderlist name=folderlist action="<%= /cgi-bin/myfilebrowser-entry.cgi %>" method="POST">
 <% list_dir %>
 <input type=hidden name=folder value="<%= ${CURDIR:-/} %>">
 </form>
@@ -155,13 +155,13 @@ fi
 <input type=hidden name=shared value="<%= ${CURDIR:-/} %>">
 </form>
 
-<form id=del name=del action="<%= ${SCRIPT_NAME} %>" method="POST">
+<form id=del name=del action="<%= /cgi-bin/myfilebrowser-entry.cgi %>" method="POST">
 <input type=hidden name=deldir value="">
 <input type=hidden name=delfilename value="">
 <input type=hidden name=folder value="<%= ${CURDIR:-/} %>">
 </form>
 
-<form id=actions name=actions action="<%= ${SCRIPT_NAME} %>" method="POST" enctype="multipart/form-data">
+<form id=actions name=actions action="<%= /cgi-bin/myfilebrowser-entry.cgi %>" method="POST" enctype="multipart/form-data">
 
 <%
 DIR=${CURDIR:-/}

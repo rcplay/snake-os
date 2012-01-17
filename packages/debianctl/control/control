@@ -1,0 +1,10 @@
+Package: debianctl
+Version: 0.2
+Description: Debian startup scripts and configuration page
+Section: snakeos/applications
+Priority: optional
+Maintainer: 
+Architecture: all
+Homepage: 
+Source:
+Depends:

@@ -1,0 +1,111 @@
+#!/bin/sh
+#
+
+# XXX: hack
+# opkg services start before networking is ready
+# minidlnasome debian services fail to start without configured network
+# try to rerun the script after 60 seconds
+# TODO: snake needs to restart opkg services when network changes
+
+
+KIND="debianctl"
+
+ENABLE=$(grep "^enabled=" /opt/etc/config/debianctl | cut -d = -f 2)
+DEBIANDIR=$(grep "^debiandir=" /opt/etc/config/debianctl | cut -d = -f 2)
+SERVICES=$(grep "^services=" /opt/etc/config/debianctl | cut -d = -f 2)
+DISKS=$(grep "^disks=" /opt/etc/config/debianctl | cut -d = -f 2)
+
+start() {
+    if [ $ENABLE -eq 1 ] ; then
+       	if [ -e /tmp/debian_started ] ; then
+	    echo "debian is already activated"
+	    return 1
+	fi
+
+	# check if network is up
+	if [ empty"$(/sbin/route | grep "^default ")" = empty ] ; then
+	    sleep 60 && /opt/etc/init.d/debianctl start &
+	    return 0
+	fi
+
+	if [ ! -d "${DEBIANDIR}" ] ; then
+	    echo "debian directory is not accessible"
+	    return 1
+	fi
+	touch /tmp/debian_started
+
+	mount -o bind /proc ${DEBIANDIR}/proc
+	mount -o bind /dev ${DEBIANDIR}/dev
+
+	cp /etc/resolv.conf ${DEBIANDIR}/etc/
+
+	for i in ${DISKS} ; do
+	    [ ! -e ${DEBIANDIR}/mnt/$i ] && mkdir ${DEBIANDIR}/mnt/$i
+	    mount -o bind /usb/${i} ${DEBIANDIR}/mnt/$i
+	done
+	
+	for i in ${SERVICES} ; do
+	    chroot ${DEBIANDIR} /etc/init.d/$i start
+	done
+	sleep 5
+    fi
+}
+
+stop() {
+    echo "Shutting down $KIND service..."
+	
+    for i in ${SERVICES} ; do
+	chroot ${DEBIANDIR} /etc/init.d/$i stop
+    done
+    
+    for i in ${DISKS} ; do
+	umount -f ${DEBIANDIR}/mnt/$i
+    done
+
+    umount -f ${DEBIANDIR}/proc
+    umount -f ${DEBIANDIR}/dev
+
+    rm /tmp/debian_started
+
+
+    sleep 5
+}
+
+
+restart() {
+    stop
+    sleep 1
+    start
+}
+
+webstatus(){
+    if [ -e /tmp/debian_started ] ; then
+	echo -n "Debian services are activated"
+    else
+    	echo -n "Debian services are not activated"
+    fi
+    
+}
+
+case "$1" in
+    start)
+  	start
+	;;
+    stop)
+  	stop
+	;;
+    restart)
+  	restart
+	;;
+    reload)
+  	restart
+	;;
+    webstatus)
+	webstatus
+	;;
+    *)
+	echo "Usage: $0 {start|stop|restart|reload}"
+	exit 1
+esac
+
+

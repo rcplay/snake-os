@@ -44,3 +44,9 @@ minidlna-release: output/minidlna-release.opk
 output/minidlna-release.opk: ${MINIDLNA_DEPS}
 	make -C minidlna-release
 	cp minidlna-release/minidlna-release.opk output/minidlna-release.opk
+
+debianctl: output/debianctl.opk
+output/debianctl.opk:
+	make -C debianctl
+	cp debianctl/debianctl.opk output/debianctl.opk
+

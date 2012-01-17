@@ -7,10 +7,12 @@ PARAM="-c /opt/etc/myfilebrowser/server.conf -h /opt/share/myfilebrowser/"
 
 # always enabled
 ENABLE=1
+USERNAME=$(grep "^username=" /opt/etc/config/myfilebrowser | cut -d = -f 2)
+PASSWORD=$(grep "^password=" /opt/etc/config/myfilebrowser | cut -d = -f 2)
 
 start() {
 	if [ $ENABLE -eq 1 ] ; then
-		sed -ri "s,/cgi-bin:admin:.*,/cgi-bin:$(echo $(grep "^/:admin:"  /etc/httpd.conf) | cut -c 3- ),g" /opt/etc/myfilebrowser/server.conf
+		sed -ri "s,/cgi-bin:.*,/cgi-bin:${USERNAME}:${PASSWORD},g" /opt/etc/myfilebrowser/server.conf
 		PID=$(pgrep -f "httpd ${PARAM}")
 		if [ ${PID:-empty} = "empty" ] ; then
 			echo "Starting $KIND service..."

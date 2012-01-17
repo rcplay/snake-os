@@ -1,0 +1,147 @@
+#!/bin/haserl
+Content-type: text/html
+
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">   
+<%in funcs.cgi %>
+<%
+# TODO: add these to the base system
+set_opkg_service_config(){
+        sed -ri "s%^${2}=.*%${2}=${3}%g" /opt/etc/config/${1}
+}
+
+get_opkg_service_config(){
+        echo -n $(sed -n "s/^\(${2}\)=\(.*\)$/\2/p" /opt/etc/config/${1})
+}
+
+
+
+DEBIANDIR=$(get_opkg_service_config debianctl debiandir)
+
+if [ "${REQUEST_METHOD}" = "POST" ]
+then
+    ACTION=$(echo ${FORM_action} | cut -d ' ' -f 1)
+    case "$ACTION" in
+	Apply)
+	    DEBIANDIR=$(echo ${FORM_shared} | cut -d ' ' -f 1)
+	    SERVICES=${FORM_services}
+	    DISKS=${FORM_disks}
+	    IS_ENABLED=$(echo ${FORM_enabled} | cut -d ' ' -f 1)
+
+	    set_opkg_service_config debianctl enabled ${IS_ENABLED:-0}
+	    
+      	    /opt/etc/init.d/debianctl stop > /dev/null
+      	    sleep 2
+	    
+      	    set_opkg_service_config debianctl debiandir ${DEBIANDIR}
+      	    set_opkg_service_config debianctl services "${SERVICES}"
+      	    set_opkg_service_config debianctl disks "${DISKS}"
+	    
+	    
+      	    /opt/etc/init.d/debianctl start > /dev/null
+      	    sleep 2
+      	    ;;
+      Start)
+      	/opt/etc/init.d/debianctl start > /dev/null
+      	sleep 2
+    	;;
+      Stop)
+      	/opt/etc/init.d/debianctl stop > /dev/null
+      	sleep 3
+    	;;
+      Restart)
+      	/opt/etc/init.d/debianctl restart > /dev/null
+      	sleep 2
+    	;;
+      Done)
+        DEBIANDIR=/usb/$(echo ${FORM_shared} | cut -d '|' -f 1)
+        ;;
+      *)
+    esac
+fi
+
+
+%>
+<script language="JavaScript">
+<!-- //
+
+function validateAction(form) {
+	var action = btnAction.value;
+	var question = "";
+
+	if ( action == 'Apply' ){
+	question = "This will restart the debian services and set the new options.";
+	}
+	else if ( action == 'Stop' )
+		question = "Are you sure that you want to stop the debian service?";
+	else if  ( action == 'Restart' )
+		question = "Are you sure that you want to restart debian service?";
+	else
+		return true;
+	
+	var answer = confirm (question);
+	if (answer)   
+		return true;                                                 
+	else                                                            
+		return false;                                           
+}
+
+
+
+function checkDebianStart(){
+	debianctl.shared.value = "<%= ${DEBIANDIR} %>";
+	if ( <% get_opkg_service_config debianctl enabled %> == 0 ){
+		document.forms[0].shared.disabled = true;
+		document.forms[0].services.disabled = true;
+		document.forms[0].disks.disabled = true;
+	}
+}
+
+function fileBrowserNew(){
+	filebrowser.submit();
+}
+
+function setReadDebianStart(obj){
+	if(obj.checked){       
+		document.forms[0].shared.disabled = false;
+		document.forms[0].services.disabled = false;
+		document.forms[0].disks.disabled = false;
+	} 
+	else {
+		document.forms[0].shared.disabled = true;
+		document.forms[0].services.disabled = true;
+		document.forms[0].disks.disabled = true;
+	}
+}
+
+
+// -->
+</script>
+</head>
+
+<body onload="checkDebianStart();" >
+
+<center>
+<TABLE border="0">
+<form id=filebrowser name=filebrowser action="./filebrowserd.cgi" method="POST">
+  <input type=hidden name=sourceform value="<%= ${SCRIPT_NAME} %>?page=debianctl">
+  <TR><TH>Debian directory:</TH><TD><input type="text" name="shared" size=20 value="<%= $DEBIANDIR %>" readonly onclick="fileBrowserNew()"/></TD></TR>
+</form> 
+<form id=debianctl name=debianctl action="<%= ${SCRIPT_NAME} %>?page=debianctl" method="POST"  onsubmit="return validateAction(this);">
+  <input type=hidden name=shared value="">
+  <TR><TH>Autostart debian</TH><TD><input type="checkbox" name="enabled" value="1" <% is_checked $(get_opkg_service_config debianctl enabled) %> onclick="setReadDebianStart(this);"/></TD></TR>
+  <TR><TH>Status:</TH><TD><% /opt/etc/init.d/debianctl webstatus %></TD></TR>
+  <TR><TH>Services:</TH><TD><INPUT type="text" name="services" size=100 value="<% get_opkg_service_config debianctl services %>"></TD></TR>
+  <TR><TH>Disks:</TH><TD><INPUT type="text" name="disks" size=100 value="<% get_opkg_service_config debianctl disks %>"></TD></TR>
+
+
+</TABLE>
+
+<input type="submit" name="action" value="Apply" onclick="btnAction=this">
+  <input type="submit" name="action" value="Start" onclick="btnAction=this">
+  <input type="submit" name="action" value="Stop" onclick="btnAction=this">
+  <input type="submit" name="action" value="Restart" onclick="btnAction=this">   
+</form>
+
+</center>
+</body>
+</html>

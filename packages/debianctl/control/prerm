@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ -x /opt/etc/init.d/debianctl ]; then
+    echo "stopping debian services"
+    /opt/etc/init.d/debianctl stop
+fi
+
+exit 0

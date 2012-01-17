@@ -1,0 +1,4 @@
+enabled=1
+debiandir=/usb/sda1/debian
+disks=sda1
+services=
