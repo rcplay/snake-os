@@ -1,0 +1,72 @@
+#!/bin/haserl
+Content-type: text/html
+
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">   
+<%in funcs.cgi %>
+<%
+
+# TODO: add these to the base system
+set_opkg_service_config(){
+        sed -ri "s%^${2}=.*%${2}=${3}%g" /opt/etc/config/${1}
+}
+
+get_opkg_service_config(){
+        echo -n $(sed -n "s/^\(${2}\)=\(.*\)$/\2/p" /opt/etc/config/${1})
+}
+
+
+if [ "${REQUEST_METHOD}" = "POST" ]
+then
+    ACTION=$(echo ${FORM_action} | cut -d ' ' -f 1)
+    TEMPDISK=$(echo ${FORM_tempdisk} | cut -d ' ' -f 1)
+    USERNAME=$(echo ${FORM_username} | cut -d ' ' -f 1)
+    PASSWORD=$(echo ${FORM_password} | cut -d ' ' -f 1)
+
+    case "$ACTION" in
+      Apply)
+        set_opkg_service_config myfilebrowser tempdisk ${TEMPDISK}
+        set_opkg_service_config myfilebrowser username ${USERNAME}
+        set_opkg_service_config myfilebrowser password ${PASSWORD}
+	
+	/opt/etc/init.d/myfilebrowser restart
+   	;;
+      *)
+    esac
+fi
+
+
+TEMPDISK=$(get_opkg_service_config myfilebrowser tempdisk)
+
+%>
+
+</head>
+<body>                            
+
+<center>
+<form action="<%= ${SCRIPT_NAME} %>?page=myfilebrowser" method="POST">
+      <TABLE border="0" >
+      
+      <TR><TH>Temp disk for uploads:</TH><TD> <select name="tempdisk">
+<%
+
+    OPTIONS="<option value="${TEMPDISK}" selected>${TEMPDISK}</option>"
+    for MOUNT in $(get_mounted) ; do
+        if [ ! $MOUNT = ${TEMPDISK} ] ; then
+            OPTIONS=${OPTIONS}"<option value="${MOUNT}">${MOUNT}</option>"        
+        fi
+    done
+    echo ${OPTIONS}
+    %>
+    </select></TD></TR>
+    <TR><TH>Username:</TH><TD><INPUT type="text" name="username" size=20 value="<% get_opkg_service_config myfilebrowser username %>"></TD></TR>
+    <TR><TH>Password:</TH><TD><INPUT type="password" name="password" size=20 value="<% get_opkg_service_config myfilebrowser password %>"></TD></TR>
+
+</TD></TR>
+</TABLE>
+
+   <input type="submit" name="action" value="Apply" onclick="btnAction=this">
+</form>
+
+
+</body>
+</html>
