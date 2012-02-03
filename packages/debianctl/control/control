@@ -1,5 +1,5 @@
 Package: debianctl
-Version: 0.2
+Version: 0.3-1
 Description: Debian startup scripts and configuration page
 Section: snakeos/applications
 Priority: optional
