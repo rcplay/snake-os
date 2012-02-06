@@ -21,6 +21,7 @@ Time is priceless and if you have some to spare then there is no other better wa
 
 == Donors ==
 || *Date*      || *Donor*        ||
+|| 04 Feb 2012 || Eduardo Martin ||
 || 03 Feb 2012 || SR-Technics ||
 || 02 Dec 2011 || Jan Kolinke ||
 || 27 Nov 2011 || Christophe Candillier ||
