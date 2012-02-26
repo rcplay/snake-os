@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ -x /opt/etc/init.d/samba3 ]; then
+    echo "Stopping samba3"
+    /opt/etc/init.d/samba3 stop
+fi
+
+exit 0

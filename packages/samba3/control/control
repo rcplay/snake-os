@@ -1,0 +1,10 @@
+Package: samba3
+Version: 3.6.3-1
+Description: samba3 server
+Section: snakeos/applications
+Priority: optional
+Maintainer: 
+Architecture: all
+Homepage:
+Source:
+Depends:

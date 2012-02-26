@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ -x /opt/etc/init.d/samba3 ]; then
+    echo "Starting samba3"
+    /opt/etc/init.d/samba3 restart
+fi
+
+exit 0

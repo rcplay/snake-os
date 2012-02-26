@@ -50,3 +50,7 @@ output/debianctl.opk:
 	make -C debianctl
 	cp debianctl/debianctl.opk output/debianctl.opk
 
+samba3: output/samba3.opk
+output/samba3.opk:
+	make -C samba3
+	cp samba3/samba3.opk output/samba3.opk

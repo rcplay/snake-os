@@ -1,0 +1,3 @@
+samba_enable=0
+smbworkgroup=WORKGROUP
+smbsecurity=SHARE

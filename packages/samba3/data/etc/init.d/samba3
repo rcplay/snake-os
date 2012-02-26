@@ -1,0 +1,110 @@
+#!/bin/sh
+#
+
+RETVAL=0
+TZGEO=$(grep "tzgeo=" /etc/default/config | cut -d '=' -f 2)
+export TZ=${TZGEO}
+
+SAMBA_ENABLE=`grep "^samba_enable=" /etc/default/config | cut -d = -f 2`
+SAMBA3_ENABLE=`grep "^samba_enable=" /opt/etc/config/samba3 | cut -d = -f 2`
+
+fix_smbpasswd() {
+     sed -i s/"^\(.*:\)$"/"\1[U]:LCT-4294967295"/ /etc/smbpasswd
+}
+
+start() {
+    if [ $SAMBA_ENABLE -eq 1 ] ; then
+	echo "Builtin samba is running! Samba3 will not be started."
+	return 1
+    fi
+    
+    if [ $SAMBA3_ENABLE -eq 1 ] ; then
+	# check if network is up
+	if [ empty"$(/sbin/route | grep "^default ")" = empty ] ; then
+	    sleep 60 && /opt/etc/init.d/samba3 start &
+	    return 0
+	fi
+	
+	fix_smbpasswd
+	
+	KIND="SMB3"
+	echo "Starting $KIND services..."
+	/opt/bin/smbd3 -D
+	RETVAL=$?
+	KIND="NMB3"
+	echo "Starting $KIND services..."
+	/opt/bin/nmbd3 -D
+	RETVAL2=$?
+	return $RETVAL
+    fi
+}
+
+webstatus(){
+    PID=$(pidof smbd3)
+    if [ ${PID:-empty} = "empty" ] ; then
+	echo -n "Samba3 is not running"
+    else
+    	echo -n "Samba3 is running"
+    fi
+}	
+
+stop() {
+    KIND="SMB3"
+    echo "Shutting down $KIND services..."
+    killall -9 smbd3
+    RETVAL=$?
+    
+    KIND="NMB3"
+    echo "Shutting down $KIND services..."
+    killall -9 nmbd3
+    
+    return $RETVAL
+}	
+
+restart() {
+    stop
+    sleep 1
+    start
+}	
+
+reload() {
+    if [ $SAMBA_ENABLE -eq 1 ] ; then
+	echo "Builtin samba is running"
+	return 1
+    fi
+    
+    if [ $SAMBA3_ENABLE -eq 1 ] ; then
+	echo "Reloading smb.conf file..."
+	fix_smbpasswd
+	killall -HUP smbd3
+	killall -9 nmbd3
+	sleep 1
+	/opt/bin/nmbd3 -D
+	RETVAL=$?
+	return $RETVAL
+    fi
+}	
+
+
+case "$1" in
+    start)
+  	start
+	;;
+    stop)
+  	stop
+	;;
+    restart)
+  	restart
+	;;
+    reload)
+  	reload
+	;;
+    webstatus)
+  	webstatus
+  	;;
+    *)
+	echo "Usage: $0 {start|stop|restart|reload}"
+	exit 1
+esac
+
+

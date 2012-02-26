@@ -1,0 +1,22 @@
+diff -ur samba3-src/source3/param/loadparm.c samba3-src-new/source3/param/loadparm.c
+--- samba3-src/source3/param/loadparm.c	2012-01-29 20:40:43.000000000 +0100
++++ samba3-src-new/source3/param/loadparm.c	2012-02-26 19:23:33.521493064 +0100
+@@ -659,7 +659,7 @@
+ 	False,			/* bForcePrintername */
+ 	True,			/* bNTAclSupport */
+ 	False,                  /* bForceUnknownAclUser */
+-	False,			/* bUseSendfile */
++	True,			/* bUseSendfile */
+ 	False,			/* bProfileAcls */
+ 	False,			/* bMap_acl_inherit */
+ 	False,			/* bAfs_Share */
+@@ -5358,7 +5358,7 @@
+ 	   a large number of sites (tridge) */
+ 	Globals.bHostnameLookups = False;
+ 
+-	string_set(&Globals.szPassdbBackend, "tdbsam");
++	string_set(&Globals.szPassdbBackend, "smbpasswd");
+ 	string_set(&Globals.szLdapSuffix, "");
+ 	string_set(&Globals.szLdapMachineSuffix, "");
+ 	string_set(&Globals.szLdapUserSuffix, "");
+Only in samba3-src-new/source3/param: loadparm.c~
