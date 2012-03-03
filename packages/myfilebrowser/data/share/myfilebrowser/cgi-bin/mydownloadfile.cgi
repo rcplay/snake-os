@@ -7,6 +7,6 @@ then
         FILENAME=${FORM_shared}
         echo \"$(basename "${FILENAME}")\";
         echo ""
-	dd if="${FILENAME}"
+	dd if="${FILENAME}" bs=2048
 fi
 %>

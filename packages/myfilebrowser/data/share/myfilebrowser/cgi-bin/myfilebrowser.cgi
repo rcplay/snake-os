@@ -133,7 +133,7 @@ fi
 if [ "$ACTION" = "Upload" ]
 then
         if [ -n "$FORM_uploadfile_name" ] ; then
-                dd if="$FORM_uploadfile" of="/usb${CURDIR}/${FORM_uploadfile_name}"
+                dd if="$FORM_uploadfile" of="/usb${CURDIR}/${FORM_uploadfile_name}" bs=4096
         fi
 fi
 
