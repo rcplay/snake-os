@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [ -x /opt/etc/init.d/prerm ]; then
+    echo "Stopping webondisk"
+    /opt/etc/init.d/webondisk stop
+    exit 0
+fi

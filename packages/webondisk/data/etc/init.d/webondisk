@@ -1,0 +1,57 @@
+#!/bin/sh
+#
+
+WEBDIR=$(grep "^webdir=" /opt/etc/config/webondisk | cut -d = -f 2)
+PORT=$(grep "^port=" /opt/etc/config/webondisk | cut -d = -f 2)
+PARAM="-c /etc/httpd.conf -h ${WEBDIR}"
+KIND="webondisk"
+HOSTNAME=$(grep "^hostname=" /etc/default/config | cut -d = -f 2)
+
+start() {
+	echo "Starting $KIND service..."
+	if [ "${WEBDIR}" == "" ]
+	then
+	    echo "Error: No web directory defined! Please run /opt/bin/webondisk"
+	    exit 1
+	fi
+
+
+	if [ ! -d ${WEBDIR} ]
+	then
+	    echo "Error: ${WEBDIR} does not exist!"
+	    exit 1
+	fi
+
+	httpd ${PARAM} -p ${PORT} -r ${HOSTNAME}
+}
+
+stop() {
+	echo "Shutting down $KIND service..."
+	pkill -9 -f "httpd ${PARAM}"
+}
+
+restart() {
+	stop
+	sleep 1
+	start
+}	
+
+case "$1" in
+  start)
+  	start
+	;;
+  stop)
+  	stop
+	;;
+  restart)
+  	restart
+	;;
+  reload)
+  	restart
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart|reload}"
+	exit 1
+esac
+
+

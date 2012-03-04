@@ -54,3 +54,8 @@ samba3: output/samba3.opk
 output/samba3.opk:
 	make -C samba3
 	cp samba3/samba3.opk output/samba3.opk
+
+webondisk: output/webondisk.opk
+output/webondisk.opk:
+	make -C webondisk
+	cp webondisk/webondisk.opk output/webondisk.opk

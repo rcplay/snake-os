@@ -1,0 +1,27 @@
+#!/bin/sh
+WEBDIR=$1
+
+if [ "${WEBDIR}" == "" ]
+then
+    echo "This script copies the web interface to the given directory and"
+    echo "updates the configuration. The target directory must not exist."
+    echo "Usage: webondisk <directory>"
+    exit 1
+fi
+
+
+if [ -e ${WEBDIR} ]
+then
+    echo "Error: ${WEBDIR} exists!"
+    exit 1
+fi
+
+sh /opt/etc/init.d/webondisk stop
+
+echo "Copying web interface to ${WEBDIR} .."
+cp -a /usr/share/www ${WEBDIR} || exit 1
+
+echo "Updating config .."
+sed -ri "s%^webdir=.*%webdir=${WEBDIR}%g" /opt/etc/config/webondisk || exit 1
+
+sh /opt/etc/init.d/webondisk start

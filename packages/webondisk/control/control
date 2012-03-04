@@ -1,0 +1,10 @@
+Package: webondisk
+Version: 0.1-1
+Description: Runs the snakeos webinterface from a disk
+Section: snakeos/applications
+Priority: optional
+Maintainer: 
+Architecture: all
+Homepage: 
+Source:
+Depends:
