@@ -24,12 +24,17 @@ Use ext2 or ext3 file system to extract files below.
   # `#`mount -o bind /proc /usb/sda1/debian/proc 
   # `#`mount -o bind /dev /usb/sda1/debian/dev 
   # `#`mount -o bind /usb/sda1 /usb/sda1/debian/mnt/sda1    - this is not mandatory
-  # `#` edit /usb/sda1/debian/etc/resolv.conf   -Set your name server, if you need.    Default is 192.168.1.1
+  # edit /usb/sda1/debian/etc/resolv.conf   -Set your name server, if you need.    Default is 192.168.1.1
   # `#`chroot /usb/sda1/debian/ 
 
-Now you are in chrooted debian shell.
+Now you are in chrooted debian shell. To exit debian use "exit" command or reboot. 
 
-   To exit debian use "exit" command or reboot. 
+
+== Debianctl ==
+
+Steps eight to eleven can be automated with the debianctl package. Once installed go to Services->Debianctl and set the directory where Debian was extracted, the disks to mount and the services to start. From then on debianctl will automatically bring up Debian at system startup.
+
+Current version: http://code.google.com/p/snake-os/downloads/detail?name=debianctl-0.3-1.opk
 
 *Some useful - "must have"  thing: *
 
