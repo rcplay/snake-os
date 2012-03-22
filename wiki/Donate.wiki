@@ -21,6 +21,7 @@ Time is priceless and if you have some to spare then there is no other better wa
 
 == Donors ==
 || *Date*      || *Donor*        ||
+|| 19 Mar 2012 || Fredrik Ekholm ||
 || 01 Mar 2012 || Frode Larsen ||
 || 15 Feb 2012 || Matvey Votinov ||
 || 04 Feb 2012 || Eduardo Martin ||
