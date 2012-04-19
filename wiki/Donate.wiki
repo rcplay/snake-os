@@ -21,6 +21,7 @@ Time is priceless and if you have some to spare then there is no other better wa
 
 == Donors ==
 || *Date*      || *Donor*        ||
+|| 18 Apr 2012 || Denis Argutinsky ||
 || 17 Apr 2012 || Pablo Arroyo ||
 || 24 Mar 2012 || Remko Kruize ||
 || 19 Mar 2012 || Fredrik Ekholm ||
