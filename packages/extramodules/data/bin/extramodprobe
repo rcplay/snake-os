@@ -1,0 +1,3 @@
+#!/bin/sh
+cd /opt/lib/modules/$(uname -r)/ || exit 0
+for i in $(grep "/$1.ko:" modules.dep | tr -d ":" | tr " " "\n" | tac); do insmod $i; done

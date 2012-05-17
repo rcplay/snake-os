@@ -1,0 +1,54 @@
+#!/bin/haserl
+Content-type: text/html
+
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">   
+<%in funcs.cgi %>
+<%
+# TODO: add these to the base system
+set_opkg_service_config(){
+        sed -ri "s%^${2}=.*%${2}=${3}%g" /opt/etc/config/${1}
+}
+
+get_opkg_service_config(){
+        echo -n $(sed -n "s/^\(${2}\)=\(.*\)$/\2/p" /opt/etc/config/${1})
+}
+
+
+if [ "${REQUEST_METHOD}" = "POST" ]
+then
+    ACTION=$(echo ${FORM_action} | cut -d ' ' -f 1)
+    case "$ACTION" in
+	Apply)
+	    set_opkg_service_config extramodules modules "$(echo ${FORM_modules} | cut -d '|' -f 1)"
+	    
+      	    /opt/etc/init.d/00extramodules start > /dev/null
+      	    ;;
+	*)
+    esac
+fi
+
+
+%>
+<script language="JavaScript">
+<!-- //
+
+
+// -->
+</script>
+</head>
+
+<body>
+
+<center>
+<TABLE border="0">
+<form id=extramodules name=extramodules action="<%= ${SCRIPT_NAME} %>?page=extramodules" method="POST">
+  <TR><TH>Enabled modules:</TH><TD><input type="text" name="modules" size=80 value="<% get_opkg_service_config extramodules modules %>" /></TD></TR>
+</TABLE>
+
+<input type="submit" name="action" value="Apply">
+
+</form>
+
+</center>
+</body>
+</html>

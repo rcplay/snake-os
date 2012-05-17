@@ -1,0 +1,10 @@
+Package: extramodules
+Version: 2.6.16-1
+Description: set of extra modules
+Section: snakeos/applications
+Priority: optional
+Maintainer: 
+Architecture: all
+Homepage: 
+Source:
+Depends:

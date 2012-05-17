@@ -1,0 +1,10 @@
+Package: mpd
+Version: 0.16.8-1
+Description: mpd
+Section: snakeos/applications
+Priority: optional
+Maintainer: 
+Architecture: all
+Homepage:
+Source:
+Depends:

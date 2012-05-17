@@ -1,0 +1,42 @@
+#!/bin/sh
+#
+
+
+MODULES=$(grep "^modules=" /opt/etc/config/extramodules | cut -d = -f 2)
+
+start() {
+    echo "Loading extra modules..."
+    for module in ${MODULES}; do
+	echo "Loading ${module} module"
+	/opt/bin/extramodprobe ${module}
+    done
+    sleep 2
+}
+
+stop() {
+    # module unloading isn't supported so this does nothing
+    return 0
+}
+
+restart() {
+    stop
+    sleep 1
+    start
+}
+
+case "$1" in
+    start)
+  	start
+	;;
+    stop)
+  	stop
+	;;
+    restart)
+  	restart
+	;;
+    *)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
+
+

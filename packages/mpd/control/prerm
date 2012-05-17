@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ -x /opt/etc/init.d/mpd ]; then
+    echo "Stopping mpd"
+    /opt/etc/init.d/mpd stop
+fi
+
+exit 0

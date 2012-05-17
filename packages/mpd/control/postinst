@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ -x /opt/etc/init.d/mpd ]; then
+    echo "Starting mpd"
+    /opt/etc/init.d/mpd restart
+fi
+
+exit 0

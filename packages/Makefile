@@ -59,3 +59,21 @@ webondisk: output/webondisk.opk
 output/webondisk.opk:
 	make -C webondisk
 	cp webondisk/webondisk.opk output/webondisk.opk
+
+.PHONY: libcurl gettext libffi libmad tremor glib
+libcurl gettext libffi libmad tremor:
+	make -C $@
+
+glib: gettext libffi libiconv
+	make -C $@
+
+mpd: libcurl libid3tag libmad libiconv libogg tremor libvorbis libFLAC libsqlite3 glib output/mpd.opk
+output/mpd.opk:
+	make -C mpd
+	cp mpd/mpd.opk output/mpd.opk
+
+
+extramodules: output/extramodules.opk
+output/extramodules.opk:
+	make -C extramodules
+	cp extramodules/extramodules.opk output/extramodules.opk

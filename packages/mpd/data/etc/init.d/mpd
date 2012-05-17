@@ -1,0 +1,57 @@
+#!/bin/sh
+#
+
+RETVAL=0
+
+ENABLE=`grep "^enabled=" /opt/etc/config/mpd | cut -d = -f 2`
+
+start() {
+    if [ $ENABLE -eq 1 ] ; then
+	echo "Starting mpd"
+	/opt/bin/mpd /opt/etc/mpd/mpd.conf
+    fi
+}
+
+stop() {
+    echo "Shutting down mpd"
+    killall mpd
+}	
+
+restart() {
+    stop
+    sleep 1
+    start
+}	
+
+webstatus(){
+    PID=$(pgrep -f "/opt/bin/mpd")
+    if [ ${PID:-empty} = "empty" ] ; then
+	echo -n "MPD is not running"
+    else
+    	echo -n "MPD is running"
+    fi
+}
+
+
+case "$1" in
+    start)
+  	start
+	;;
+    stop)
+  	stop
+	;;
+    restart)
+  	restart
+	;;
+    reload)
+  	reload
+	;;
+    webstatus)
+  	webstatus
+  	;;
+    *)
+	echo "Usage: $0 {start|stop|restart|reload}"
+	exit 1
+esac
+
+
