@@ -1,5 +1,5 @@
 Package: minidlna
-Version: cvs-20120104
+Version: cvs-20120611
 Description: dlna server
 Section: snakeos/applications
 Priority: optional

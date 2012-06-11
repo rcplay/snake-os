@@ -31,6 +31,8 @@
 
 #include "config.h"
 #include <netinet/in.h>
+#include <time.h>
+#include <fcntl.h>
 
 /* structure for storing lan addresses
  * with ascii representation and mask */
@@ -82,6 +84,8 @@ enum client_types {
 	ESamsungSeriesA,
 	ESamsungSeriesB,
 	EMarantzDMP,
+	ELifeTab,
+	EDirecTV,
 	EStandardDLNA150 = 100
 };
 

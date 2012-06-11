@@ -1,4 +1,3 @@
-/* $Id: daemonize.c,v 1.6 2011/09/16 23:39:57 jmaggard Exp $ */
 /* MiniUPnP project
  * http://miniupnp.free.fr/ or http://miniupnp.tuxfamily.org/
  *

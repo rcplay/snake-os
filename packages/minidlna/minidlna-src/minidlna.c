@@ -53,6 +53,7 @@
 #include <ctype.h>
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <sys/wait.h>
 #include <sys/file.h>
 #include <sys/time.h>
 #include <sys/param.h>
@@ -69,6 +70,7 @@
 #include "config.h"
 
 #ifdef ENABLE_NLS
+#include <locale.h>
 #include <libintl.h>
 #endif
 
@@ -157,7 +159,15 @@ sigterm(int sig)
 	/*errno = save_errno;*/
 }
 
-/* record the startup time, for returning uptime */
+static void
+sigchld(int sig)
+{
+	if (!scanning)
+		signal(SIGCHLD, SIG_IGN);
+	waitpid(-1, NULL, WNOHANG);
+}
+
+/* record the startup time */
 static void
 set_startup_time(void)
 {
@@ -211,8 +221,7 @@ getfriendlyname(char * buf, int len)
 
 	if( gethostname(hn, 256) == 0 )
 	{
-		strncpy(buf, hn, len-1);
-		buf[len] = '\0';
+		strncpyt(buf, hn, len);
 		dot = strchr(buf, '.');
 		if( dot )
 			*dot = '\0';
@@ -242,8 +251,7 @@ getfriendlyname(char * buf, int len)
 			key = strchr(val, ' ');
 			if( key )
 			{
-				strncpy(modelnumber, key+1, MODELNUMBER_MAX_LEN);
-				modelnumber[MODELNUMBER_MAX_LEN-1] = '\0';
+				strncpyt(modelnumber, key+1, MODELNUMBER_MAX_LEN);
 				*key = '\0';
 			}
 			snprintf(modelname, MODELNAME_MAX_LEN,
@@ -251,8 +259,7 @@ getfriendlyname(char * buf, int len)
 		}
 		else if( strcmp(key, "serial") == 0 )
 		{
-			strncpy(serialnumber, val, SERIALNUMBER_MAX_LEN);
-			serialnumber[SERIALNUMBER_MAX_LEN-1] = '\0';
+			strncpyt(serialnumber, val, SERIALNUMBER_MAX_LEN);
 			if( serialnumber[0] == '\0' )
 			{
 				char mac_str[13];
@@ -265,6 +272,7 @@ getfriendlyname(char * buf, int len)
 		}
 	}
 	fclose(info);
+#if PNPX
 	memcpy(pnpx_hwid+4, "01F2", 4);
 	if( strcmp(modelnumber, "NVX") == 0 )
 		memcpy(pnpx_hwid+17, "0101", 4);
@@ -287,6 +295,7 @@ getfriendlyname(char * buf, int len)
 		memcpy(pnpx_hwid+17, "0108", 4);
 	else if( strcmp(modelnumber, "NV+ v2") == 0 )
 		memcpy(pnpx_hwid+17, "0109", 4);
+#endif
 #else
 	char * logname;
 	logname = getenv("LOGNAME");
@@ -327,6 +336,81 @@ open_db(void)
 	return new_db;
 }
 
+static void
+check_db(sqlite3 *db, int new_db, pid_t *scanner_pid)
+{
+	int ret;
+	char cmd[PATH_MAX*2];
+	struct media_dir_s *media_path = NULL, *last_path;
+	struct album_art_name_s *art_names, *last_name;
+
+	/* Check if any new media dirs appeared */
+	if( !new_db )
+	{
+		media_path = media_dirs;
+		while( media_path )
+		{
+			ret = sql_get_int_field(db, "SELECT ID from DETAILS where PATH = %Q", media_path->path);
+			if (ret < 1)
+				break;
+			media_path = media_path->next;
+		}
+	}
+	if( media_path )
+		ret = 1;
+	else 
+		ret = db_upgrade(db);
+	if( ret != 0 )
+	{
+		if( ret < 0 )
+			DPRINTF(E_WARN, L_GENERAL, "Creating new database at %s/files.db\n", db_path);
+		else if( ret == 1 )
+			DPRINTF(E_WARN, L_GENERAL, "New media_dir detected; rescanning...\n");
+		else
+			DPRINTF(E_WARN, L_GENERAL, "Database version mismatch; need to recreate...\n");
+		sqlite3_close(db);
+
+		snprintf(cmd, sizeof(cmd), "rm -rf %s/files.db %s/art_cache", db_path, db_path);
+		if( system(cmd) != 0 )
+			DPRINTF(E_FATAL, L_GENERAL, "Failed to clean old file cache!  Exiting...\n");
+
+		open_db();
+		if( CreateDatabase() != 0 )
+			DPRINTF(E_FATAL, L_GENERAL, "ERROR: Failed to create sqlite database!  Exiting...\n");
+#if USE_FORK
+		scanning = 1;
+		sqlite3_close(db);
+		*scanner_pid = fork();
+		open_db();
+		if( !(*scanner_pid) ) // child (scanner) process
+		{
+			start_scanner();
+			sqlite3_close(db);
+			media_path = media_dirs;
+			art_names = album_art_names;
+			while( media_path )
+			{
+				free(media_path->path);
+				last_path = media_path;
+				media_path = media_path->next;
+				free(last_path);
+			}
+			while( art_names )
+			{
+				free(art_names->name);
+				last_name = art_names;
+				art_names = art_names->next;
+				free(last_name);
+			}
+			freeoptions();
+			exit(EXIT_SUCCESS);
+		}
+#else
+		start_scanner();
+#endif
+	}
+}
+
 /* init phase :
  * 1) read configuration file
  * 2) read command line arguments
@@ -344,16 +428,16 @@ init(int argc, char * * argv)
 	int verbose_flag = 0;
 	int options_flag = 0;
 	struct sigaction sa;
-	/*const char * logfilename = 0;*/
-	const char * presurl = 0;
+	const char * presurl = NULL;
 	const char * optionsfile = "/etc/minidlna.conf";
 	char mac_str[13];
 	char * string, * word;
 	enum media_types type;
 	char * path;
-	char real_path[PATH_MAX];
+	char buf[PATH_MAX];
 	char ip_addr[INET_ADDRSTRLEN + 3] = {'\0'};
-	char log_str[72] = "general,artwork,database,inotify,scanner,metadata,http,ssdp,tivo=warn";
+	char log_str[75] = "general,artwork,database,inotify,scanner,metadata,http,ssdp,tivo=warn";
+	char *log_level = NULL;
 
 	/* first check if "-f" option is used */
 	for(i=2; i<argc; i++)
@@ -387,7 +471,7 @@ init(int argc, char * * argv)
 	{
 		/* only error if file exists or using -f */
 		if(access(optionsfile, F_OK) == 0 || options_flag)
-			fprintf(stderr, "Error reading configuration file %s\n", optionsfile);
+			DPRINTF(E_FATAL, L_GENERAL, "Error reading configuration file %s\n", optionsfile);
 	}
 	else
 	{
@@ -406,12 +490,10 @@ init(int argc, char * * argv)
 								if(n_lan_addr < MAX_LAN_ADDR)
 									n_lan_addr++;
 						}
-						else
-							fprintf(stderr, "Interface %s not found, ignoring.\n", word);
 					}
 					else
 					{
-						fprintf(stderr, "Too many listening ips (max: %d), ignoring %s\n",
+						DPRINTF(E_ERROR, L_GENERAL, "Too many listening ips (max: %d), ignoring %s\n",
 				    		    MAX_LAN_ADDR, word);
 					}
 				}
@@ -425,7 +507,7 @@ init(int argc, char * * argv)
 				}
 				else
 				{
-					fprintf(stderr, "Too many listening ips (max: %d), ignoring %s\n",
+					DPRINTF(E_ERROR, L_GENERAL, "Too many listening ips (max: %d), ignoring %s\n",
 			    		    MAX_LAN_ADDR, ary_options[i].value);
 				}
 				break;
@@ -439,68 +521,63 @@ init(int argc, char * * argv)
 				runtime_vars.notify_interval = atoi(ary_options[i].value);
 				break;
 			case UPNPSERIAL:
-				strncpy(serialnumber, ary_options[i].value, SERIALNUMBER_MAX_LEN);
-				serialnumber[SERIALNUMBER_MAX_LEN-1] = '\0';
+				strncpyt(serialnumber, ary_options[i].value, SERIALNUMBER_MAX_LEN);
 				break;				
 			case UPNPMODEL_NAME:
-				strncpy(modelname, ary_options[i].value, MODELNAME_MAX_LEN);
-				modelname[MODELNAME_MAX_LEN-1] = '\0';
+				strncpyt(modelname, ary_options[i].value, MODELNAME_MAX_LEN);
 				break;
 			case UPNPMODEL_NUMBER:
-				strncpy(modelnumber, ary_options[i].value, MODELNUMBER_MAX_LEN);
-				modelnumber[MODELNUMBER_MAX_LEN-1] = '\0';
+				strncpyt(modelnumber, ary_options[i].value, MODELNUMBER_MAX_LEN);
 				break;
 			case UPNPFRIENDLYNAME:
-				strncpy(friendly_name, ary_options[i].value, FRIENDLYNAME_MAX_LEN);
-				friendly_name[FRIENDLYNAME_MAX_LEN-1] = '\0';
+				strncpyt(friendly_name, ary_options[i].value, FRIENDLYNAME_MAX_LEN);
 				break;
 			case UPNPMEDIADIR:
 				type = ALL_MEDIA;
-				char * myval = NULL;
-				switch( ary_options[i].value[0] )
+				path = ary_options[i].value;
+				if( *path && (path[1] == ',') && (access(path, F_OK) != 0) )
 				{
-				case 'A':
-				case 'a':
-					if( ary_options[i].value[0] == 'A' || ary_options[i].value[0] == 'a' )
-						type = AUDIO_ONLY;
-				case 'V':
-				case 'v':
-					if( ary_options[i].value[0] == 'V' || ary_options[i].value[0] == 'v' )
-						type = VIDEO_ONLY;
-				case 'P':
-				case 'p':
-					if( ary_options[i].value[0] == 'P' || ary_options[i].value[0] == 'p' )
-						type = IMAGES_ONLY;
-					myval = index(ary_options[i].value, '/');
-				case '/':
-					path = realpath(myval ? myval:ary_options[i].value, real_path);
-					if( !path )
-						path = (myval ? myval:ary_options[i].value);
-					if( access(path, F_OK) != 0 )
+					switch( *path )
 					{
-						fprintf(stderr, "Media directory not accessible! [%s]\n",
-						        path);
+					case 'A':
+					case 'a':
+						type = AUDIO_ONLY;
+						break;
+					case 'V':
+					case 'v':
+						type = VIDEO_ONLY;
+						break;
+					case 'P':
+					case 'p':
+						type = IMAGES_ONLY;
+						break;
+					default:
+						DPRINTF(E_FATAL, L_GENERAL, "Media directory entry not understood [%s]\n",
+							ary_options[i].value);
 						break;
 					}
-					struct media_dir_s * this_dir = calloc(1, sizeof(struct media_dir_s));
-					this_dir->path = strdup(path);
-					this_dir->type = type;
-					if( !media_dirs )
-					{
-						media_dirs = this_dir;
-					}
-					else
-					{
-						struct media_dir_s * all_dirs = media_dirs;
-						while( all_dirs->next )
-							all_dirs = all_dirs->next;
-						all_dirs->next = this_dir;
-					}
+					path += 2;
+				}
+				path = realpath(path, buf);
+				if( !path || access(path, F_OK) != 0 )
+				{
+					DPRINTF(E_ERROR, L_GENERAL, "Media directory \"%s\" not accessible [%s]\n",
+						ary_options[i].value, strerror(errno));
 					break;
-				default:
-					fprintf(stderr, "Media directory entry not understood! [%s]\n",
-					        ary_options[i].value);
-					break;
+				}
+				struct media_dir_s * this_dir = calloc(1, sizeof(struct media_dir_s));
+				this_dir->path = strdup(path);
+				this_dir->type = type;
+				if( !media_dirs )
+				{
+					media_dirs = this_dir;
+				}
+				else
+				{
+					struct media_dir_s * all_dirs = media_dirs;
+					while( all_dirs->next )
+						all_dirs = all_dirs->next;
+					all_dirs->next = this_dir;
 				}
 				break;
 			case UPNPALBUMART_NAMES:
@@ -528,7 +605,7 @@ init(int argc, char * * argv)
 				}
 				break;
 			case UPNPDBDIR:
-				path = realpath(ary_options[i].value, real_path);
+				path = realpath(ary_options[i].value, buf);
 				if( !path )
 					path = (ary_options[i].value);
 				make_dir(path, S_ISVTX|S_IRWXU|S_IRWXG|S_IRWXO);
@@ -537,10 +614,10 @@ init(int argc, char * * argv)
 					DPRINTF(E_FATAL, L_GENERAL, "Database path not accessible! [%s]\n", path);
 					break;
 				}
-				strncpy(db_path, path, PATH_MAX);
+				strncpyt(db_path, path, PATH_MAX);
 				break;
 			case UPNPLOGDIR:
-				path = realpath(ary_options[i].value, real_path);
+				path = realpath(ary_options[i].value, buf);
 				if( !path )
 					path = (ary_options[i].value);
 				make_dir(path, S_ISVTX|S_IRWXU|S_IRWXG|S_IRWXO);
@@ -549,7 +626,10 @@ init(int argc, char * * argv)
 					DPRINTF(E_FATAL, L_GENERAL, "Log path not accessible! [%s]\n", path);
 					break;
 				}
-				strncpy(log_path, path, PATH_MAX);
+				strncpyt(log_path, path, PATH_MAX);
+				break;
+			case UPNPLOGLEVEL:
+				log_level = ary_options[i].value;
 				break;
 			case UPNPINOTIFY:
 				if( (strcmp(ary_options[i].value, "yes") != 0) && !atoi(ary_options[i].value) )
@@ -586,7 +666,7 @@ init(int argc, char * * argv)
 					runtime_vars.root_container = IMAGE_ID;
 					break;
 				default:
-					fprintf(stderr, "Invalid root container! [%s]\n",
+					DPRINTF(E_ERROR, L_GENERAL, "Invalid root container! [%s]\n",
 						ary_options[i].value);
 					break;
 				}
@@ -594,8 +674,11 @@ init(int argc, char * * argv)
 			case UPNPMINISSDPDSOCKET:
 				minissdpdsocketpath = ary_options[i].value;
 				break;
+			case UPNPUUID:
+				strcpy(uuidvalue+5, ary_options[i].value);
+				break;
 			default:
-				fprintf(stderr, "Unknown option in file %s\n",
+				DPRINTF(E_ERROR, L_GENERAL, "Unknown option in file %s\n",
 				        optionsfile);
 			}
 		}
@@ -603,19 +686,19 @@ init(int argc, char * * argv)
 	if( log_path[0] == '\0' )
 	{
 		if( db_path[0] == '\0' )
-			strncpy(log_path, DEFAULT_LOG_PATH, PATH_MAX);
+			strncpyt(log_path, DEFAULT_LOG_PATH, PATH_MAX);
 		else
-			strncpy(log_path, db_path, PATH_MAX);
+			strncpyt(log_path, db_path, PATH_MAX);
 	}
 	if( db_path[0] == '\0' )
-		strncpy(db_path, DEFAULT_DB_PATH, PATH_MAX);
+		strncpyt(db_path, DEFAULT_DB_PATH, PATH_MAX);
 
 	/* command line arguments processing */
 	for(i=1; i<argc; i++)
 	{
 		if(argv[i][0]!='-')
 		{
-			fprintf(stderr, "Unknown option: %s\n", argv[i]);
+			DPRINTF(E_FATAL, L_GENERAL, "Unknown option: %s\n", argv[i]);
 		}
 		else if(strcmp(argv[i], "--help")==0)
 		{
@@ -628,36 +711,36 @@ init(int argc, char * * argv)
 			if(i+1 < argc)
 				runtime_vars.notify_interval = atoi(argv[++i]);
 			else
-				fprintf(stderr, "Option -%c takes one argument.\n", argv[i][1]);
+				DPRINTF(E_FATAL, L_GENERAL, "Option -%c takes one argument.\n", argv[i][1]);
 			break;
 		case 's':
 			if(i+1 < argc)
-				strncpy(serialnumber, argv[++i], SERIALNUMBER_MAX_LEN);
+				strncpyt(serialnumber, argv[++i], SERIALNUMBER_MAX_LEN);
 			else
-				fprintf(stderr, "Option -%c takes one argument.\n", argv[i][1]);
-			serialnumber[SERIALNUMBER_MAX_LEN-1] = '\0';
+				DPRINTF(E_FATAL, L_GENERAL, "Option -%c takes one argument.\n", argv[i][1]);
 			break;
 		case 'm':
 			if(i+1 < argc)
-				strncpy(modelnumber, argv[++i], MODELNUMBER_MAX_LEN);
+				strncpyt(modelnumber, argv[++i], MODELNUMBER_MAX_LEN);
 			else
-				fprintf(stderr, "Option -%c takes one argument.\n", argv[i][1]);
-			modelnumber[MODELNUMBER_MAX_LEN-1] = '\0';
+				DPRINTF(E_FATAL, L_GENERAL, "Option -%c takes one argument.\n", argv[i][1]);
 			break;
-		/*case 'l':
-			logfilename = argv[++i];
-			break;*/
 		case 'p':
 			if(i+1 < argc)
 				runtime_vars.port = atoi(argv[++i]);
 			else
-				fprintf(stderr, "Option -%c takes one argument.\n", argv[i][1]);
+				DPRINTF(E_FATAL, L_GENERAL, "Option -%c takes one argument.\n", argv[i][1]);
 			break;
 		case 'P':
 			if(i+1 < argc)
-				pidfilename = argv[++i];
+			{
+				if (argv[++i][0] != '/')
+					DPRINTF(E_FATAL, L_GENERAL, "Option -%c requires an absolute filename.\n", argv[i-1][1]);
+				else
+					pidfilename = argv[i];
+			}
 			else
-				fprintf(stderr, "Option -%c takes one argument.\n", argv[i][1]);
+				DPRINTF(E_FATAL, L_GENERAL, "Option -%c takes one argument.\n", argv[i][1]);
 			break;
 		case 'd':
 			debug_flag = 1;
@@ -671,7 +754,7 @@ init(int argc, char * * argv)
 			if(i+1 < argc)
 				presurl = argv[++i];
 			else
-				fprintf(stderr, "Option -%c takes one argument.\n", argv[i][1]);
+				DPRINTF(E_FATAL, L_GENERAL, "Option -%c takes one argument.\n", argv[i][1]);
 			break;
 		case 'a':
 			if(i+1 < argc)
@@ -695,12 +778,12 @@ init(int argc, char * * argv)
 				}
 				else
 				{
-					fprintf(stderr, "Too many listening ips (max: %d), ignoring %s\n",
+					DPRINTF(E_ERROR, L_GENERAL, "Too many listening ips (max: %d), ignoring %s\n",
 				    	    MAX_LAN_ADDR, argv[i]);
 				}
 			}
 			else
-				fprintf(stderr, "Option -%c takes one argument.\n", argv[i][1]);
+				DPRINTF(E_FATAL, L_GENERAL, "Option -%c takes one argument.\n", argv[i][1]);
 			break;
 		case 'i':
 			if(i+1 < argc)
@@ -710,9 +793,8 @@ init(int argc, char * * argv)
 				i++;
 				if( getifaddr(argv[i], ip_addr, sizeof(ip_addr)) < 0 )
 				{
-					fprintf(stderr, "Network interface '%s' not found.\n",
+					DPRINTF(E_FATAL, L_GENERAL, "Required network interface '%s' not found.\n",
 						argv[i]);
-					exit(-1);
 				}
 				for(j=0; j<n_lan_addr; j++)
 				{
@@ -730,12 +812,12 @@ init(int argc, char * * argv)
 				}
 				else
 				{
-					fprintf(stderr, "Too many listening ips (max: %d), ignoring %s\n",
+					DPRINTF(E_ERROR, L_GENERAL, "Too many listening ips (max: %d), ignoring %s\n",
 				    	    MAX_LAN_ADDR, argv[i]);
 				}
 			}
 			else
-				fprintf(stderr, "Option -%c takes one argument.\n", argv[i][1]);
+				DPRINTF(E_FATAL, L_GENERAL, "Option -%c takes one argument.\n", argv[i][1]);
 			break;
 		case 'f':
 			i++;	/* discarding, the config file is already read */
@@ -744,15 +826,16 @@ init(int argc, char * * argv)
 			runtime_vars.port = 0; // triggers help display
 			break;
 		case 'R':
-			snprintf(real_path, sizeof(real_path), "rm -rf %s/files.db %s/art_cache", db_path, db_path);
-			system(real_path);
+			snprintf(buf, sizeof(buf), "rm -rf %s/files.db %s/art_cache", db_path, db_path);
+			if( system(buf) != 0 )
+				DPRINTF(E_FATAL, L_GENERAL, "Failed to clean old file cache. EXITING\n");
 			break;
 		case 'V':
 			printf("Version " MINIDLNA_VERSION "\n");
 			exit(0);
 			break;
 		default:
-			fprintf(stderr, "Unknown option: %s\n", argv[i]);
+			DPRINTF(E_ERROR, L_GENERAL, "Unknown option: %s\n", argv[i]);
 		}
 	}
 	/* If no IP was specified, try to detect one */
@@ -772,7 +855,7 @@ init(int argc, char * * argv)
 
 	if( (n_lan_addr==0) || (runtime_vars.port<=0) )
 	{
-		fprintf(stderr, "Usage:\n\t"
+		DPRINTF(E_ERROR, L_GENERAL, "Usage:\n\t"
 		        "%s [-d] [-v] [-f config_file]\n"
 			"\t\t[-a listening_ip] [-p port]\n"
 			/*"[-l logfile] " not functionnal */
@@ -792,26 +875,36 @@ init(int argc, char * * argv)
 	}
 
 	if( verbose_flag )
+	{
 		strcpy(log_str+65, "debug");
+		log_level = log_str;
+	}
+	else if( !log_level )
+	{
+		log_level = log_str;
+	}
 	if(debug_flag)
 	{
 		pid = getpid();
-		log_init(NULL, log_str);
+		strcpy(log_str+65, "maxdebug");
+		log_level = log_str;
+		log_init(NULL, log_level);
 	}
 	else
 	{
 		pid = daemonize();
 		#ifdef READYNAS
-		log_init("/var/log/upnp-av.log", log_str);
+		unlink("/ramfs/.upnp-av_scan");
+		log_init("/var/log/upnp-av.log", log_level);
 		#else
 		if( access(db_path, F_OK) != 0 )
 			make_dir(db_path, S_ISVTX|S_IRWXU|S_IRWXG|S_IRWXO);
-		sprintf(real_path, "%s/minidlna.log", log_path);
-		log_init(real_path, log_str);
+		sprintf(buf, "%s/minidlna.log", log_path);
+		log_init(buf, log_level);
 		#endif
 	}
 
-	if(checkforrunning(pidfilename) < 0)
+	if (checkforrunning(pidfilename) < 0)
 	{
 		DPRINTF(E_ERROR, L_GENERAL, "MiniDLNA is already running. EXITING.\n");
 		return 1;
@@ -820,40 +913,23 @@ init(int argc, char * * argv)
 	set_startup_time();
 
 	/* presentation url */
-	if(presurl)
-	{
-		strncpy(presentationurl, presurl, PRESENTATIONURL_MAX_LEN);
-		presentationurl[PRESENTATIONURL_MAX_LEN-1] = '\0';
-	}
+	if (presurl)
+		strncpyt(presentationurl, presurl, PRESENTATIONURL_MAX_LEN);
 	else
-	{
-#ifdef READYNAS
-		snprintf(presentationurl, PRESENTATIONURL_MAX_LEN,
-		         "http://%s/admin/", lan_addr[0].str);
-#else
-		snprintf(presentationurl, PRESENTATIONURL_MAX_LEN,
-		         "http://%s:%d/", lan_addr[0].str, runtime_vars.port);
-#endif
-	}
+		strcpy(presentationurl, "/");
 
 	/* set signal handler */
-	signal(SIGCHLD, SIG_IGN);
 	memset(&sa, 0, sizeof(struct sigaction));
 	sa.sa_handler = sigterm;
 	if (sigaction(SIGTERM, &sa, NULL))
-	{
-		DPRINTF(E_FATAL, L_GENERAL, "Failed to set SIGTERM handler. EXITING.\n");
-	}
+		DPRINTF(E_FATAL, L_GENERAL, "Failed to set %s handler. EXITING.\n", SIGTERM);
 	if (sigaction(SIGINT, &sa, NULL))
-	{
-		DPRINTF(E_FATAL, L_GENERAL, "Failed to set SIGINT handler. EXITING.\n");
-	}
+		DPRINTF(E_FATAL, L_GENERAL, "Failed to set %s handler. EXITING.\n", SIGINT);
+	if (signal(SIGPIPE, SIG_IGN) == SIG_ERR)
+		DPRINTF(E_FATAL, L_GENERAL, "Failed to set %s handler. EXITING.\n", SIGPIPE);
 
-	if(signal(SIGPIPE, SIG_IGN) == SIG_ERR) {
-		DPRINTF(E_FATAL, L_GENERAL, "Failed to ignore SIGPIPE signals. EXITING.\n");
-	}
-
-	writepidfile(pidfilename, pid);
+	if (writepidfile(pidfilename, pid) != 0)
+		pidfilename = NULL;
 
 	return 0;
 }
@@ -880,12 +956,14 @@ main(int argc, char * * argv)
 	struct media_dir_s *media_path, *last_path;
 	struct album_art_name_s *art_names, *last_name;
 #ifdef TIVO_SUPPORT
-	unsigned short int beacon_interval = 5;
+	uint8_t beacon_interval = 5;
 	int sbeacon = -1;
 	struct sockaddr_in tivo_bcast;
 	struct timeval lastbeacontime = {0, 0};
 #endif
 
+	for (i = 0; i < L_MAX; i++)
+		log_level[i] = E_WARN;
 #ifdef ENABLE_NLS
 	setlocale(LC_MESSAGES, "");
 	setlocale(LC_CTYPE, "en_US.utf8");
@@ -893,89 +971,35 @@ main(int argc, char * * argv)
 	textdomain("minidlna");
 #endif
 
-	if(init(argc, argv) != 0)
+	if (init(argc, argv) != 0)
 		return 1;
 
-#ifdef READYNAS
 	DPRINTF(E_WARN, L_GENERAL, "Starting " SERVER_NAME " version " MINIDLNA_VERSION ".\n");
-	unlink("/ramfs/.upnp-av_scan");
-#else
-	DPRINTF(E_WARN, L_GENERAL, "Starting " SERVER_NAME " version " MINIDLNA_VERSION " [SQLite %s].\n", sqlite3_libversion());
-	if( !sqlite3_threadsafe() )
-	{
-		DPRINTF(E_ERROR, L_GENERAL, "SQLite library is not threadsafe!  "
-		                            "Scanning must be finished before file serving can begin, "
-		                            "and inotify will be disabled.\n");
-	}
 	if( sqlite3_libversion_number() < 3005001 )
 	{
 		DPRINTF(E_WARN, L_GENERAL, "SQLite library is old.  Please use version 3.5.1 or newer.\n");
 	}
-#endif
+
 	LIST_INIT(&upnphttphead);
 
-	if( open_db() == 0 )
+	if( (i = open_db()) == 0 )
 	{
 		updateID = sql_get_int_field(db, "SELECT UPDATE_ID from SETTINGS");
 	}
-	i = db_upgrade(db);
-	if( i != 0 )
-	{
-		if( i < 0 )
-		{
-			DPRINTF(E_WARN, L_GENERAL, "Creating new database at %s/files.db\n", db_path);
-		}
-		else
-		{
-			DPRINTF(E_WARN, L_GENERAL, "Database version mismatch; need to recreate...\n");
-		}
-		sqlite3_close(db);
-		char *cmd;
-		asprintf(&cmd, "rm -rf %s/files.db %s/art_cache", db_path, db_path);
-		system(cmd);
-		free(cmd);
-		open_db();
-		if( CreateDatabase() != 0 )
-		{
-			DPRINTF(E_FATAL, L_GENERAL, "ERROR: Failed to create sqlite database!  Exiting...\n");
-		}
-#if USE_FORK
-		scanning = 1;
-		sqlite3_close(db);
-		scanner_pid = fork();
-		open_db();
-		if( !scanner_pid ) // child (scanner) process
-		{
-			start_scanner();
-			sqlite3_close(db);
-			media_path = media_dirs;
-			art_names = album_art_names;
-			while( media_path )
-			{
-				free(media_path->path);
-				last_path = media_path;
-				media_path = media_path->next;
-				free(last_path);
-			}
-			while( art_names )
-			{
-				free(art_names->name);
-				last_name = art_names;
-				art_names = art_names->next;
-				free(last_name);
-			}
-			freeoptions();
-			exit(EXIT_SUCCESS);
-		}
-#else
-		start_scanner();
-#endif
-	}
+	check_db(db, i, &scanner_pid);
+	signal(SIGCHLD, &sigchld);
 #ifdef HAVE_INOTIFY
-	if( sqlite3_threadsafe() && sqlite3_libversion_number() >= 3005001 &&
-	    GETFLAG(INOTIFY_MASK) && pthread_create(&inotify_thread, NULL, start_inotify, NULL) )
+	if( GETFLAG(INOTIFY_MASK) )
 	{
-		DPRINTF(E_FATAL, L_GENERAL, "ERROR: pthread_create() failed for start_inotify.\n");
+		if( !sqlite3_threadsafe() || sqlite3_libversion_number() < 3005001 )
+		{
+			DPRINTF(E_ERROR, L_GENERAL, "SQLite library is not threadsafe!  "
+			                            "Inotify will be disabled.\n");
+		}
+		else if( pthread_create(&inotify_thread, NULL, start_inotify, NULL) )
+		{
+			DPRINTF(E_FATAL, L_GENERAL, "ERROR: pthread_create() failed for start_inotify. EXITING\n");
+		}
 	}
 #endif
 	sudp = OpenAndConfSSDPReceiveSocket(n_lan_addr, lan_addr);
@@ -1043,7 +1067,7 @@ main(int argc, char * * argv)
 		}
 		else
 		{
-			/* the comparaison is not very precise but who cares ? */
+			/* the comparison is not very precise but who cares ? */
 			if(timeofday.tv_sec >= (lastnotifytime.tv_sec + runtime_vars.notify_interval))
 			{
 				SendSSDPNotifies2(snotify,
@@ -1148,6 +1172,7 @@ main(int argc, char * * argv)
 		if(select(max_fd+1, &readset, &writeset, 0, &timeout) < 0)
 		{
 			if(quitting) goto shutdown;
+			if(errno == EINTR) continue;
 			DPRINTF(E_ERROR, L_GENERAL, "select(all): %s\n", strerror(errno));
 			DPRINTF(E_FATAL, L_GENERAL, "Failed to select open sockets. EXITING\n");
 		}
@@ -1238,9 +1263,8 @@ main(int argc, char * * argv)
 shutdown:
 	/* kill the scanner */
 	if( scanning && scanner_pid )
-	{
 		kill(scanner_pid, 9);
-	}
+
 	/* close out open sockets */
 	while(upnphttphead.lh_first != NULL)
 	{
@@ -1248,17 +1272,18 @@ shutdown:
 		LIST_REMOVE(e, entries);
 		Delete_upnphttp(e);
 	}
-
-	if (sudp >= 0) close(sudp);
-	if (shttpl >= 0) close(shttpl);
+	if (sudp >= 0)
+		close(sudp);
+	if (shttpl >= 0)
+		close(shttpl);
 	#ifdef TIVO_SUPPORT
-	if (sbeacon >= 0) close(sbeacon);
+	if (sbeacon >= 0)
+		close(sbeacon);
 	#endif
 	
 	if(SendSSDPGoodbye(snotify, n_lan_addr) < 0)
-	{
 		DPRINTF(E_ERROR, L_GENERAL, "Failed to broadcast good-bye notifications\n");
-	}
+
 	for(i=0; i<n_lan_addr; i++)
 		close(snotify[i]);
 
@@ -1267,6 +1292,8 @@ shutdown:
 
 	sql_exec(db, "UPDATE SETTINGS set UPDATE_ID = %u", updateID);
 	sqlite3_close(db);
+
+	upnpevents_removeSubscribers();
 
 	media_path = media_dirs;
 	art_names = album_art_names;
@@ -1285,10 +1312,8 @@ shutdown:
 		free(last_name);
 	}
 
-	if(unlink(pidfilename) < 0)
-	{
+	if(pidfilename && unlink(pidfilename) < 0)
 		DPRINTF(E_ERROR, L_GENERAL, "Failed to remove pidfile %s: %s\n", pidfilename, strerror(errno));
-	}
 
 	freeoptions();
 

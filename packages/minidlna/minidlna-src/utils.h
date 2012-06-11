@@ -24,11 +24,16 @@
 #ifndef __UTILS_H__
 #define __UTILS_H__
 
+#include "minidlnatypes.h"
+
 int
 strcatf(struct string_s *str, char *fmt, ...);
 
 void
 strncpyt(char *dst, const char *src, size_t len);
+
+inline int
+xasprintf(char **strp, char *fmt, ...);
 
 int
 ends_with(const char * haystack, const char * needle);
@@ -38,6 +43,9 @@ trim(char *str);
 
 char *
 strstrc(const char *s, const char *p, const char t);
+
+char *
+strcasestrc(const char *s, const char *p, const char t);
 
 char *
 modifyString(char * string, const char * before, const char * after, short like);
@@ -50,6 +58,9 @@ strip_ext(char * name);
 
 int
 make_dir(char * path, mode_t mode);
+
+unsigned int
+DJBHash(const char *str, int len);
 
 int
 is_video(const char * file);

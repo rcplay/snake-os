@@ -2,7 +2,7 @@
 all: minidlna-release.opk
 
 minidlna-src:
-	wget http://sourceforge.net/projects/minidlna/files/minidlna/1.0.22/minidlna_1.0.22_src.tar.gz/download -O minidlna-src.tar.gz
+	wget http://sourceforge.net/projects/minidlna/files/minidlna/1.0.24/minidlna_1.0.24_src.tar.gz/download -O minidlna-src.tar.gz
 	sha1sum -c minidlna-src.tar.gz.sha1
 	mkdir minidlna-src
 	tar -xf minidlna-src.tar.gz --strip-components=1 -C minidlna-src

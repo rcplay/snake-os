@@ -33,8 +33,36 @@
 #ifdef ENABLE_NLS
 #include <libintl.h>
 #endif
+#if HAVE_FFMPEG_LIBAVUTIL_AVUTIL_H
+#include <ffmpeg/libavutil/avutil.h>
+#elif HAVE_LIBAV_LIBAVUTIL_AVUTIL_H
+#include <libav/libavutil/avutil.h>
+#elif HAVE_LIBAVUTIL_AVUTIL_H
+#include <libavutil/avutil.h>
+#elif HAVE_FFMPEG_AVUTIL_H
+#include <ffmpeg/avutil.h>
+#elif HAVE_LIBAV_AVUTIL_H
+#include <libav/avutil.h>
+#elif HAVE_AVUTIL_H
+#include <avutil.h>
+#endif
+#if HAVE_FFMPEG_LIBAVFORMAT_AVFORMAT_H
+#include <ffmpeg/libavformat/avformat.h>
+#elif HAVE_LIBAV_LIBAVFORMAT_AVFORMAT_H
+#include <libav/libavformat/avformat.h>
+#elif HAVE_LIBAVFORMAT_AVFORMAT_H
+#include <libavformat/avformat.h>
+#elif HAVE_FFMPEG_AVFORMAT_H
+#include <ffmpeg/avformat.h>
+#elif HAVE_LIBAV_LIBAVFORMAT_H
+#include <libav/avformat.h>
+#elif HAVE_AVFORMAT_H
+#include <avformat.h>
+#endif
+
 #include <sqlite3.h>
 
+#include "scanner_sqlite.h"
 #include "upnpglobalvars.h"
 #include "metadata.h"
 #include "playlist.h"
@@ -562,74 +590,25 @@ CreateDatabase(void)
 	                     BROWSEDIR_ID, "0", _("Browse Folders"),
 			0 };
 
-	ret = sql_exec(db, "CREATE TABLE OBJECTS ( "
-					"ID INTEGER PRIMARY KEY AUTOINCREMENT, "
-					"OBJECT_ID TEXT UNIQUE NOT NULL, "
-					"PARENT_ID TEXT NOT NULL, "
-					"REF_ID TEXT DEFAULT NULL, "
-					"CLASS TEXT NOT NULL, "
-					"DETAIL_ID INTEGER DEFAULT NULL, "
-					"NAME TEXT DEFAULT NULL"
-					");");
+	ret = sql_exec(db, create_objectTable_sqlite);
 	if( ret != SQLITE_OK )
 		goto sql_failed;
-	ret = sql_exec(db, "CREATE TABLE DETAILS ( "
-					"ID INTEGER PRIMARY KEY AUTOINCREMENT, "
-					"PATH TEXT DEFAULT NULL, "
-					"SIZE INTEGER, "
-					"TITLE TEXT COLLATE NOCASE, "
-					"DURATION TEXT, "
-					"BITRATE INTEGER, "
-					"SAMPLERATE INTEGER, "
-					"ARTIST TEXT COLLATE NOCASE, "
-					"ALBUM TEXT COLLATE NOCASE, "
-					"GENRE TEXT COLLATE NOCASE, "
-					"COMMENT TEXT, "
-					"CHANNELS INTEGER, "
-					"TRACK INTEGER, "
-					"DATE DATE, "
-					"RESOLUTION TEXT, "
-					"THUMBNAIL BOOL DEFAULT 0, "
-					"CREATOR TEXT COLLATE NOCASE, "
-					"DLNA_PN TEXT, "
-					"MIME TEXT, "
-					"ALBUM_ART INTEGER DEFAULT 0, "
-					"DISC INTEGER, "
-					"TIMESTAMP INTEGER"
-					")");
+	ret = sql_exec(db, create_detailTable_sqlite);
 	if( ret != SQLITE_OK )
 		goto sql_failed;
-	ret = sql_exec(db, "CREATE TABLE ALBUM_ART ( "
-					"ID INTEGER PRIMARY KEY AUTOINCREMENT, "
-					"PATH TEXT NOT NULL"
-					")");
+	ret = sql_exec(db, create_albumArtTable_sqlite);
 	if( ret != SQLITE_OK )
 		goto sql_failed;
-	ret = sql_exec(db, "CREATE TABLE CAPTIONS ("
-					"ID INTEGER PRIMARY KEY, "
-					"PATH TEXT NOT NULL"
-					")");
+	ret = sql_exec(db, create_captionTable_sqlite);
 	if( ret != SQLITE_OK )
 		goto sql_failed;
-	ret = sql_exec(db, "CREATE TABLE BOOKMARKS ("
-					"ID INTEGER PRIMARY KEY, "
-					"SEC INTEGER"
-					")");
+	ret = sql_exec(db, create_bookmarkTable_sqlite);
 	if( ret != SQLITE_OK )
 		goto sql_failed;
-	ret = sql_exec(db, "CREATE TABLE PLAYLISTS ("
-					"ID INTEGER PRIMARY KEY AUTOINCREMENT, "
-					"NAME TEXT NOT NULL, "
-					"PATH TEXT NOT NULL, "
-					"ITEMS INTEGER DEFAULT 0, "
-					"FOUND INTEGER DEFAULT 0"
-					")");
+	ret = sql_exec(db, create_playlistTable_sqlite);
 	if( ret != SQLITE_OK )
 		goto sql_failed;
-	ret = sql_exec(db, "CREATE TABLE SETTINGS ("
-					"UPDATE_ID INTEGER PRIMARY KEY DEFAULT 0, "
-					"FLAGS INTEGER DEFAULT 0"
-					")");
+	ret = sql_exec(db, create_settingsTable_sqlite);
 	if( ret != SQLITE_OK )
 		goto sql_failed;
 	ret = sql_exec(db, "INSERT into SETTINGS values (0, 0)");
@@ -725,30 +704,28 @@ ScanDirectory(const char * dir, const char * parent, enum media_types dir_type)
 	enum file_types type;
 
 	setlocale(LC_COLLATE, "");
-	if( chdir(dir) != 0 )
-		return;
 
 	DPRINTF(parent?E_INFO:E_WARN, L_SCANNER, _("Scanning %s\n"), dir);
 	switch( dir_type )
 	{
 		case ALL_MEDIA:
-			n = scandir(".", &namelist, filter_media, alphasort);
+			n = scandir(dir, &namelist, filter_media, alphasort);
 			break;
 		case AUDIO_ONLY:
-			n = scandir(".", &namelist, filter_audio, alphasort);
+			n = scandir(dir, &namelist, filter_audio, alphasort);
 			break;
 		case VIDEO_ONLY:
-			n = scandir(".", &namelist, filter_video, alphasort);
+			n = scandir(dir, &namelist, filter_video, alphasort);
 			break;
 		case IMAGES_ONLY:
-			n = scandir(".", &namelist, filter_images, alphasort);
+			n = scandir(dir, &namelist, filter_images, alphasort);
 			break;
 		default:
 			n = -1;
 			break;
 	}
 	if (n < 0) {
-		fprintf(stderr, "Error scanning %s [scandir]\n", dir);
+		DPRINTF(E_WARN, L_SCANNER, "Error scanning %s\n", dir);
 		return;
 	}
 
@@ -793,11 +770,7 @@ ScanDirectory(const char * dir, const char * parent, enum media_types dir_type)
 		free(namelist[i]);
 	}
 	free(namelist);
-	if( parent )
-	{
-		chdir(dirname((char*)dir));
-	}
-	else
+	if( !parent )
 	{
 		DPRINTF(E_WARN, L_SCANNER, _("Scanning %s finished (%llu files)!\n"), dir, fileno);
 	}
@@ -817,7 +790,8 @@ start_scanner()
 	if( flag )
 		fclose(flag);
 #endif
-	freopen("/dev/null", "a", stderr);
+	av_register_all();
+	av_log_set_level(AV_LOG_PANIC);
 	while( media_path )
 	{
 		strncpy(name, media_path->path, sizeof(name));
@@ -825,7 +799,6 @@ start_scanner()
 		ScanDirectory(media_path->path, NULL, media_path->type);
 		media_path = media_path->next;
 	}
-	freopen("/proc/self/fd/2", "a", stderr);
 #ifdef READYNAS
 	if( access("/ramfs/.rescan_done", F_OK) == 0 )
 		system("/bin/sh /ramfs/.rescan_done");

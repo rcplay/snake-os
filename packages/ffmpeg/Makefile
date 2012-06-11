@@ -1,6 +1,6 @@
 ffmpeg: ffmpeg-src ffmpeg-src/libavformat/libavformat.a ffmpeg-src/libavutil/libavutil.a ffmpeg-src/libavcodec/libavcodec.a
 ffmpeg-src:
-	wget http://ffmpeg.org/releases/ffmpeg-0.8.6.tar.gz -O ffmpeg-src.tar.gz
+	wget http://ffmpeg.org/releases/ffmpeg-0.8.12.tar.gz -O ffmpeg-src.tar.gz
 	sha1sum -c ffmpeg-src.tar.gz.sha1
 	mkdir ffmpeg-src
 	tar -xf ffmpeg-src.tar.gz --strip-components=1 -C ffmpeg-src
