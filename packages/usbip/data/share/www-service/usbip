@@ -1,0 +1,129 @@
+#!/bin/haserl
+Content-type: text/html
+
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">   
+<%in funcs.cgi %>
+<%in /opt/share/www-service/.usbip-helpers %>
+<% usbip_list %>
+
+<%
+
+if [ "${REQUEST_METHOD}" = "POST" ]
+then
+    ACTION=$(echo ${FORM_action} | cut -d ' ' -f 1)
+    case "$ACTION" in
+      Start)
+        /opt/etc/init.d/usbip start > /dev/null
+        sleep 1
+      ;;
+      Stop)
+        /opt/etc/init.d/usbip stop > /dev/null
+        sleep 1
+      ;;
+      Restart)
+        /opt/etc/init.d/usbip restart > /dev/null
+        sleep 1
+      ;;
+      Apply)
+        USBIP_ENABLED=$(echo ${FORM_enabled} | cut -d ' ' -f 1)
+        set_opkg_service_config usbip enabled ${USBIP_ENABLED:-0}
+
+        for bus in $(env | grep FORM_busid); do
+          busid=$(echo $bus | cut -d "=" -f 1 | cut -d "_" -f 3)
+          busid_status=$(echo $bus | cut -d "=" -f 2)
+
+          if [ "$busid_status" = "1" ]; then
+            export_device $busid
+          else
+            unexport_device $busid
+          fi
+        done
+
+        /opt/etc/init.d/usbip restart > /dev/null
+        sleep 1
+      ;;
+      
+      *)
+    esac
+fi
+
+
+%>
+<script language="JavaScript">
+<!-- //
+
+function validateAction(form) {                                             
+    var action = btnAction.value;
+    var question = "";
+
+    if ( action == 'Start' )
+      return true;
+    else if ( action == 'Stop' )
+      question = "This action may disconnect remote USB devices. Are you sure that you want to stop USB/IP service?";
+    else if  ( action == 'Restart' )
+      question = "This action may disconnect remote USB devices. Are you sure that you want to restart USB/IP service?";
+    else if  ( action == 'Apply' )
+      question = "This action may disconnect remote USB devices. Do you want to continue?";
+
+    return confirm(question);
+} 
+
+
+// -->
+</script>
+</head>
+<body>                 
+
+<center>
+<form action="<%= ${SCRIPT_NAME} %>?page=usbip" method="POST"  onsubmit="return validateAction(this);">
+  <table border="0">
+    <tr>
+      <th>USB/IP enabled:</th>
+      <td>
+        <input type="hidden" name="enabled" value="0" />
+        <input type="checkbox" name="enabled" value="1" <% is_checked $(get_opkg_service_config usbip enabled) %> />
+      </td>
+    </tr>
+
+    <tr>
+      <th colspan="2">Devices</th>
+    </tr>
+
+    <tr>
+      <td>Identification</td>
+      <td>Exported</td>
+    </tr>
+
+    <% for line in $(cat /tmp/usbip-list); do %>
+      <% USB_ID=$(parse_usbip_entry usbid "$line") %>
+      <% BUS_ID=$(parse_usbip_entry busid "$line") %>
+      <% DEV_ID=$(parse_usbip_entry devid "$line") %>
+      <% DEV_KIND=$(parse_usbip_entry kind "$line") %>
+
+      <tr>
+        <th><%= $USB_ID %> (<%= $DEV_KIND %>)</th>
+        <td>
+          <input type="hidden" value="0" name="busid_<%= $BUS_ID %>">
+          <input type="checkbox" value="1" name="busid_<%= $BUS_ID %>" <% is_checked $(check_exported_device $BUS_ID) %>>
+          <% check_online_exported_device $BUS_ID %>
+        </td>
+      </tr>
+    <% done %>
+
+    <tr>
+      <th>Status:</th>
+      <td><% /opt/etc/init.d/usbip webstatus %></td>
+    </tr>
+
+  </table>
+
+  <input type="submit" name="action" value="Apply" onclick="btnAction=this">
+  <input type="submit" name="action" value="Start" onclick="btnAction=this">
+  <input type="submit" name="action" value="Stop" onclick="btnAction=this">
+  <input type="submit" name="action" value="Restart" onclick="btnAction=this">
+
+</form>
+
+
+</body>
+</html>

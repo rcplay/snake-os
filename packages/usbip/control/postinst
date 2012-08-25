@@ -1,0 +1,25 @@
+#!/bin/sh
+
+MODULES_DEP=/opt/lib/modules/$(uname -r)/modules.dep
+MODULES_DEP_LINE="usbip/usbip.ko: usbip/usbip_common_mod.ko usbip/vhci-hcd.ko"
+EXTRAMODULES=/opt/etc/config/extramodules
+
+echo "Installing USB/IP kernel modules"
+
+grep "usbip" $EXTRAMODULES > /dev/null
+if [ "$?" = "1" ]; then
+  sed -i "s/^modules=/modules=usbip /" $EXTRAMODULES
+fi
+
+grep "usbip" $MODULES_DEP > /dev/null
+if [ "$?" = "1" ]; then
+  echo "$MODULES_DEP_LINE" >> $MODULES_DEP
+fi
+
+echo "Added USB/IP kernel modules"
+
+echo "Extramodprobing USB/IP kernel module"
+/opt/bin/extramodprobe usbip
+echo "Finished instalation of USB/IP"
+
+exit 0

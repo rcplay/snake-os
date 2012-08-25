@@ -4,12 +4,11 @@ all: transmission curl myfilebrowser minidlna
 export TOPDIR=$(PWD)
 export CFLAGS_COMMON=-Os -s -pipe -march=armv4
 
-PATH+=:$(TOPDIR)/snake-os/tools/arm-uclibc-3.4.6/bin/
-
-
+#PATH=$(PATH):$(TOPDIR)/snake-os/tools/arm-uclibc-3.4.6/bin/
 
 snake-os: snake-os/output/rootfs.jffs2
 snake-os/output/rootfs.jffs2:
+	echo $(PATH)
 	cd snake-os; sh mk_snakeos_image.sh
 
 
@@ -77,3 +76,9 @@ extramodules: output/extramodules.opk
 output/extramodules.opk:
 	make -C extramodules
 	cp extramodules/extramodules.opk output/extramodules.opk
+
+usbip: output/usbip.opk
+output/usbip.opk: glib
+	make -C usbip
+	cp usbip/usbip.opk output/usbip.opk
+

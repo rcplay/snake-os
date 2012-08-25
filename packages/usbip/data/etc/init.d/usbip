@@ -1,0 +1,80 @@
+#!/bin/sh
+#
+
+RETVAL=0
+
+ENABLED=`grep "^enabled=" /opt/etc/config/usbip | cut -d = -f 2`
+
+start() {
+    if [ $ENABLED -eq 1 ]; then
+      echo "Starting USB/IP"
+      /opt/bin/usbipd -D &
+      devices bind &
+    fi
+}
+
+stop() {
+    echo "Shutting down USB/IP"
+    devices unbind &
+    killall usbipd &
+} 
+
+restart() {
+    stop
+    sleep 1
+    start
+} 
+
+webstatus(){
+    PID=$(pgrep -f "/opt/bin/usbipd")
+    if [ ${PID:-empty} = "empty" ] ; then
+      echo -n "USB/IP is not running"
+    else
+      echo -n "USB/IP is running"
+    fi
+}
+
+devices(){
+  DEVICES=`grep "^devices=" /opt/etc/config/usbip | cut -d = -f 2 | sed 's/://g'`
+
+  case "$1" in
+    bind)
+    ACTION=usbip
+    echo "Binding devices"
+  ;;
+    unbind)
+    ACTION=other
+    echo "Unbinding devices"
+  ;;
+    *)
+    echo "Usage: $0 {start|stop|restart|bind_devices (bind|unbind)}"
+    exit 1
+  esac
+
+  for device in $DEVICES; do
+    /opt/bin/bind_driver --$(ACTION) $device
+  done
+}
+
+case "$1" in
+    start)
+    start
+  ;;
+    bind_devices)
+    bind_devices
+  ;;  
+    stop)
+    stop
+  ;;
+    restart)
+    restart
+  ;;
+    webstatus)
+    webstatus
+    ;;
+    *)
+  echo "Usage: $0 {start|stop|restart|bind_devices (bind|unbind)}"
+  exit 1
+esac
+
+

@@ -1,0 +1,73 @@
+<%
+# TODO: add these to the base system
+set_opkg_service_config(){
+        sed -ri "s%^${2}=.*%${2}=${3}%g" /opt/etc/config/${1}
+}
+
+get_opkg_service_config(){
+        echo -n $(sed -n "s/^\(${2}\)=\(.*\)$/\2/p" /opt/etc/config/${1})
+}
+
+usbip_list(){
+    /opt/bin/bind_driver --list | grep -v "^List" | awk '{printf NF?$0:"\n"}' | sed -e "s/[ \t]*/ /g" | sed 's/ - //' | sed 's/ /#/g' > /tmp/usbip-list
+}
+
+parse_usbip_entry(){
+  # busid#1-1#(0781:5567)#1-1:1.0#->#usb-storage
+  # --list2 busid=1-1#usbid=8087:0024#1-1:1.0=hub#
+
+  case "$1" in
+    busid)
+      echo "$2" | awk -F "#" '{ print $2 }'
+    ;;
+    usbid)
+      echo "$2" | awk -F "#" '{ print $3 }' | sed 's/[()]//g'
+    ;;
+    extbusid)
+      echo "$2" | awk -F "#" '{ print $4 }'
+    ;;
+    kind)
+      echo "$2" | awk -F "#" '{ print $6 }'
+    ;;
+    *)
+      echo "$2"
+    ;;
+  esac
+}
+
+check_exported_device(){
+  get_opkg_service_config usbip devices | grep ":$1:" > /dev/null
+
+  if [ $? = "1" ]; then
+    echo "0"
+  else
+    echo "1"
+  fi
+}
+
+check_online_exported_device(){
+  usbip_list
+  kind=$(parse_usbip_entry kind $(cat /tmp/usbip-list | grep "busid#$1#"))
+
+  if [ "$kind" = "usbip" ]; then
+    echo " (Online)"
+  else
+    echo ""
+  fi
+}
+
+export_device(){
+  devices=$(get_opkg_service_config usbip devices)
+  set_opkg_service_config usbip devices "$devices :$1:"
+  /opt/bin/bind_driver --usbip $1
+  usbip_list
+}
+
+unexport_device(){
+  devices=$(get_opkg_service_config usbip devices | sed "s/:$1://g")
+  set_opkg_service_config usbip devices "$devices"
+  /opt/bin/bind_driver --other $1
+  usbip_list
+}
+
+%>

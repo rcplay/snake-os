@@ -1,0 +1,10 @@
+Package: usbip
+Version: 0.1.7
+Description: USB device sharing system over IP network
+Section: snakeos/applications
+Priority: optional
+Maintainer: 
+Architecture: all
+Homepage: 
+Source: 
+Depends: extramodules

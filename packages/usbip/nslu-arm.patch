@@ -1,0 +1,25 @@
+--- usbip-src/src/configure.ac	2008-05-19 07:52:04.000000000 -0300
++++ usbip-src/src/configure.ac	2012-08-14 18:56:20.494244028 -0300
+@@ -32,8 +32,8 @@ AC_C_CONST
+ AC_TYPE_SIZE_T
+ 
+ # Checks for library functions.
+-AC_FUNC_MALLOC
+-AC_FUNC_REALLOC
++# AC_FUNC_MALLOC
++# AC_FUNC_REALLOC
+ AC_CHECK_FUNCS([bzero memset strchr strerror strstr strtoul])
+ 
+ AC_CHECK_HEADER(sysfs/libsysfs.h,
+
+--- usbip-src/src/lib/usbip_common.h	2008-05-19 08:14:14.000000000 -0300
++++ usbip-src/src/lib/usbip_common.h	2012-08-14 18:55:46.050243382 -0300
+@@ -125,7 +125,7 @@ struct usb_device {
+ 	uint8_t bConfigurationValue;
+ 	uint8_t bNumConfigurations;
+ 	uint8_t bNumInterfaces;
+-} __attribute__((packed));
++};
+ 
+ #define to_string(s)	#s
+ 
