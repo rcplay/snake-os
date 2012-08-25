@@ -4,11 +4,10 @@ all: transmission curl myfilebrowser minidlna
 export TOPDIR=$(PWD)
 export CFLAGS_COMMON=-Os -s -pipe -march=armv4
 
-#PATH=$(PATH):$(TOPDIR)/snake-os/tools/arm-uclibc-3.4.6/bin/
+PATH+=:$(TOPDIR)/snake-os/tools/arm-uclibc-3.4.6/bin/
 
 snake-os: snake-os/output/rootfs.jffs2
 snake-os/output/rootfs.jffs2:
-	echo $(PATH)
 	cd snake-os; sh mk_snakeos_image.sh
 
 
