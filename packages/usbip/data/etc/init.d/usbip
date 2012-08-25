@@ -47,12 +47,12 @@ devices(){
     echo "Unbinding devices"
   ;;
     *)
-    echo "Usage: $0 {start|stop|restart|bind_devices (bind|unbind)}"
+    echo "Usage: $0 {start|stop|restart|devices (bind|unbind)}"
     exit 1
   esac
 
   for device in $DEVICES; do
-    /opt/bin/bind_driver --$(ACTION) $device
+    /opt/bin/bind_driver --$ACTION $device
   done
 }
 
@@ -60,8 +60,8 @@ case "$1" in
     start)
     start
   ;;
-    bind_devices)
-    bind_devices
+    devices)
+    devices
   ;;  
     stop)
     stop
@@ -73,7 +73,7 @@ case "$1" in
     webstatus
     ;;
     *)
-  echo "Usage: $0 {start|stop|restart|bind_devices (bind|unbind)}"
+  echo "Usage: $0 {start|stop|restart|devices (bind|unbind)}"
   exit 1
 esac
 
