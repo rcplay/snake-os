@@ -1,0 +1,10 @@
+Package: sqlite3
+Version: 3.7.13
+Description: SQL database
+Section: snakeos/applications
+Priority: optional
+Maintainer: 
+Architecture: all
+Homepage: http://www.sqlite.org
+Source: 
+Depends: 
