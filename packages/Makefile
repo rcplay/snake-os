@@ -81,3 +81,8 @@ output/usbip.opk: glib
 	make -C usbip
 	cp usbip/usbip.opk output/usbip.opk
 
+sqlite3: output/sqlite3.opk
+output/sqlite3.opk: 
+	make -C sqlite3
+	cp sqlite3/sqlite3.opk output/sqlite3.opk
+
