@@ -21,6 +21,7 @@ Time is priceless and if you have some to spare then there is no other better wa
 
 == Donors ==
 || *Date*      || *Donor*        ||
+|| 03 Nov 2012 || Jamie Shield ||
 || 20 Oct 2012 || Huseyin Cagri Gurses ||
 || 04 Sep 2012 || René Viancos ||
 || 27 Jun 2012 || Adam Zorn ||
