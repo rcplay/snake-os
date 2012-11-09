@@ -1,0 +1,18 @@
+#!/bin/haserl
+Content-type: text/html
+
+<html>
+<%in funcs.cgi %>
+<%
+get_opkg_service_config(){
+        echo -n $(sed -n "s/^\(${2}\)=\(.*\)$/\2/p" /opt/etc/config/${1})
+}
+
+%>
+
+<script type="text/javascript">
+<!--
+window.open('http://'+document.location.hostname+':<% get_opkg_service_config transmission trans_rpc_port %>')
+//-->
+</script>
+</head></html>

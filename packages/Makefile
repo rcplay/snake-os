@@ -11,9 +11,14 @@ snake-os/output/rootfs.jffs2:
 	cd snake-os; sh mk_snakeos_image.sh
 
 
-transmission: output/transmission.opk
-output/transmission.opk: snake-os
-	cp ./snake-os/output/transmission.opk ./output/
+.PHONY: libevent openssl libcurl-ssl
+libevent openssl libcurl-ssl:
+	make -C $@ 
+
+transmission: libevent openssl libcurl-ssl output/transmission.opk
+output/transmission.opk:
+	make -C transmission
+	cp transmission/transmission.opk output/
 
 
 curl: output/curl.opk

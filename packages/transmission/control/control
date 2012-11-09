@@ -1,6 +1,6 @@
-Package: extramodules
-Version: 2.6.16-2
-Description: set of extra modules
+Package: transmission
+Version: 2.60-1
+Description:Transmission Bittorrent client
 Section: snakeos/applications
 Priority: optional
 Maintainer: 
