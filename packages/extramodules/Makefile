@@ -10,7 +10,7 @@ linux-src:
 data/lib/extramodules/modules.dep: linux-src
 	make -C linux-src zImage
 	make -C linux-src modules
-	make -C linux-src modules_install INSTALL_MOD_PATH=${TOPDIR}/extramodules/data/
+	make -C linux-src modules_install DEPMOD=$(TOPDIR)/snake-os/tools/depmod.pl INSTALL_MOD_PATH=${TOPDIR}/extramodules/data/
 
 
 extramodules.opk: data/lib/extramodules/modules.dep
