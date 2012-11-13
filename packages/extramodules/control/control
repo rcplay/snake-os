@@ -1,6 +1,6 @@
 Package: extramodules
-Version: 2.6.16-2
-Description: set of extra modules
+Version: 2.6.16-3
+Description: set of extra kernel modules
 Section: snakeos/applications
 Priority: optional
 Maintainer: 
