@@ -39,14 +39,18 @@ then
       Apply)
         SMBENABLE=$(echo ${FORM_samba_enable} | cut -d ' ' -f 1)
       	set_opkg_service_config samba3 samba_enable ${SMBENABLE:-0}
-		if [ ${SMBENABLE:-0} = 1 ] ; then
-	      	SECMODE=$(echo ${FORM_security} | cut -d ' ' -f 1)
-			set_opkg_service_config samba3 smbsecurity ${SECMODE}
-			sed -ri "s/security = .*/security = ${SECMODE}/g" /etc/smb.conf
-	      	WORKGROUP=$(echo ${FORM_workgroup} | cut -d ' ' -f 1)
-			set_opkg_service_config samba3 smbworkgroup ${WORKGROUP}
-	      	sed -ri "s/workgroup = .*/workgroup = ${WORKGROUP}/g" /etc/smb.conf
-		fi
+        if [ ${SMBENABLE:-0} = 1 ] ; then
+            SECMODE=$(echo ${FORM_security} | cut -d ' ' -f 1)
+            set_opkg_service_config samba3 smbsecurity ${SECMODE}
+            sed -ri "s/security = .*/security = ${SECMODE}/g" /etc/smb.conf
+
+            WORKGROUP=$(echo ${FORM_workgroup} | cut -d ' ' -f 1)
+            set_opkg_service_config samba3 smbworkgroup ${WORKGROUP}
+            sed -ri "s/workgroup = .*/workgroup = ${WORKGROUP}/g" /etc/smb.conf
+
+            USE_SENDFILE=$(echo ${FORM_use_sendfile} | cut -d ' ' -f 1)
+            set_opkg_service_config samba3 use_sendfile ${USE_SENDFILE:-0}
+        fi
       	/opt/etc/init.d/samba3 restart > /dev/null
       	sleep 2
     	;;
@@ -61,7 +65,7 @@ samba_form(){
 %>
 <form action="<%= ${SCRIPT_NAME} %>?page=samba3" method="POST"  onsubmit="return validateAction(this);">
      <TABLE border="0" >
-	  <TR><TH>Samba3 enabled:</TH><TD><input type="checkbox" name="samba_enable" value="1" <% is_checked $(get_opkg_service_config samba3 samba_enable) %> onclick="setReadSmb(this);"/></TD></TR>
+      <TR><TH>Samba3 enabled:</TH><TD><input type="checkbox" name="samba_enable" value="1" <% is_checked $(get_opkg_service_config samba3 samba_enable) %> onclick="setReadSmb(this);"/></TD></TR>
       <TR><TH>Samba domain/workgroup:</TH><TD><input type="text" name="workgroup" size=20 value=<% get_opkg_service_config samba3 smbworkgroup %> </TD>
       <TR><TH>Samba security mode:</TH><TD> <select name="security">
     <%
@@ -70,7 +74,9 @@ samba_form(){
     echo ${OPTIONS}
     %>
     </select></TD></TR>
-     
+    <TR><TH colspan=2>Samba3 - Advanced</TH></TR>
+    <TR><TH>Sendfile support (may cause file corruption):</TH><TD><input type="checkbox" name="use_sendfile" value="1" <% is_checked $(get_opkg_service_config samba3 use_sendfile) %>/></TD></TR>
+
      
      <TR><TH>Status:</TH><TD><% /opt/etc/init.d/samba3 webstatus %></TD></TR>
 </TABLE>
@@ -108,6 +114,7 @@ function checkSmb(){
 	if ( <% get_opkg_service_config samba3 samba_enable %> == 0 ){
 		document.forms[0].workgroup.disabled = true;
 		document.forms[0].security.disabled = true;
+		document.forms[0].use_sendfile.disabled = true;
 	}
 }
 
@@ -115,10 +122,12 @@ function setReadSmb(obj){
 	if(obj.checked){       
 		document.forms[0].workgroup.disabled = false;
 		document.forms[0].security.disabled = false;
+		document.forms[0].use_sendfile.disabled = false;
 	} 
 	else { 
 		document.forms[0].workgroup.disabled = true;
 		document.forms[0].security.disabled = true;
+		document.forms[0].use_sendfile.disabled = true;
 	}
 }   
 

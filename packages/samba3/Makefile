@@ -2,7 +2,7 @@ TARGET=samba3
 
 $(TARGET): $(TARGET)-src samba3-src/source3/bin/smbd $(TARGET).opk
 $(TARGET)-src:
-	wget http://ftp.samba.org/pub/samba/samba-3.6.3.tar.gz -c -O $(TARGET)-src.tar.gz
+	wget http://ftp.samba.org/pub/samba/samba-3.6.9.tar.gz -c -O $(TARGET)-src.tar.gz
 	sha1sum -c $(TARGET)-src.tar.gz.sha1
 	mkdir $(TARGET)-src
 	tar -xf $(TARGET)-src.tar.gz --strip-components=1 -C $(TARGET)-src
@@ -31,11 +31,12 @@ samba3-src/source3/bin/smbd:
 	samba_cv_CC_NEGATIVE_ENUM_VALUES=yes libreplace_cv_HAVE_GETADDRINFO=no \
 	ac_cv_file__proc_sys_kernel_core_pattern=yes \
 	CFLAGS=" -pipe -Os -s -march=armv4 " \
-	CPPFLAGS="-DNDEBUG -Dfcntl=fcntl64 -DHAVE_IFACE_IFCONF=1" \
+	CPPFLAGS="-DNDEBUG -Dfcntl=fcntl64 -DHAVE_IFACE_IFCONF=1 -I${TOPDIR}/libiconv/libiconv-src/include/" \
+	LDFLAGS="-L${TOPDIR}/libiconv/libiconv-src/lib/.libs/" \
 	CC=arm-linux-gcc LD=arm-linux-ld AR=arm-linux-ar RANLIB=arm-linux-ranlib ./configure --host=arm-linux \
 	--prefix=/bin --bindir=/bin --sbindir=/bin --sharedstatedir=/var --localstatedir=/var --sysconfdir=/etc --with-privatedir=/etc \
 	--with-lockdir=/var --with-piddir=/var --libexecdir=/bin --with-logfilebase=/var --libdir=/etc --with-configdir=/etc \
-	--without-syslog --disable-cups --with-sendfile-support --without-winbind --disable-external-libtalloc --disable-pie --disable-shared
+	--without-syslog --disable-cups --with-sendfile-support --without-winbind --disable-external-libtalloc --disable-pie --disable-shared --with-libiconv=${TOPDIR}/libiconv/libiconv-src/
 
 
 	make -j3 -C samba3-src/source3 

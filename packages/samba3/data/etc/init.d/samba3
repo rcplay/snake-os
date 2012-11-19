@@ -7,6 +7,8 @@ export TZ=${TZGEO}
 
 SAMBA_ENABLE=`grep "^samba_enable=" /etc/default/config | cut -d = -f 2`
 SAMBA3_ENABLE=`grep "^samba_enable=" /opt/etc/config/samba3 | cut -d = -f 2`
+USE_SENDFILE=`grep "^use_sendfile=" /opt/etc/config/samba3 | cut -d = -f 2`
+
 
 fix_smbpasswd() {
      sed -i s/"^\(.*:\)$"/"\1[U]:LCT-4294967295"/ /etc/smbpasswd
@@ -14,7 +16,7 @@ fix_smbpasswd() {
 
 start() {
     if [ $SAMBA_ENABLE -eq 1 ] ; then
-	echo "Builtin samba is running! Samba3 will not be started."
+	echo "Builtin samba is enabled! Samba3 will not be started."
 	return 1
     fi
     
@@ -24,15 +26,20 @@ start() {
 	    sleep 60 && /opt/etc/init.d/samba3 start &
 	    return 0
 	fi
-	
+
+	# set "use sendfile" option in smb.conf according to config
+	# samba2 should ignore this option so it's probably safe to leave it in when sambe3 is disabled
+	sed -i /"^use sendfile"/d /etc/smb.conf
+	if [ $USE_SENDFILE -eq 1 ] ; then
+	    sed -i s/"^\[global\]"/"[global]\nuse sendfile = true"/ /etc/smb.conf
+	fi
+
 	fix_smbpasswd
 	
-	KIND="SMB3"
-	echo "Starting $KIND services..."
+	echo "Starting SMB3 services..."
 	/opt/bin/smbd3 -D
 	RETVAL=$?
-	KIND="NMB3"
-	echo "Starting $KIND services..."
+	echo "Starting NMB3 services..."
 	/opt/bin/nmbd3 -D
 	RETVAL2=$?
 	return $RETVAL

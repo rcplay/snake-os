@@ -1,3 +1,4 @@
 samba_enable=0
 smbworkgroup=WORKGROUP
 smbsecurity=SHARE
+use_sendfile=0
