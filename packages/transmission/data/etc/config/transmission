@@ -15,3 +15,4 @@ trans_peer_limit_torrent=60
 trans_peer_port=51413
 trans_rpc_port=9091
 autorestart=0
+trans_download_queue_size=5

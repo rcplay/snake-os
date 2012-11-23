@@ -77,6 +77,12 @@ set_ports(){
 	sed -ri "s/rpc-port\":.*/rpc-port\": ${2},/g" /opt/etc/config/transmission.json
 }
 
+set_queue(){
+	set_opkg_service_config transmission trans_download_queue_size ${1}
+
+	sed -ri "s/download-queue-size\":.*/download-queue-size\": ${1},/g" /opt/etc/config/transmission.json
+}
+
 
 disable_trans_alt(){
 	sed -ri "s,^enable_trans_alt=.*,enable_trans_alt=0,g" /opt/etc/config/transmission
@@ -116,6 +122,9 @@ then
 	PEER_PORT=$(echo ${FORM_peer_port} | cut -d ' ' -f 1)
 	RPC_PORT=$(echo ${FORM_rpc_port} | cut -d ' ' -f 1)
 	set_ports ${PEER_PORT} ${RPC_PORT}
+
+	DL_QUEUE_SIZE=$(echo ${FORM_download_queue_size} | cut -d ' ' -f 1)
+	set_queue ${DL_QUEUE_SIZE}
 
 	PEER_LIMIT_GLOBAL=$(echo ${FORM_peer_limit_global} | cut -d ' ' -f 1)
 	PEER_LIMIT_TORRENT=$(echo ${FORM_peer_limit_torrent} | cut -d ' ' -f 1)
@@ -226,6 +235,9 @@ function validateAction(form) {
 			if (form.speed_up_enable.checked && !validateNumber(form.speed_up.value,'Speed Up'))
 				return false;
 
+			if (!validateNumber(form.download_queue_size.value,'Download Queue Size'))
+				return false;		
+
 			if (form.enable_trans_alt.checked){
 				if (!validateNumber(form.alt_speed_down.value,'Alternative Speed Down'))
 					return false;
@@ -318,7 +330,7 @@ function setReadTrans(obj){
 		document.forms[1].peer_limit_torrent.disabled = false;
 		document.forms[1].peer_port.disabled = false;
 		document.forms[1].rpc_port.disabled = false;
-
+		document.forms[1].download_queue_size.disabled = false;
 	} 
 	else { 
 		document.forms[0].shared.disabled = true;
@@ -333,7 +345,7 @@ function setReadTrans(obj){
 		document.forms[1].peer_limit_torrent.disabled = true;
 		document.forms[1].peer_port.disabled = true;
 		document.forms[1].rpc_port.disabled = true;
-
+		document.forms[1].download_queue_size.disabled = true;
 	}
 	setTransUp(document.forms[1].speed_up_enable);
 	setTransDown(document.forms[1].speed_down_enable);
@@ -416,6 +428,8 @@ function setReadTransAlt(obj){
 
 	<TR><TH>Speed Down:</TH><TD><input type="checkbox" name="speed_down_enable" value="1" <% is_checked $(get_opkg_service_config transmission trans_speed_down_enable) %> onclick="setTransDown(this);"/><INPUT type="text" name="speed_down" size=4 value="<% get_opkg_service_config transmission trans_speed_down %>"> (KB/s)</TD></TR>
 	<TR><TH>Speed Up:</TH><TD><input type="checkbox" name="speed_up_enable" value="1" <% is_checked $(get_opkg_service_config transmission trans_speed_up_enable) %> onclick="setTransUp(this);"/><INPUT type="text" name="speed_up" size=4 value="<% get_opkg_service_config transmission trans_speed_up %>"> (KB/s)</TD></TR>
+
+	<TR><TH>Download Queue Size:</TH><TD><INPUT type="text" name="download_queue_size" size=4 value="<% get_opkg_service_config transmission trans_download_queue_size %>"></TD></TR>
 
 	<TR><TH COLSPAN=2>Transmission - Alternate Time</TH></TR>
 	<TR><TH>Enable Alternate Time:</TH><TD><input type="checkbox" name="enable_trans_alt" value="1" <% is_checked $(get_opkg_service_config transmission enable_trans_alt) %> onclick="setReadTransAlt(this);"/></TD></TR>
