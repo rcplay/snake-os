@@ -1,0 +1,10 @@
+Package: DownloadDaemon
+Version: 1316-1
+Description: Downloader for oneclick hosters
+Section: snakeos/applications
+Priority: optional
+Maintainer: 
+Architecture: all
+Homepage: 
+Source:
+Depends:

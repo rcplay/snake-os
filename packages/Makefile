@@ -91,3 +91,11 @@ output/sqlite3.opk:
 	make -C sqlite3
 	cp sqlite3/sqlite3.opk output/sqlite3.opk
 
+.PHONY: boost
+boost:
+	make -C boost
+
+
+downloaddaemon: libcurl-ssl boost output/downloaddaemon.opk
+output/downloaddaemon.opk:
+	make -C downloaddaemon

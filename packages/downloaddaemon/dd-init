@@ -1,0 +1,84 @@
+#! /bin/sh
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/opt/bin
+DAEMON=DownloadDaemon
+NAME=DownloadDaemon
+DESC="DownloadDaemon download manager service"
+
+export LD_LIBRARY_PATH=/opt/lib/ddlibs
+
+ENABLE=$(grep "^enabled=" /opt/etc/config/downloaddaemon | cut -d = -f 2)
+DOWNLOADDIR=$(grep "^download_dir=" /opt/etc/config/downloaddaemon | cut -d = -f 2)
+
+
+start() {
+    PID=$(pidof DownloadDaemon | cut -d ' ' -f 1)
+    if [ ${PID:-empty} = "empty" ] ; then
+
+	if [ $ENABLE -eq 1 ]; then
+	    if ! grep -q "^downloadd:" /etc/passwd; then
+		adduser -h /opt/etc/downloaddaemon -D -s /bin/false downloadd
+	    fi
+	    chown -R downloadd:downloadd /opt/etc/downloaddaemon
+	    
+	    MPOINT=$(echo "${DOWNLOADDIR}" | cut -d "/" -f 1-3 -s)
+	    if echo "${MPOINT}" | grep -q "^/usb/..*" && cat /proc/mounts | cut -d " " -f 2 | grep "${MPOINT}"; then
+		if [ ! -e "${DOWNLOADDIR}" ]; then
+		    mkdir -p ${DOWNLOADDIR}
+		fi
+		if [ -d "${DOWNLOADDIR}" ]; then
+		    chmod -R 777 "${DOWNLOADDIR}"
+		    sed -ri "s%^download_folder = .*%download_folder = ${DOWNLOADDIR}%g" /opt/etc/downloaddaemon/downloaddaemon.conf
+		else
+		    echo -n "downloaddaemon: ${DOWNLOADDIR} is not a directory"
+		    exit 1
+		fi
+	    else
+		echo -n "downloaddaemon: ${DOWNLOADDIR} is an invalid directory"
+		exit 1
+	    fi
+	    DownloadDaemon -d --confdir /opt/etc/downloaddaemon 2> /dev/null
+	fi
+    fi
+}
+
+stop() {
+    killall DownloadDaemon 2> /dev/null
+}
+
+restart() {
+    stop
+    sleep 1
+    start
+}
+
+webstatus() {
+    PID=$(pidof DownloadDaemon)
+    if [ ${PID:-empty} = "empty" ] ; then
+	echo -n "$NAME is not running"
+    else
+    	echo -n "$NAME is running"
+    fi
+}
+
+case "$1" in
+    start)
+	start
+	;;
+    stop)
+	stop
+	;;
+    restart)
+	restart
+	;;
+    webstatus)
+	webstatus
+	;;
+    *)
+	N=/etc/init.d/${0##*/}
+	echo "Usage: $N {start|stop|restart|webstatus}" >&2
+	exit 1
+	;;
+esac
+
+exit 0

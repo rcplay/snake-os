@@ -1,0 +1,11 @@
+--- downloaddaemon-src/src/include/cfgfile/cfgfile.cpp	2012-11-13 03:00:17.000000000 +0100
++++ downloaddaemon-src-new/src/include/cfgfile/cfgfile.cpp	2012-11-24 13:32:48.203606885 +0100
+@@ -48,6 +48,8 @@
+ 
+ void cfgfile::open_cfg_file(const std::string &fp, bool open_writeable) {
+ 	file.close();
++	file.clear(); // XXX: would checking if a file is opened work too?
++
+ 	filepath = fp;
+ 	if (open_writeable) {
+ 		file.open(filepath.c_str(), fstream::out | fstream::in);
