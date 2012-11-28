@@ -11,7 +11,7 @@ $(TARGET)-src:
 	cat dd-cfg-open.patch | patch -p0
 
 $(TARGET)-src/src/daemon/DownloadDaemon:
-	cd downloaddaemon-src && cmake . -DCMAKE_C_COMPILER=arm-linux-gcc  -DCMAKE_CXX_COMPILER=arm-linux-g++  -DBOOST_ROOT=${TOPDIR}/boost/output -DCURL_INCLUDE_DIRs=${TOPDIR}/libcurl-ssl/libcurl-src/include/ -DCURL_LIBRARIES="" -DCMAKE_INSTALL_PREFIX=/ -DCMAKE_MODULE_LINKER_FLAGS="-L${TOPDIR}/libcurl-ssl/libcurl-src/lib/.libs/" -DCMAKE_EXE_LINKER_FLAGS="-lpthread -lz -L${TOPDIR}/libcurl-ssl/libcurl-src/lib/.libs/ -lcurl"
+	cd downloaddaemon-src && CC=arm-linux-gcc CXX=arm-linux-g++ cmake . -DBOOST_ROOT=${TOPDIR}/boost/output -DCURL_INCLUDE_DIRs=${TOPDIR}/libcurl-ssl/libcurl-src/include/ -DCURL_LIBRARIES="" -DCMAKE_INSTALL_PREFIX=/ -DCMAKE_MODULE_LINKER_FLAGS="-L${TOPDIR}/libcurl-ssl/libcurl-src/lib/.libs/" -DCMAKE_EXE_LINKER_FLAGS="-lpthread -lz -L${TOPDIR}/libcurl-ssl/libcurl-src/lib/.libs/ -lcurl"
 	cd downloaddaemon-src && DESTDIR=${TOPDIR}/$(TARGET)/data make install
 
 

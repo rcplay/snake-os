@@ -1,5 +1,5 @@
---- downloaddaemon-src/src/include/cfgfile/cfgfile.cpp	2012-11-13 03:00:17.000000000 +0100
-+++ downloaddaemon-src-new/src/include/cfgfile/cfgfile.cpp	2012-11-24 13:32:48.203606885 +0100
+--- downloaddaemon-src/src/include/cfgfile/cfgfile.cpp	2012-11-27 16:32:44.891694375 +0100
++++ downloaddaemon-src-new/src/include/cfgfile/cfgfile.cpp	2012-11-27 17:54:45.142100333 +0100
 @@ -48,6 +48,8 @@
  
  void cfgfile::open_cfg_file(const std::string &fp, bool open_writeable) {
@@ -9,3 +9,12 @@
  	filepath = fp;
  	if (open_writeable) {
  		file.open(filepath.c_str(), fstream::out | fstream::in);
+@@ -183,6 +185,8 @@
+ 
+ 	// write to file.. need to close/reopen it in order to delete the existing content
+ 	file.close();
++	file.clear();
++	
+ 	file.open(filepath.c_str(), fstream::in | fstream::out | fstream::trunc);
+ 	for(vector<std::string>::iterator it = cfgvec.begin(); it != cfgvec.end(); ++it) {
+ 		file << *it;

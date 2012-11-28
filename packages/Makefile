@@ -12,8 +12,15 @@ snake-os/output/rootfs.jffs2:
 
 
 .PHONY: libevent openssl libcurl-ssl
-libevent openssl libcurl-ssl:
-	make -C $@ 
+
+openssl:
+	make -C openssl
+
+libcurl-ssl: openssl
+	make -C libcurl-ssl
+
+libevent:
+	make -C libevent
 
 transmission: libevent openssl libcurl-ssl output/transmission.opk
 output/transmission.opk:
