@@ -1,0 +1,10 @@
+ISSUES
+
+- cp.b and cp.w seems to be broken (cp.l works)
+  possibly a toolchain issue
+- usb detection is unreliable
+
+TODO
+
+- integrate self contained drivers (spi_flash/cns21xx_nic) into /drivers/
+- scan all usb devices for image file
