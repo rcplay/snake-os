@@ -475,6 +475,7 @@ extern flash_info_t *flash_get_info(ulong base);
 #define FLASH_MAN_MT	0x00400000
 #define FLASH_MAN_SHARP 0x00500000
 #define FLASH_MAN_ATM	0x00600000
+#define FLASH_MAN_EON	0x00700000
 #define FLASH_MAN_CFI	0x01000000
 
 

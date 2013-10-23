@@ -282,6 +282,11 @@ cpu_init_crit:
 	stmia	sp, {r0 - r12}			@ Calling r0-r12
 	add	r7, sp, #S_PC
 	stmdb	r7, {sp, lr}^			@ Calling SP, LR
+#ifdef CONFIG_CNS21XX
+	// this is for CPU from idle mode to normal mode
+	// FA526's BUG
+	add     lr, lr, #4
+#endif
 	str	lr, [r7, #0]			@ Save calling PC
 	mrs	r6, spsr
 	str	r6, [r7, #4]			@ Save CPSR
