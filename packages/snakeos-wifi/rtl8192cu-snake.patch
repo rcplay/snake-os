@@ -1,0 +1,61 @@
+diff -ur rtl8188C_8192C_usb_linux_v4.0.2_9000.20130911/Makefile rtl8188C_8192C_usb_linux_v4.0.2_9000.20130911-snake/Makefile
+--- rtl8188C_8192C_usb_linux_v4.0.2_9000.20130911/Makefile	2013-09-11 05:56:55.000000000 +0200
++++ rtl8188C_8192C_usb_linux_v4.0.2_9000.20130911-snake/Makefile	2014-02-12 18:10:27.780200518 +0100
+@@ -38,7 +38,7 @@
+ CONFIG_INTEL_WIDI = n
+ CONFIG_WAKE_ON_WLAN = n
+ 
+-CONFIG_PLATFORM_I386_PC = y
++CONFIG_PLATFORM_I386_PC = n
+ CONFIG_PLATFORM_TI_AM3517 = n
+ CONFIG_PLATFORM_ANDROID_X86 = n
+ CONFIG_PLATFORM_JB_X86 = n
+@@ -70,6 +70,7 @@
+ CONFIG_PLATFORM_MSTAR_A3 = n
+ CONFIG_PLATFORM_ARM_SUNxI = n
+ CONFIG_PLATFORM_ARM_SUN6I = n
++CONFIG_PLATFORM_ARM_CNS21XX = y
+ 
+ CONFIG_DRVEXT_MODULE = n
+ 
+@@ -524,6 +525,15 @@
+ #KSRC:= ../lichee/linux-3.3/
+ endif
+ 
++ifeq ($(CONFIG_PLATFORM_ARM_CNS21XX), y)
++EXTRA_CFLAGS += -DCONFIG_LITTLE_ENDIAN
++ARCH := arm
++CROSS_COMPILE := arm-linux-    
++KVER  := 2.6.16-gazineu  
++KSRC := /usr/src/kernels/linux-$(KVER)
++endif
++
++
+ ifneq ($(USER_MODULE_NAME),)
+ MODULE_NAME := $(USER_MODULE_NAME)
+ endif
+diff -ur rtl8188C_8192C_usb_linux_v4.0.2_9000.20130911/include/autoconf.h rtl8188C_8192C_usb_linux_v4.0.2_9000.20130911-snake/include/autoconf.h
+--- rtl8188C_8192C_usb_linux_v4.0.2_9000.20130911/include/autoconf.h	2013-09-11 05:56:55.000000000 +0200
++++ rtl8188C_8192C_usb_linux_v4.0.2_9000.20130911-snake/include/autoconf.h	2014-02-12 18:12:20.932196462 +0100
+@@ -31,6 +31,8 @@
+ 
+ #define PLATFORM_LINUX	1
+ 
++#define CONFIG_WIRELESS_EXT 1
++
+ //#define CONFIG_IOCTL_CFG80211 1
+ #ifdef CONFIG_IOCTL_CFG80211
+ 	//#define RTW_USE_CFG80211_STA_EVENT /* Indecate new sta asoc through cfg80211_new_sta */
+Only in rtl8188C_8192C_usb_linux_v4.0.2_9000.20130911-snake/include: autoconf.h~
+diff -ur rtl8188C_8192C_usb_linux_v4.0.2_9000.20130911/include/basic_types.h rtl8188C_8192C_usb_linux_v4.0.2_9000.20130911-snake/include/basic_types.h
+--- rtl8188C_8192C_usb_linux_v4.0.2_9000.20130911/include/basic_types.h	2013-09-11 05:56:55.000000000 +0200
++++ rtl8188C_8192C_usb_linux_v4.0.2_9000.20130911-snake/include/basic_types.h	2014-02-04 12:18:49.393707213 +0100
+@@ -22,6 +22,7 @@
+ 
+ #include <drv_conf.h>
+ 
++typedef _Bool bool;
+ 
+ #define SUCCESS	0
+ #define FAIL	(-1)
+Only in rtl8188C_8192C_usb_linux_v4.0.2_9000.20130911-snake/include: basic_types.h~

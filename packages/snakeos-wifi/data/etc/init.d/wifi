@@ -1,0 +1,33 @@
+
+ENABLE=$(grep "^enabled=" /opt/etc/config/wifi | cut -d = -f 2)
+DRIVER=$(grep "^driver=" /opt/etc/config/wifi | cut -d = -f 2)
+
+start() {
+    if [ $ENABLE -eq 1 ] ; then
+	if [ -e /opt/share/wifi/driver-$DRIVER ] ; then
+	    /usr/share/snake/network stop
+	    sh /opt/share/wifi/driver-$DRIVER up
+	fi
+    fi
+}
+
+stop() {
+    if [ -e /opt/share/wifi/driver-$DRIVER ] ; then
+	sh /opt/share/wifi/driver-$DRIVER down
+    fi
+    /usr/share/snake/network start
+}
+
+case "$1" in
+    start)
+  	start
+	;;
+    stop)
+  	stop
+	;;
+    *)
+	echo "Usage: $0 {start|stop}"
+	exit 1
+esac
+
+

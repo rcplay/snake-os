@@ -1,0 +1,10 @@
+Package: hd-idle
+Version: 1.04
+Description: power down disk when idle
+Section: snakeos/applications
+Priority: optional
+Maintainer: 
+Architecture: all
+Homepage: 
+Source:
+Depends:

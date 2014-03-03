@@ -1,0 +1,6 @@
+#!/bin/sh
+
+if [ -x /opt/etc/init.d/hd-idle ]; then
+    echo "Starting hd-idle"
+    /opt/etc/init.d/hd-idle start
+fi

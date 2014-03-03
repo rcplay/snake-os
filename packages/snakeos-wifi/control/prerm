@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ -x /opt/etc/init.d/wifi ]; then
+    echo "Stopping wifi"
+    /opt/etc/init.d/wifi stop
+fi
+
+exit 0

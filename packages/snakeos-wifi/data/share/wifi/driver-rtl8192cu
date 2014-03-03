@@ -1,0 +1,68 @@
+#!/bin/sh
+
+IFACE=wlan0
+
+up() {
+    SSID=$(grep "^ssid=" /opt/etc/config/wifi | cut -d = -f 2)
+    PSK=$(grep "^psk=" /opt/etc/config/wifi | cut -d = -f 2)
+
+    insmod /opt/share/wifi/8192cu.ko rtw_ips_mode=0
+
+    pkill wpa_supplicant
+
+    sed -ri s/"ssid=.*"/"ssid=\"${SSID}\""/g /opt/etc/wpa.conf
+    sed -ri s/"psk=.*"/"psk=\"${PSK}\""/g /opt/etc/wpa.conf
+
+    # taken from /usr/share/snake/network
+
+    HOSTNAME=`grep "hostname=" /etc/default/config | cut -d = -f 2`
+    DEF_IP=`grep "ip_address=" /etc/default/config | cut -d = -f 2`
+    DEF_MASK=`grep "netmask=" /etc/default/config | cut -d = -f 2`
+    DEF_GW=`grep "gateway=" /etc/default/config | cut -d = -f 2`
+    USE_DHCP_ADD=`grep "dhcp_address=" /etc/default/config | cut -d = -f 2`
+    USE_DHCP_DNS=`grep "dhcp_dns=" /etc/default/config | cut -d = -f 2`
+    DEF_DNS1=`grep "nameserver1=" /etc/default/config | cut -d = -f 2`
+    DEF_DNS2=`grep "nameserver2=" /etc/default/config | cut -d = -f 2`
+    DEF_DNSDOM=`grep "dnsdomain=" /etc/default/config | cut -d = -f 2`
+
+    hostname $HOSTNAME
+
+    /opt/bin/wpa_supplicant -D wext -i $IFACE -c /opt/etc/wpa.conf -B
+
+    /bin/sleep 5
+    if [ $USE_DHCP_ADD -eq 1 ] ; then
+        /sbin/udhcpc -i $IFACE -b -q -t 5 -H $HOSTNAME
+    else
+        /sbin/ifconfig $IFACE $DEF_IP netmask $DEF_MASK
+        route add default gw $DEF_GW dev $IFACE
+        echo "$DEF_IP $HOSTNAME" > /etc/hosts
+	echo "nameserver $DEF_DNS1" > /etc/resolv.conf
+	echo "nameserver $DEF_DNS2" >> /etc/resolv.conf
+    	echo "search $DEF_DNSDOM" >> /etc/resolv.conf
+        if [ -f /usr/share/snake/setntp ] ; then
+	    /usr/share/snake/setntp
+        fi
+    fi
+
+    /sbin/ifconfig lo 127.0.0.1
+}
+
+
+down() {
+    pkill wpa_supplicant
+    /sbin/ifconfig $IFACE down
+    /sbin/ifconfig lo down
+}
+
+case "$1" in
+    up)
+  	up
+	;;
+    down)
+  	down
+	;;
+    *)
+	echo "Usage: $0 {up|down}"
+	exit 1
+esac
+

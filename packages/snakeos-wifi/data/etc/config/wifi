@@ -1,0 +1,4 @@
+enabled=0
+driver=rt5370
+ssid=my ssid
+psk=my password

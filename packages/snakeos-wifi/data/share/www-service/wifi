@@ -1,0 +1,117 @@
+#!/bin/haserl
+Content-type: text/html
+
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">   
+<%in funcs.cgi %>
+<%
+
+# TODO: add these to the base system
+set_opkg_service_config(){
+        sed -ri "s%^${2}=.*%${2}=${3}%g" /opt/etc/config/${1}
+}
+
+get_opkg_service_config(){
+        echo -n $(sed -n "s/^\(${2}\)=\(.*\)$/\2/p" /opt/etc/config/${1})
+}
+
+get_driver_sel(){
+    if [ $DRIVER = $1 ] ; then
+        echo -n "selected"
+    fi
+}
+
+if [ "${REQUEST_METHOD}" = "POST" ]
+then
+    ACTION=$(echo ${FORM_action} | cut -d ' ' -f 1)
+    case "$ACTION" in
+      Apply)
+	/opt/etc/init.d/wifi stop > /dev/null
+
+	sleep 2
+
+        ENABLED=$(echo ${FORM_enabled} | cut -d ' ' -f 1)
+      	set_opkg_service_config wifi enabled ${ENABLED:-0}
+
+	if [ ${ENABLED:-0} = 1 ] ; then
+            set_opkg_service_config wifi driver "${FORM_driver}"
+
+            set_opkg_service_config wifi ssid "${FORM_ssid}"
+
+            set_opkg_service_config wifi psk "${FORM_psk}"
+
+	    /opt/etc/init.d/wifi start > /dev/null
+	    sleep 2
+	fi
+
+	/usr/share/snake/network start > /dev/null
+    	;;
+    	
+      *)
+    esac
+fi
+
+DRIVER=$(get_opkg_service_config wifi driver)
+
+%>
+<script language="JavaScript">
+<!-- /
+
+function validateAction(form) {                            
+    var action = btnAction.value;
+    var question = "";
+    if  ( action == 'Apply' )
+        question = "This will reconfigure the network interfaces. If DHCP used the IP address may change.";
+
+    var answer = confirm (question);
+    if (answer)                                                      
+        return true;                                                 
+    else                                                            
+        return false;                                           
+} 
+function check(){
+	if ( <% get_opkg_service_config wifi enabled %> == 0 ){
+		document.forms[0].ssid.disabled = true;
+		document.forms[0].psk.disabled = true;
+		document.forms[0].driver.disabled = true;
+	}
+}
+
+function setRead(obj){
+	if(obj.checked){       
+		document.forms[0].ssid.disabled = false;
+		document.forms[0].psk.disabled = false;
+		document.forms[0].driver.disabled = false;
+	} 
+	else { 
+		document.forms[0].ssid.disabled = true;
+		document.forms[0].psk.disabled = true;
+		document.forms[0].driver.disabled = true;
+	}
+}   
+
+// -->
+</script>
+</head>
+<body onload="check();">
+
+<center>
+<form action="<%= ${SCRIPT_NAME} %>?page=wifi" method="POST"  onsubmit="return validateAction(this);">
+     <TABLE border="0" >
+      <TR><TH>Wifi enabled:</TH><TD><input type="checkbox" name="enabled" value="1" <% is_checked $(get_opkg_service_config wifi enabled) %> onclick="setRead(this);"/></TD></TR>
+      <TR><TH>SSID</TH><TD><input type="text" name="ssid" size=20 value="<% get_opkg_service_config wifi ssid %>" </TD>
+      <TR><TH>PSK</TH><TD><input type="text" name="psk" size=20 value="<% get_opkg_service_config wifi psk %>" </TD>
+      <TR><TH>Driver:</TH><TD> <select name="driver">
+    <%
+    OPTIONS="<option value="rt5370" $(get_driver_sel rt5370)>Ralink RT5370</option>"
+    OPTIONS=${OPTIONS}"<option value="rtl8192cu" $(get_driver_sel rtl8192cu)>Realtek RTL8192CU</option>"
+    echo ${OPTIONS}
+    %>
+    </select></TD></TR>
+</TABLE>
+   <input type="submit" name="action" value="Apply" onclick="btnAction=this">
+</form>
+
+</center>
+
+</body>
+</html>

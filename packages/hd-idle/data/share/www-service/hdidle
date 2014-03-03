@@ -1,0 +1,78 @@
+#!/bin/haserl
+Content-type: text/html
+
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">   
+<%in funcs.cgi %>
+<%
+# TODO: add these to the base system
+set_opkg_service_config(){
+        sed -ri "s%^${2}=.*%${2}=${3}%g" /opt/etc/config/${1}
+}
+
+get_opkg_service_config(){
+        echo -n $(sed -n "s/^\(${2}\)=\(.*\)$/\2/p" /opt/etc/config/${1})
+}
+
+
+TIMEOUT=$(get_opkg_service_config hd-idle timeout)
+
+if [ "${REQUEST_METHOD}" = "POST" ]
+then
+    ACTION=$(echo ${FORM_action} | cut -d ' ' -f 1)
+    case "$ACTION" in
+	Apply)
+	    TIMEOUT=$(echo ${FORM_timeout} | cut -d ' ' -f 1)
+	    IS_ENABLED=$(echo ${FORM_enabled} | cut -d ' ' -f 1)
+	    set_opkg_service_config hd-idle enabled ${IS_ENABLED:-0}
+	    
+      	    /opt/etc/init.d/hd-idle stop > /dev/null
+      	    sleep 2
+	    
+	    set_opkg_service_config hd-idle timeout ${TIMEOUT}
+	    
+      	    /opt/etc/init.d/hd-idle start > /dev/null
+      	    sleep 2
+      	    ;;
+      Start)
+      	/opt/etc/init.d/hd-idle start > /dev/null
+      	sleep 2
+    	;;
+      Stop)
+      	/opt/etc/init.d/hd-idle stop > /dev/null
+      	sleep 3
+    	;;
+      Restart)
+      	/opt/etc/init.d/hd-idle restart > /dev/null
+      	sleep 2
+    	;;
+      Done)
+        TIMEOUT=/usb/$(echo ${FORM_timeout} | cut -d '|' -f 1)
+        ;;
+      *)
+    esac
+fi
+
+
+%>
+
+</head>
+
+<body>
+
+<center>
+<TABLE border="0">
+<form id=hd-idle name=hd-idle action="<%= ${SCRIPT_NAME} %>?page=hdidle" method="POST" >
+  <TR><TH>hd-idle enabled:</TH><TD><input type="checkbox" name="enabled" value="1" <% is_checked $(get_opkg_service_config hd-idle enabled) %> /></TD></TR>
+  <TR><TH>Spindown time:</TH><TD><INPUT type="text" name="timeout" size=20 value="<% get_opkg_service_config hd-idle timeout %>"></TD></TR>
+  <TR><TH>Status:</TH><TD><% /opt/etc/init.d/hd-idle webstatus %></TD></TR>
+</TABLE>
+
+<input type="submit" name="action" value="Apply">
+<input type="submit" name="action" value="Start">
+<input type="submit" name="action" value="Stop">
+<input type="submit" name="action" value="Restart">
+</form>
+
+</center>
+</body>
+</html>

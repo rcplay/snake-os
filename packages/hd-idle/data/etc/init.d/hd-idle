@@ -1,0 +1,60 @@
+#!/bin/sh
+#
+
+KIND="hd-idle"
+
+ENABLE=$(grep "^enabled=" /opt/etc/config/hd-idle | cut -d = -f 2)
+TIMEOUT=$(grep "^timeout=" /opt/etc/config/hd-idle | cut -d = -f 2)
+
+start() {
+    if [ $ENABLE -eq 1 ] ; then
+	PID=$(pgrep -f "/opt/bin/hd-idle")
+	if [ ${PID:-empty} = "empty" ] ; then
+	    echo "Starting $KIND service..."
+	    /opt/bin/hd-idle -i ${TIMEOUT}
+	fi
+    fi
+}
+
+stop() {
+    echo "Shutting down $KIND service..."
+    pkill -9 -f "/opt/bin/hd-idle"
+}
+
+restart() {
+    stop
+    sleep 1
+    start
+}
+
+webstatus(){
+    PID=$(pgrep -f "/opt/bin/hd-idle")
+    if [ ${PID:-empty} = "empty" ] ; then
+	echo -n "$KIND is not running"
+    else
+    	echo -n "$KIND is running"
+    fi
+}
+
+case "$1" in
+    start)
+  	start
+	;;
+    stop)
+  	stop
+	;;
+    restart)
+  	restart
+	;;
+    reload)
+  	restart
+	;;
+    webstatus)
+	webstatus
+	;;
+    *)
+	echo "Usage: $0 {start|stop|restart|reload}"
+	exit 1
+esac
+
+
