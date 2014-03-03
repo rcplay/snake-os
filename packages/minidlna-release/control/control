@@ -1,5 +1,5 @@
 Package: minidlna
-Version: 1.0.24-1
+Version: 1.0.25-1
 Description: dlna server
 Section: snakeos/applications
 Priority: optional

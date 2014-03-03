@@ -8,12 +8,12 @@ TRANS_DIR=$(grep "transmission_dir=" /opt/etc/config/transmission | cut -d = -f 
 export TRANSMISSION_WEB_HOME=/opt/share/transmission/web/
 
 remove_cronjob() {
-    sed -i /"\* \*\/12 \* \* \* sh \/opt\/etc\/init.d\/transmission restart"/d /etc/cron.d/root /etc/cron.d/root
+    sed -i /" \*\/12 \* \* \* sh \/opt\/etc\/init.d\/transmission restart"/d /etc/cron.d/root /etc/cron.d/root
 }
 
 update_cronjob() {
     remove_cronjob
-    echo "* */12 * * * sh /opt/etc/init.d/transmission restart" >>  /etc/cron.d/root
+    echo "0 */12 * * * sh /opt/etc/init.d/transmission restart" >>  /etc/cron.d/root
 }
 
 start() {

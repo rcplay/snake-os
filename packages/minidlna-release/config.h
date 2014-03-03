@@ -10,10 +10,10 @@
 #define OS_URL			"http://code.google.com/p/snake-os/"
 
 /* full path of the file database */
-#define DEFAULT_DB_PATH		"/tmp/minidlna"
+#define DEFAULT_DB_PATH		"/opt/var/log"
 
 /* full path of the log directory */
-#define DEFAULT_LOG_PATH	"/tmp/minidlna"
+#define DEFAULT_LOG_PATH	"/opt/var/cache/minidlna"
 
 /* Comment the following line to use home made daemonize() func instead
  * of BSD daemon() */
@@ -33,7 +33,7 @@
 /* Enable ReadyNAS-specific tweaks. */
 /*#define READYNAS*/
 /* Compile in TiVo support. */
-/*#define TIVO_SUPPORT*/
+#define TIVO_SUPPORT
 /* Enable PnPX support. */
 #define PNPX 0
 

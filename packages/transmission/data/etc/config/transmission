@@ -1,5 +1,6 @@
 use_transmission=1
 transmission_dir=/usb/sda1/torrents
+utp=0
 enable_trans_alt=0
 trans_speed_up_enable=0
 trans_speed_up=50

@@ -106,3 +106,13 @@ boost:
 downloaddaemon: libcurl-ssl boost output/downloaddaemon.opk
 output/downloaddaemon.opk:
 	make -C downloaddaemon
+
+hd-idle: output/hd-idle.opk
+output/hd-idle.opk:
+	make -C hd-idle
+
+
+snakeos-wifi: output/snakeos-wifi.opk
+output/snakeos-wifi.opk:
+	make -C snakeos-wifi
+	cp snakeos-wifi/snakeos-wifi.opk output/snakeos-wifi.opk

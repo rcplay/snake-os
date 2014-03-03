@@ -17,7 +17,7 @@ ENABLE=$(grep "^enabled=" /opt/etc/config/minidlna | cut -d = -f 2)
 start() {
     if [ $ENABLE -eq 1 ] ; then
 	PID=$(pgrep -f "/opt/bin/minidlna ${PARAM}")
-	if [ ${PID:-empty} = "empty" ] ; then
+	if [ "empty$PID" = "empty" ] ; then
 	    echo "Starting $KIND service..."
 	    /opt/bin/minidlna ${PARAM}
 	    
@@ -43,7 +43,7 @@ restart() {
 
 webstatus(){
     PID=$(pgrep -f "/opt/bin/minidlna ${PARAM}")
-    if [ ${PID:-empty} = "empty" ] ; then
+    if [ "empty$PID" = "empty" ] ; then
 	echo -n "$KIND is not running"
     else
     	echo -n "$KIND is running"

@@ -4,15 +4,15 @@ TARGET=transmission
 $TARGET: $(TARGET)-src transmission-src/daemon/transmission-daemon $(TARGET).opk
 
 $(TARGET)-src:
-	wget http://download.transmissionbt.com/files/transmission-2.73.tar.bz2 -c -O $(TARGET)-src.tar.bz2
-	sha1sum -c $(TARGET)-src.tar.bz2.sha1
+	wget http://download.transmissionbt.com/files/transmission-2.76.tar.xz -c -O $(TARGET)-src.tar.xz
+	sha1sum -c $(TARGET)-src.tar.xz.sha1
 	mkdir $(TARGET)-src
-	tar -xf $(TARGET)-src.tar.bz2 --strip-components=1 -C $(TARGET)-src
+	tar -xf $(TARGET)-src.tar.xz --strip-components=1 -C $(TARGET)-src
 
 transmission-src/daemon/transmission-daemon:
 	cd transmission-src ; \
 	./configure \
-		--host=arm-linux CC=arm-linux-gcc CXX=arm-linux-g++ --prefix=/opt/ CFLAGS="${CFLAGS_COMMON}" CXXFLAGS="${CFLAGS_COMMON}" \
+		--host=arm-linux CC=arm-linux-gcc CXX=arm-linux-g++ --prefix=/opt/ CFLAGS="${CFLAGS_COMMON} -static" CXXFLAGS="${CFLAGS_COMMON}" \
         LIBCURL_LIBS="-L${TOPDIR}/libcurl-ssl/libcurl-src/lib/.libs -lcurl"  \
         LIBCURL_CFLAGS=-I${TOPDIR}/libcurl-ssl/libcurl-src/include \
         OPENSSL_LIBS="-L${TOPDIR}/openssl/openssl-src/ -lssl -lcrypto" \

@@ -2,18 +2,17 @@
 all: minidlna-release.opk
 
 minidlna-src:
-	wget http://sourceforge.net/projects/minidlna/files/minidlna/1.0.24/minidlna_1.0.24_src.tar.gz/download -O minidlna-src.tar.gz
+	wget http://sourceforge.net/projects/minidlna/files/minidlna/1.0.25/minidlna_1.0.25_src.tar.gz/download -O minidlna-src.tar.gz
 	sha1sum -c minidlna-src.tar.gz.sha1
 	mkdir minidlna-src
 	tar -xf minidlna-src.tar.gz --strip-components=1 -C minidlna-src
 	patch -p0 < minidlna-libcheck.patch
+	patch -p0 -d minidlna-src < 0002_fix_libavformat_api_version.diff
 
 minidlna-src/minidlna: minidlna-src
 	cp config.h minidlna-src/
 	make -C minidlna-src CC="arm-linux-gcc" \
 		CFLAGS=" -Wall -s -Os -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -DSTATIC \
-			-DTIVO_SUPPORT -DHAVE_INOTIFY \
-			-DDB_PATH=\"/opt/var/cache/minidlna\" -DLOG_PATH=\"/opt/var/log/\" \
 			-I${TOPDIR}/libjpeg/libjpeg-src/ \
 			-I${TOPDIR}/libexif/libexif-src/ \
 			-I${TOPDIR}/libogg/libogg-src/include/ \
@@ -40,7 +39,6 @@ minidlna-src/minidlna: minidlna-src
 minidlna-release.opk: minidlna-src/minidlna
 	cp minidlna-src/minidlna data/bin/
 	chmod -R 755 data/bin/minidlna
-	cp minidlna-src/minidlna.conf data/etc/
 	chmod -R 644 data/etc/minidlna.conf
 	chmod -R 755 data/etc/init.d/minidlna
 

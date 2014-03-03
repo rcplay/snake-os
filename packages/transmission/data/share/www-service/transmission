@@ -14,6 +14,16 @@ get_opkg_service_config(){
         echo -n $(sed -n "s/^\(${2}\)=\(.*\)$/\2/p" /opt/etc/config/${1})
 }
 
+set_trans_bool(){
+	if [ ${2} = 1 ] ; then
+		BOOL_VAL=true 
+	else 
+		BOOL_VAL=false
+	fi
+	
+	sed -ri "s/${1}\":.*/${1}\": ${BOOL_VAL},/g" /opt/etc/config/transmission.json	
+}
+
 set_trans_alt(){
 	set_opkg_service_config transmission enable_trans_alt ${1}
 	set_opkg_service_config transmission trans_alt_speed_up ${2}
@@ -22,13 +32,8 @@ set_trans_alt(){
 	set_opkg_service_config transmission trans_alt_time_end ${5}
 	set_opkg_service_config transmission trans_alt_time_days ${6}
 
-	if [ ${1} = 1 ] ; then
-		ALTSPEED=true 
-	else 
-		ALTSPEED=false
-	fi
+	set_trans_bool alt-speed-time-enabled ${1}
 
-	sed -ri "s/alt-speed-time-enabled\":.*/alt-speed-time-enabled\": ${ALTSPEED},/g" /opt/etc/config/transmission.json
 	sed -ri "s/alt-speed-up\":.*/alt-speed-up\": ${2},/g" /opt/etc/config/transmission.json
 	sed -ri "s/alt-speed-down\":.*/alt-speed-down\": ${3},/g" /opt/etc/config/transmission.json
 	sed -ri "s/alt-speed-time-begin\":.*/alt-speed-time-begin\": ${4},/g" /opt/etc/config/transmission.json
@@ -43,20 +48,8 @@ set_trans_speed(){
 	set_opkg_service_config transmission trans_speed_down_enable ${3}
 	set_opkg_service_config transmission trans_speed_down ${4}
 
-	if [ ${1} = 1 ] ; then
-		UPSPEED=true 
-	else 
-		UPSPEED=false
-	fi
-
-	if [ ${3} = 1 ] ; then
-		DOWNSPEED=true 
-	else 
-		DOWNSPEED=false
-	fi
-
-	sed -ri "s/speed-limit-up-enabled\":.*/speed-limit-up-enabled\": ${UPSPEED},/g" /opt/etc/config/transmission.json
-	sed -ri "s/speed-limit-down-enabled\":.*/speed-limit-down-enabled\": ${DOWNSPEED},/g" /opt/etc/config/transmission.json
+	set_trans_bool speed-limit-up-enabled ${1}
+	set_trans_bool speed-limit-down-enabled ${3}
 	sed -ri "s/speed-limit-up\":.*/speed-limit-up\": ${2},/g" /opt/etc/config/transmission.json
 	sed -ri "s/speed-limit-down\":.*/speed-limit-down\": ${4},/g" /opt/etc/config/transmission.json
 }
@@ -86,7 +79,7 @@ set_queue(){
 
 disable_trans_alt(){
 	sed -ri "s,^enable_trans_alt=.*,enable_trans_alt=0,g" /opt/etc/config/transmission
-	sed -ri "s/alt-speed-time-enabled\":.*/alt-speed-time-enabled\": false,/g" /opt/etc/config/transmission.json
+	set_trans_bool alt-speed-time-enabled 0
 }
 
 get_alt_time_begin_sel(){
@@ -158,6 +151,9 @@ then
 	AUTORESTART=$(echo ${FORM_autorestart} | cut -d ' ' -f 1)
 	set_opkg_service_config transmission autorestart ${AUTORESTART:-0}
 
+	UTP=$(echo ${FORM_utp} | cut -d ' ' -f 1)
+	set_opkg_service_config transmission utp ${UTP:-0}
+	set_trans_bool utp-enabled ${UTP:-0}
 
       	/opt/etc/init.d/transmission start > /dev/null
       	sleep 2
@@ -309,6 +305,7 @@ function checkTrans(){
 		document.forms[1].enable_trans_alt.checked = false;
 		document.forms[1].enable_trans_alt.disabled = true;
 		document.forms[1].autorestart.disabled = true;
+		document.forms[1].utp.disabled = true;
 	}
 	setTransUp(document.forms[1].speed_up_enable);
 	setTransDown(document.forms[1].speed_down_enable);
@@ -323,6 +320,7 @@ function setReadTrans(obj){
 	if(obj.checked){       
 		document.forms[0].shared.disabled = false;
 		document.forms[1].autorestart.disabled = false;
+		document.forms[1].utp.disabled = false;
 		document.forms[1].enable_trans_alt.disabled = false;
 		document.forms[1].speed_up_enable.disabled = false;
 		document.forms[1].speed_down_enable.disabled = false;
@@ -335,6 +333,7 @@ function setReadTrans(obj){
 	else { 
 		document.forms[0].shared.disabled = true;
 		document.forms[1].autorestart.disabled = true;
+		document.forms[1].utp.disabled = true;
 		document.forms[1].enable_trans_alt.checked = false;
 		document.forms[1].enable_trans_alt.disabled = true;
 		document.forms[1].speed_up_enable.checked = false;
@@ -419,6 +418,7 @@ function setReadTransAlt(obj){
   	<TR><TH COLSPAN=2>Transmission - Main Settings</TH></TR>
 	<TR><TH>Transmission enabled:</TH><TD><input type="checkbox" name="use_transmission" value="1" <% is_checked $(get_opkg_service_config transmission use_transmission) %> onclick="setReadTrans(this);"/></TD></TR>
 	<TR><TH>Restart every 12 hours:</TH><TD><input type="checkbox" name="autorestart" value="1" <% is_checked $(get_opkg_service_config transmission autorestart) %> /></TD></TR>
+	<TR><TH>Enable uTP:</TH><TD><input type="checkbox" name="utp" value="1" <% is_checked $(get_opkg_service_config transmission utp) %> /></TD></TR>
 
 	<TR><TH>p2p Port:</TH><TD><INPUT type="text" name="peer_port" size=4 value="<% get_opkg_service_config transmission trans_peer_port %>"></TD></TR>
 	<TR><TH>Web Port:</TH><TD><INPUT type="text" name="rpc_port" size=4 value="<% get_opkg_service_config transmission trans_rpc_port %>"></TD></TR>
