@@ -1,6 +1,6 @@
 glib: glib-src glib-src/glib/.libs/libglib-2.0.a
 glib-src:
-	wget -c ftp://ftp.gtk.org/pub/glib/2.32/glib-2.32.1.tar.xz -O glib-src.tar.xz
+	wget -c http://ftp.gnome.org/pub/gnome/sources/glib/2.32/glib-2.32.1.tar.xz -O glib-src.tar.xz
 	sha1sum -c glib-src.tar.xz.sha1
 	mkdir glib-src
 	tar -xf glib-src.tar.xz --strip-components=1 -C glib-src

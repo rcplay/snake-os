@@ -16,7 +16,7 @@ NM=$(TOPDIR)/snake-os/tools/arm-uclibc-3.4.6/bin/arm-linux-nm
 all: usbip-src usbip-modules usbip-utilities usbip-opk-clean usbip.opk
 
 usbip-src:
-	wget http://voxel.dl.sourceforge.net/project/usbip/usbip/0.1.7/usbip-0.1.7.tar.gz -O usbip-src.tar.gz
+	wget http://ufpr.dl.sourceforge.net/project/usbip/usbip/0.1.7/usbip-0.1.7.tar.gz -O usbip-src.tar.gz
 	mkdir -p usbip-src
 	tar -xf usbip-src.tar.gz --strip-components=1 -C usbip-src
 	patch -p0 < nslu-arm.patch
