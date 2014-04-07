@@ -1,17 +1,10 @@
 KERNELDIR=$(TOPDIR)/snake-os/kernels/linux
 USBIP_DIR=$(TOPDIR)/usbip
-USBIP_SRC_DIR=$(TOPDIR)/usbip/usbip-src/src
+USBIP_SRC_DIR=$(USBIP_DIR)/usbip-src/src
 USBIP_DRIVERS=$(USBIP_DIR)/usbip-src/drivers/2.6.21
 USBIP_UTILS_DIR=$(USBIP_DIR)/usbip-src/cmd
 
 USBIP_UTILS=usbip usbipd bind_driver
-
-CC=$(TOPDIR)/snake-os/tools/arm-uclibc-3.4.6/bin/arm-linux-gcc
-AR=$(TOPDIR)/snake-os/tools/arm-uclibc-3.4.6/bin/arm-linux-ar
-RANLIB=$(TOPDIR)/snake-os/tools/arm-uclibc-3.4.6/bin/arm-linux-ranlib
-AS=$(TOPDIR)/snake-os/tools/arm-uclibc-3.4.6/bin/arm-linux-as
-LD=$(TOPDIR)/snake-os/tools/arm-uclibc-3.4.6/bin/arm-linux-ld
-NM=$(TOPDIR)/snake-os/tools/arm-uclibc-3.4.6/bin/arm-linux-nm
 
 all: usbip-src usbip-modules usbip-utilities usbip-opk-clean usbip.opk
 
