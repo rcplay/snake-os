@@ -7,4 +7,4 @@ Maintainer:
 Architecture: all
 Homepage: 
 Source: 
-Depends: extramodules
+Depends: 

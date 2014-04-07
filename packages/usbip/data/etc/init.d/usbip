@@ -5,6 +5,17 @@ RETVAL=0
 
 ENABLED=`grep "^enabled=" /opt/etc/config/usbip | cut -d = -f 2`
 
+modules() {
+  lsmod | grep usbip > /dev/null 2>&1
+
+  if [ $? -eq 1 ]; then
+    cd /opt/lib/modules/$(uname -r)
+    insmod usbip/usbip_common_mod.ko
+    insmod usbip/vhci-hcd.ko
+    insmod usbip/usbip.ko
+  fi
+}
+
 start() {
     if [ $ENABLED -eq 1 ]; then
       echo "Starting USB/IP"
@@ -56,6 +67,7 @@ devices(){
   done
 }
 
+modules
 case "$1" in
     start)
     start
@@ -71,9 +83,12 @@ case "$1" in
   ;;
     webstatus)
     webstatus
-    ;;
+  ;;
+    modules)
+    modules    
+  ;;
     *)
-  echo "Usage: $0 {start|stop|restart|devices (bind|unbind)}"
+  echo "Usage: $0 {start|stop|restart|modules|devices (bind|unbind)}"
   exit 1
 esac
 
