@@ -4,8 +4,7 @@ TARGET=transmission
 $TARGET: $(TARGET)-src transmission-src/daemon/transmission-daemon $(TARGET).opk
 
 $(TARGET)-src:
-	wget http://download.transmissionbt.com/files/transmission-2.76.tar.xz -c -O $(TARGET)-src.tar.xz
-	sha1sum -c $(TARGET)-src.tar.xz.sha1
+	wget http://download.transmissionbt.com/files/transmission-2.82.tar.xz -c -O $(TARGET)-src.tar.xz
 	mkdir $(TARGET)-src
 	tar -xf $(TARGET)-src.tar.xz --strip-components=1 -C $(TARGET)-src
 
