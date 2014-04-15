@@ -1,5 +1,5 @@
 Package: usbip
-Version: 0.1.7
+Version: 0.1.7-3
 Description: USB device sharing system over IP network
 Section: snakeos/applications
 Priority: optional

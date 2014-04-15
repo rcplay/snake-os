@@ -1,60 +1,67 @@
-KERNELDIR=$(TOPDIR)/snake-os/kernels/linux
-USBIP_DIR=$(TOPDIR)/usbip
-USBIP_SRC_DIR=$(USBIP_DIR)/usbip-src/src
-USBIP_DRIVERS=$(USBIP_DIR)/usbip-src/drivers/2.6.21
-USBIP_UTILS_DIR=$(USBIP_DIR)/usbip-src/cmd
+TARGET=usbip
 
-USBIP_UTILS=usbip usbipd bind_driver
+USBIP_DIR=$(TOPDIR)/$(TARGET)
+USBIP_DRIVERS=$(USBIP_DIR)/$(TARGET)-src/drivers/2.6.21
+USBIP_UTILITIES=$(TARGET)-src/src/cmd
 
-all: usbip-src usbip-modules usbip-utilities usbip-opk-clean usbip.opk
+UTILITIES=$(USBIP_UTILITIES)/bind_driver $(USBIP_UTILITIES)/usbip $(USBIP_UTILITIES)/usbipd
+MODULES=$(USBIP_DRIVERS)/usbip.ko $(USBIP_DRIVERS)/usbip_common_mod.ko $(USBIP_DRIVERS)/vhci-hcd.ko
 
-usbip-src:
-	wget http://ufpr.dl.sourceforge.net/project/usbip/usbip/0.1.7/usbip-0.1.7.tar.gz -O usbip-src.tar.gz
-	mkdir -p usbip-src
-	tar -xf usbip-src.tar.gz --strip-components=1 -C usbip-src
+$(TARGET): $(TARGET).opk
+
+usb.ids:
+	wget http://www.linux-usb.org/usb.ids
+
+$(TARGET)-src:
+	wget http://ufpr.dl.sourceforge.net/project/usbip/usbip/0.1.7/usbip-0.1.7.tar.gz -O $(TARGET)-src.tar.gz
+	mkdir -p $(TARGET)-src
+	tar -xf $(TARGET)-src.tar.gz --strip-components=1 -C $(TARGET)-src
 	patch -p0 < nslu-arm.patch
 
-usbip-modules:
-	make KSOURCE=$(KERNELDIR) ARCH=arm CROSS_COMPILE=arm-linux- -C $(USBIP_DRIVERS)
+$(MODULES):
+	make \
+		KSOURCE=$(TOPDIR)/snake-os/kernels/linux \
+		ARCH=arm \
+		CROSS_COMPILE=arm-linux- \
+		-C $(USBIP_DRIVERS)
 
-usbip-src/src/Makefile:
-	cd usbip-src/src && \
+$(UTILITIES): $(TARGET)-src $(MODULES)
+	cd $(TARGET)-src/src ; \
 	./autogen.sh && \
-	./configure --disable-shared --enable-static --host=arm-linux \
+	./configure \
+		--disable-shared \
+		--enable-static \
+		--host=arm-linux \
 		--prefix=/ CFLAGS="${CFLAGS_COMMON}" \
-		--with-usbids-dir=/opt/share/usbip/
+		--with-usbids-dir=/opt/share/usbip/ ; \
+	make \
+		ARCH=arm \
+		CROSS_COMPILE=arm-linux- \
+		LDFLAGS="-all-static -L${TOPDIR}/glib/glib-src/glib/.libs/"
 
-usbip-utilities: usbip-src/src/Makefile
-	cd usbip-src/src && \
-	make ARCH=arm CROSS_COMPILE=arm-linux- LDFLAGS="-all-static -L${TOPDIR}/glib/glib-src/glib/.libs/"
+$(TARGET).opk: $(TARGET)-src $(MODULES) $(UTILITIES) usb.ids
+	make install DESTDIR=$(USBIP_DIR)/data -C $(USBIP_DIR)/$(TARGET)-src/src
+	mv usb.ids data/share/usbip
 
-usbip-clean:
-	rm -f usbip.opk
+	mkdir -p data/lib/modules/2.6.16-gazineu/$(TARGET)
+	cp $(USBIP_DRIVERS)/*.ko data/lib/modules/2.6.16-gazineu/$(TARGET)
+
+	rm -rf data/include
+	rm -rf data/lib/libusbip.*a
+
+	chown -R root:root debian-binary data control
+
+	cd $(USBIP_DIR)/data; tar --exclude-vcs -zcf ../data.tar.gz *
+	cd $(USBIP_DIR)/control; tar --exclude-vcs -zcf ../control.tar.gz *
+
+	ar -r $(TARGET).opk data.tar.gz control.tar.gz debian-binary
+
+clean:
+	rm -f $(TARGET).opk
 	rm -rf data/bin
 	rm -rf data/lib
 	rm -rf data/include
 	rm -f control.tar.gz
 	rm -f data.tar.gz
-	rm -f usbip-src.tar.gz
-	rm -rf usbip-src
-
-usbip-opk-clean:
-	rm -f usbip.opk
-
-usbip.opk:
-	make install DESTDIR=$(USBIP_DIR)/data -C $(USBIP_DIR)/usbip-src/src
-
-	mkdir -p data/lib/modules/2.6.16-gazineu/usbip
-	cp $(USBIP_DRIVERS)/*.ko data/lib/modules/2.6.16-gazineu/usbip
-
-	rm -rf data/include
-	rm -rf data/lib/libusbip.*a
-
-	chown -R root:root data
-	cd $(USBIP_DIR)/data; tar --exclude-vcs -zcf ../data.tar.gz *
-
-	chown -R root:root control
-	cd $(USBIP_DIR)/control; tar --exclude-vcs -zcf ../control.tar.gz *
-
-	chown -R root:root debian-binary
-	ar -r usbip.opk data.tar.gz control.tar.gz debian-binary
+	rm -f $(TARGET)-src.tar.gz
+	rm -rf $(TARGET)-src
