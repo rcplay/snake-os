@@ -6,13 +6,10 @@ Content-type: text/html
 
 <%
   ACTION=$(echo ${FORM_action} | cut -d ' ' -f 1)
-  CLIENT=$(echo ${FORM_client} | cut -d ' ' -f 1)
-  PARAMETERS=${FORM_parameters}
+  SERVER=$(echo ${FORM_server} | cut -d ' ' -f 1)
+  PARAMETERS="${FORM_parameters}"
   IPERF=/opt/bin/iperf
-
-  filter_html() {
-    sed -e "s/</\&lt;/g" -e "s/>/\&gt;/g"
-  }
+  MSG="Running as a ${ACTION}. This might take a while."
 %>
 
 </head>
@@ -22,9 +19,9 @@ Content-type: text/html
     <form action="<%= ${SCRIPT_NAME} %>?page=iperf" method="POST">
       <table border="0">
         <tr>
-          <th>Client address:</th>
+          <th>Server address:</th>
           <td>
-            <input type="textbox" name="client" value="<%= ${CLIENT} %>"/>
+            <input type="textbox" name="server" value="<%= ${SERVER} %>"/>
           </td>
         </tr>
 
@@ -43,13 +40,15 @@ Content-type: text/html
 <%
                 case "$ACTION" in
                   Server)
-                    ${IPERF} -s ${PARAMETERS} 2>&1 | filter_html
+                    echo ${MSG}
+                    ${IPERF} -P 1 -s ${PARAMETERS} 2>&1
                   ;;
                   Client)
-                    ${IPERF} -c ${CLIENT} ${PARAMETERS} 2>&1 | filter_html
+                    echo ${MSG}
+                    ${IPERF} -c ${SERVER} ${PARAMETERS} 2>&1
                   ;;
                   Help)
-                    ${IPERF} -h 2>&1 | filter_html
+                    ${IPERF} -h 2>&1 | sed -e "s/</\&lt;/g" -e "s/>/\&gt;/g"
                   ;;                  
                   *)
                 esac
