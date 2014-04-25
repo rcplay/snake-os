@@ -111,6 +111,10 @@ hd-idle: output/hd-idle.opk
 output/hd-idle.opk:
 	make -C hd-idle
 
+iperf: output/iperf.opk
+output/iperf.opk:
+	make -C iperf
+	cp iperf/iperf.opk $@
 
 snakeos-wifi: output/snakeos-wifi.opk
 output/snakeos-wifi.opk:

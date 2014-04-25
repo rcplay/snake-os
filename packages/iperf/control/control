@@ -1,0 +1,10 @@
+Package: iperf
+Version: 2.0.5-1
+Description: Iperf - The TCP/UDP Bandwidth Measurement Tool
+Section: snakeos/applications
+Priority: optional
+Maintainer: 
+Architecture: all
+Homepage: 
+Source: 
+Depends: 

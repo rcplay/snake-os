@@ -1,0 +1,67 @@
+#!/bin/haserl
+Content-type: text/html
+
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">   
+<%in funcs.cgi %>
+
+<%
+  ACTION=$(echo ${FORM_action} | cut -d ' ' -f 1)
+  CLIENT=$(echo ${FORM_client} | cut -d ' ' -f 1)
+  PARAMETERS=${FORM_parameters}
+  IPERF=/opt/bin/iperf
+%>
+
+</head>
+
+<body>                 
+  <center>
+    <form action="<%= ${SCRIPT_NAME} %>?page=iperf" method="POST">
+      <table border="0">
+        <tr>
+          <th>Client address:</th>
+          <td>
+            <input type="textbox" name="client" value="<%= ${CLIENT} %>"/>
+          </td>
+        </tr>
+
+        <tr>
+          <th>Additional parameters:</th>
+          <td>
+            <textarea name="parameters"><%= ${PARAMETERS} %></textarea>
+          </td>
+        </tr>
+<%
+            if [ "${REQUEST_METHOD}" = "POST" ]; then
+%>
+        <tr>
+          <td colspan="2">
+            <pre>
+<%
+                case "$ACTION" in
+                  Server)
+                    ${IPERF} -s ${PARAMETERS} 2>&1
+                  ;;
+                  Client)
+                    ${IPERF} -c ${CLIENT} ${PARAMETERS} 2>&1
+                  ;;
+                  Help)
+                    ${IPERF} -h 2>&1
+                  ;;                  
+                  *)
+                esac
+            fi
+%>
+            </pre>
+          </td>
+        </tr>
+
+      </table>
+
+      <input type="submit" name="action" value="Server">
+      <input type="submit" name="action" value="Client">
+      <input type="submit" name="action" value="Help">
+
+    </form>
+  </center>
+</body>
+</html>
