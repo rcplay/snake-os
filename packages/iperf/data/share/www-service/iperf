@@ -9,6 +9,10 @@ Content-type: text/html
   CLIENT=$(echo ${FORM_client} | cut -d ' ' -f 1)
   PARAMETERS=${FORM_parameters}
   IPERF=/opt/bin/iperf
+
+  filter_html() {
+    sed -e "s/</\&lt;/g" -e "s/>/\&gt;/g"
+  }
 %>
 
 </head>
@@ -39,13 +43,13 @@ Content-type: text/html
 <%
                 case "$ACTION" in
                   Server)
-                    ${IPERF} -s ${PARAMETERS} 2>&1
+                    ${IPERF} -s ${PARAMETERS} 2>&1 | filter_html
                   ;;
                   Client)
-                    ${IPERF} -c ${CLIENT} ${PARAMETERS} 2>&1
+                    ${IPERF} -c ${CLIENT} ${PARAMETERS} 2>&1 | filter_html
                   ;;
                   Help)
-                    ${IPERF} -h 2>&1
+                    ${IPERF} -h 2>&1 | filter_html
                   ;;                  
                   *)
                 esac
