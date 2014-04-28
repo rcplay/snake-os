@@ -20,7 +20,6 @@ $(TARGET)/data/bin/iperf: $(TARGET)-src
 		--prefix=/ \
 		CFLAGS="${CFLAGS_COMMON} -static" \
 		CXXFLAGS="${CFLAGS_COMMON}" \
-		--host=i686-linux-gnu \
 		--target=arm-linux-gnu \
 		--enable-static=yes \
 		--enable-shared=no \
