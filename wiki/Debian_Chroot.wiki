@@ -5,7 +5,7 @@ Written by Robert Szabo.
 = Introduction =
 
 Very simple way to have Debian (and its huge number of packages). 
-Chroot is a shell (embedded system within a linux) where you have debian libraries, packages and the whole deb environment within SnakeOS host.)
+Chroot is a "jailed environment" (embedded system within a linux) where you have debian libraries, packages and the whole deb environment within SnakeOS host.)
 
 You only need to have an USB device attached. (No serial connection needed.)
 
