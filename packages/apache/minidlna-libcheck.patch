@@ -1,0 +1,11 @@
+--- minidlna-src/Makefile	2011-04-21 10:50:44.000000000 +0200
++++ minidlna-src-new/Makefile	2012-01-04 05:52:32.478873801 +0100
+@@ -62,7 +62,7 @@
+ 	$(INSTALL) -d $(ETCINSTALLDIR)
+ 	$(INSTALL) --mode=0644 minidlna.conf $(ETCINSTALLDIR)
+ 
+-minidlna:	$(BASEOBJS) $(LNXOBJS) $(LIBS)
++minidlna:	$(BASEOBJS) $(LNXOBJS)
+ 	@echo Linking $@
+ 	@$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(BASEOBJS) $(LNXOBJS) $(LIBS)
+ 

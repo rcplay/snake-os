@@ -1,0 +1,10 @@
+Package: apache
+Version: 2.4.10-1
+Description: Apache HTTP server
+Section: snakeos/applications
+Priority: optional
+Maintainer: 
+Architecture: all
+Homepage: 
+Source:
+Depends:

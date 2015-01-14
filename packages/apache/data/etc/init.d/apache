@@ -1,0 +1,65 @@
+#!/bin/sh
+#
+
+KIND="apache"
+
+ENABLED=$(grep "^enabled=" /opt/etc/config/${KIND} | cut -d = -f 2)
+DAV_ENABLED=$(grep "^dav_enabled=" /opt/etc/config/${KIND} | cut -d = -f 2)
+PORT=$(grep "^port=" /opt/etc/config/${KIND} | cut -d = -f 2)
+DOC_DIR=$(grep "^doc_dir=" /opt/etc/config/${KIND} | cut -d = -f 2)
+
+LD_LIBRARY_PATH=/opt/apache/lib
+
+if [ $DAV_ENABLED -eq 1 ] ; then
+    CONF_DAV_ENABLED=on
+else
+    CONF_DAV_ENABLED=off	    
+fi
+export CONF_DAV_ENABLED
+export CONF_PORT=${PORT}
+export CONF_DOC_DIR=${DOC_DIR}
+
+start() {
+    if [ $ENABLED -eq 1 ] ; then
+	/opt/apache/bin/apachectl -k restart
+    fi
+}
+
+stop() {
+    echo "Shutting down $KIND service..."
+    /opt/apache/bin/apachectl -k stop
+}
+
+restart() {
+    stop
+    sleep 1
+    start
+}
+
+webstatus(){
+    if pgrep /opt/apache/bin/httpd > /dev/null ; then
+	echo -n "$KIND is running"
+    else
+    	echo -n "$KIND is not running"
+    fi
+}
+
+case "$1" in
+    start)
+  	start
+	;;
+    stop)
+  	stop
+	;;
+    restart)
+  	restart
+	;;
+    webstatus)
+	webstatus
+	;;
+    *)
+	echo "Usage: $0 {start|stop|restart|webstatus}"
+	exit 1
+esac
+
+

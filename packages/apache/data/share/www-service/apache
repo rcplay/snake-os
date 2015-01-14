@@ -1,0 +1,122 @@
+#!/bin/haserl
+Content-type: text/html
+
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">   
+<%in funcs.cgi %>
+<%
+# TODO: add these to the base system
+set_opkg_service_config(){
+        sed -ri "s%^${2}=.*%${2}=${3}%g" /opt/etc/config/${1}
+}
+
+get_opkg_service_config(){
+        echo -n $(sed -n "s/^\(${2}\)=\(.*\)$/\2/p" /opt/etc/config/${1})
+}
+
+
+DOC_DIR=$(get_opkg_service_config apache doc_dir)
+
+if [ "${REQUEST_METHOD}" = "POST" ]
+then
+    ACTION=$(echo ${FORM_action} | cut -d ' ' -f 1)
+    case "$ACTION" in
+	Apply)
+	    DOC_DIR=$(echo ${FORM_shared} | cut -d ' ' -f 1)
+	    set_opkg_service_config apache doc_dir ${DOC_DIR}
+
+	    PORT=$(echo ${FORM_port} | cut -d ' ' -f 1)
+	    set_opkg_service_config apache port ${PORT}
+
+	    IS_ENABLED=$(echo ${FORM_enabled} | cut -d ' ' -f 1)
+	    set_opkg_service_config apache enabled ${IS_ENABLED:-0}
+
+	    IS_DAV_ENABLED=$(echo ${FORM_dav_enabled} | cut -d ' ' -f 1)
+	    set_opkg_service_config apache dav_enabled ${IS_DAV_ENABLED:-0}	    
+
+      	    /opt/etc/init.d/apache restart > /dev/null	    
+	    
+      	    ;;
+      Start)
+      	/opt/etc/init.d/apache start > /dev/null
+      	sleep 2
+    	;;
+      Stop)
+      	/opt/etc/init.d/apache stop > /dev/null
+      	sleep 3
+    	;;
+      Restart)
+      	/opt/etc/init.d/apache restart > /dev/null
+      	sleep 2
+    	;;
+      Done)
+        DOC_DIR=/usb/$(echo ${FORM_shared} | cut -d '|' -f 1)
+        ;;
+      *)
+    esac
+fi
+
+
+%>
+<script language="JavaScript">
+<!-- //
+
+function validateAction(form) {                                             
+	http_port = form.http_port.value;
+	var action = btnAction.value;
+	var question = "";
+
+	if ( action == 'Apply' ){
+		question = "This will restart apache.";
+	}
+	else if ( action == 'Stop' )
+		question = "Are you sure that you want to stop the apache service?";
+	else if  ( action == 'Restart' )
+		question = "Are you sure that you want to restart the apache service?";
+	else
+		return true;
+	
+	var answer = confirm (question);
+	if (answer)   
+		return true;                                                 
+	else                                                            
+		return false;                                           
+}
+
+
+function checkApache(){
+        apache.shared.value = "<%= ${DOC_DIR} %>";
+}
+
+function fileBrowserNew(){
+	filebrowser.submit();
+}
+
+// -->
+</script>
+</head>
+
+<body onload="checkApache();">
+
+<center>
+<TABLE border="0">
+<form id=filebrowser name=filebrowser action="./filebrowserd.cgi" method="POST">
+  <input type=hidden name=sourceform value="<%= ${SCRIPT_NAME} %>?page=apache">
+  <TR><TH>Server folder:</TH><TD><input type="text" name="shared" size=20 value="<%= $DOC_DIR %>" readonly onclick="fileBrowserNew()"/></TD></TR>
+</form>
+<form id=apache name=apache action="<%= ${SCRIPT_NAME} %>?page=apache" method="POST"  onsubmit="return validateAction(this);">
+  <input type=hidden name=shared value="">
+  <TR><TH>Enabled:</TH><TD><input type="checkbox" name="enabled" value="1" <% is_checked $(get_opkg_service_config apache enabled) %> /></TD></TR>
+  <TR><TH>WebDAV enabled:</TH><TD><input type="checkbox" name="dav_enabled" value="1" <% is_checked $(get_opkg_service_config apache dav_enabled) %> /></TD></TR>
+  <TR><TH>Port:</TH><TD><input type="text" name="port" size=5 value="<%= $(get_opkg_service_config apache port) %>" readonly /></TD></TR>
+  <TR><TH>Status:</TH><TD><% /opt/etc/init.d/apache webstatus %></TD></TR>
+</TABLE>
+
+<input type="submit" name="action" value="Apply" onclick="btnAction=this">
+  <input type="submit" name="action" value="Start" onclick="btnAction=this">
+  <input type="submit" name="action" value="Stop" onclick="btnAction=this">
+  <input type="submit" name="action" value="Restart" onclick="btnAction=this">   
+</form>
+
+</center>
+</body>
+</html>

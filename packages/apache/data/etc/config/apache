@@ -1,0 +1,4 @@
+enabled=0
+dav_enabled=0
+port=800
+doc_dir=/usb/

@@ -1,0 +1,30 @@
+--- httpd-2.4.10/server/Makefile.in	2013-10-02 14:20:14.000000000 +0200
++++ httpd-2.4.9/server/Makefile.in	2014-07-21 00:51:51.326875002 +0200
+@@ -23,9 +23,9 @@
+ include $(top_builddir)/build/rules.mk
+ include $(top_srcdir)/build/library.mk
+ 
+-gen_test_char_OBJECTS = gen_test_char.lo
+-gen_test_char: $(gen_test_char_OBJECTS)
+-	$(LINK) $(EXTRA_LDFLAGS) $(gen_test_char_OBJECTS) $(EXTRA_LIBS)
++gen_test_char: gen_test_char.c
++	gcc -DCROSS_COMPILE -o $@ $<
++
+ 
+ test_char.h: gen_test_char
+ 	./gen_test_char > test_char.h
+--- httpd-2.4.10/srclib/apr/Makefile.in	2014-03-17 16:10:26.000000000 +0100
++++ httpd-2.4.9/srclib/apr/Makefile.in	2014-07-21 00:50:23.920878134 +0200
+@@ -132,10 +132,8 @@
+ make_tools_dir:
+ 	$(APR_MKDIR) tools
+ 
+-OBJECTS_gen_test_char = tools/gen_test_char.lo $(LOCAL_LIBS)
+-tools/gen_test_char.lo: make_tools_dir
+-tools/gen_test_char@EXEEXT@: $(OBJECTS_gen_test_char)
+-	$(LINK_PROG) $(OBJECTS_gen_test_char) $(ALL_LIBS)
++tools/gen_test_char@EXEEXT@: tools/gen_test_char.c
++	 	gcc -DCROSS_COMPILE -o $@ $<
+ 
+ include/private/apr_escape_test_char.h: tools/gen_test_char@EXEEXT@
+ 	$(APR_MKDIR) include/private

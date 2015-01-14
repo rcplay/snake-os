@@ -1,0 +1,5 @@
+#!/bin/sh
+
+if [ -x /opt/etc/init.d/apache ]; then
+    /opt/etc/init.d/apache start
+fi

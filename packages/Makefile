@@ -120,3 +120,11 @@ snakeos-wifi: output/snakeos-wifi.opk
 output/snakeos-wifi.opk:
 	make -C snakeos-wifi
 	cp snakeos-wifi/snakeos-wifi.opk output/snakeos-wifi.opk
+
+.PHONY: pcre
+pcre:
+	make -C pcre
+
+apache: pcre output/apache.opk
+output/apache.opk:
+	make -C apache
