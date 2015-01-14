@@ -27,6 +27,7 @@ transmission-src/daemon/transmission-daemon:
 		--disable-cli        \
 		--disable-mac        \
 		--enable-daemon      \
+		--without-systemd-daemon \
 		--enable-lightweight   
 	make PREFIX=/opt/ CONFIG_PREFIX=/opt/ -j3 -C transmission-src
 
