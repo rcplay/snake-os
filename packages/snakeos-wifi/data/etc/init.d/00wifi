@@ -8,6 +8,10 @@ start() {
 	    /usr/share/snake/network stop
 	    sh /opt/share/wifi/driver-$DRIVER up
 	fi
+	# if we don't have an interface up at this point try to restart the wired one
+	if [ -z "$(/sbin/ifconfig | cut -d ' ' -f 1 | grep -v '^$\|lo')" ] ; then
+	    /usr/share/snake/network start
+	fi
     fi
 }
 

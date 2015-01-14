@@ -25,7 +25,7 @@ then
     ACTION=$(echo ${FORM_action} | cut -d ' ' -f 1)
     case "$ACTION" in
       Apply)
-	/opt/etc/init.d/wifi stop > /dev/null
+	/opt/etc/init.d/00wifi stop > /dev/null
 
 	sleep 2
 
@@ -39,7 +39,7 @@ then
 
             set_opkg_service_config wifi psk "${FORM_psk}"
 
-	    /opt/etc/init.d/wifi start > /dev/null
+	    /opt/etc/init.d/00wifi start > /dev/null
 	    sleep 2
 	fi
 

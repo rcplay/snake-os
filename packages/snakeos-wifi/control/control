@@ -1,5 +1,5 @@
 Package: snakeos-wifi
-Version: 1
+Version: 2
 Description: wifi drivers and configuration
 Section: snakeos/applications
 Priority: optional
