@@ -1,0 +1,175 @@
+diff -ur DPO_MT7601U_LinuxSTA_3.0.0.4_20130913/Makefile DPO_MT7601U_LinuxSTA_3.0.0.4_20130913-snake/Makefile
+--- DPO_MT7601U_LinuxSTA_3.0.0.4_20130913/Makefile	2013-09-12 07:27:14.000000000 +0200
++++ DPO_MT7601U_LinuxSTA_3.0.0.4_20130913-snake/Makefile	2015-02-12 16:07:51.994242849 +0100
+@@ -27,7 +27,7 @@
+ RTMP_SRC_DIR = $(RT28xx_DIR)/RT$(MODULE)
+ 
+ #PLATFORM: Target platform
+-PLATFORM = PC
++#PLATFORM = PC
+ #PLATFORM = 5VT
+ #PLATFORM = IKANOS_V160
+ #PLATFORM = IKANOS_V180
+@@ -64,6 +64,7 @@
+ #PLATFORM = UBICOM_IPX8
+ #PLATFORM = INTELP6
+ #PLATFORM = MSTARTV
++PLATFORM = CNS21XX
+ 
+ #APSOC
+ ifeq ($(MODULE),3050)
+@@ -214,6 +215,12 @@
+ CROSS_COMPILE = arm-linux-
+ endif
+ 
++
++ifeq ($(PLATFORM),CNS21XX)
++CROSS_COMPILE = arm-linux-
++endif
++
++
+ ifeq ($(PLATFORM),INF_TWINPASS)
+ # Linux 2.6
+ #LINUX_SRC = /lib/modules/$(shell uname -r)/build
+@@ -407,45 +414,45 @@
+ 	$(MAKE) -C $(LINUX_SRC) SUBDIRS=$(RT28xx_DIR)/os/linux modules
+ endif
+ 
+-ifeq ($(RT28xx_MODE),AP)
+-ifneq ($(findstring 7601,$(CHIPSET)),)
+-	cp -f $(RT28xx_DIR)/os/linux/mt$(MODULE)ap.ko /tftpboot
+-else
+-	cp -f $(RT28xx_DIR)/os/linux/rt$(MODULE)ap.ko /tftpboot
+-endif
+-ifeq ($(OSABL),YES)
+-	cp -f $(RT28xx_DIR)/os/linux/rtutil$(MODULE)ap.ko /tftpboot
+-	cp -f $(RT28xx_DIR)/os/linux/rtnet$(MODULE)ap.ko /tftpboot
+-endif
+-	rm -f os/linux/rt$(MODULE)ap.ko.lzma
+-	/root/bin/lzma e os/linux/rt$(MODULE)ap.ko os/linux/rt$(MODULE)ap.ko.lzma
+-else	
+-ifeq ($(RT28xx_MODE),APSTA)
+-	cp -f $(RT28xx_DIR)/os/linux/rt$(MODULE)apsta.ko /tftpboot
+-ifeq ($(OSABL),YES)
+-	cp -f $(RT28xx_DIR)/os/linux/rtutil$(MODULE)apsta.ko /tftpboot
+-	cp -f $(RT28xx_DIR)/os/linux/rtnet$(MODULE)apsta.ko /tftpboot
+-endif
+-else
+-ifneq ($(findstring 7601,$(CHIPSET)),)
+-	cp -f $(RT28xx_DIR)/os/linux/mt$(MODULE)sta.ko /tftpboot 2>/dev/null || :
+-else
+-	cp -f $(RT28xx_DIR)/os/linux/rt$(MODULE)sta.ko /tftpboot 2>/dev/null || :
+-endif
+-ifeq ($(OSABL),YES)
+-ifneq ($(findstring 7601,$(CHIPSET)),)
+-	cp -f $(RT28xx_DIR)/os/linux/mtutil$(MODULE)sta.ko /tftpboot 2>/dev/null || :
+-	cp -f $(RT28xx_DIR)/os/linux/mtnet$(MODULE)sta.ko /tftpboot 2>/dev/null || :
+-else
+-	cp -f $(RT28xx_DIR)/os/linux/rtutil$(MODULE)sta.ko /tftpboot 2>/dev/null || :
+-	cp -f $(RT28xx_DIR)/os/linux/rtnet$(MODULE)sta.ko /tftpboot 2>/dev/null || :
+-endif
+-endif
+-ifeq ($(PLATFORM),MT85XX)
+-	cp -f $(RT28xx_DIR)/os/linux/rtsta.ko $(RT28xx_DIR)/../../../../../BDP_Generic/build_linux_ko/src/driver/wlan/
+-endif
+-endif
+-endif
++# ifeq ($(RT28xx_MODE),AP)
++# ifneq ($(findstring 7601,$(CHIPSET)),)
++# 	cp -f $(RT28xx_DIR)/os/linux/mt$(MODULE)ap.ko /tftpboot
++# else
++# 	cp -f $(RT28xx_DIR)/os/linux/rt$(MODULE)ap.ko /tftpboot
++# endif
++# ifeq ($(OSABL),YES)
++# 	cp -f $(RT28xx_DIR)/os/linux/rtutil$(MODULE)ap.ko /tftpboot
++# 	cp -f $(RT28xx_DIR)/os/linux/rtnet$(MODULE)ap.ko /tftpboot
++# endif
++# 	rm -f os/linux/rt$(MODULE)ap.ko.lzma
++# 	/root/bin/lzma e os/linux/rt$(MODULE)ap.ko os/linux/rt$(MODULE)ap.ko.lzma
++# else	
++# ifeq ($(RT28xx_MODE),APSTA)
++# 	cp -f $(RT28xx_DIR)/os/linux/rt$(MODULE)apsta.ko /tftpboot
++# ifeq ($(OSABL),YES)
++# 	cp -f $(RT28xx_DIR)/os/linux/rtutil$(MODULE)apsta.ko /tftpboot
++# 	cp -f $(RT28xx_DIR)/os/linux/rtnet$(MODULE)apsta.ko /tftpboot
++# endif
++# else
++# ifneq ($(findstring 7601,$(CHIPSET)),)
++# 	cp -f $(RT28xx_DIR)/os/linux/mt$(MODULE)sta.ko /tftpboot 2>/dev/null || :
++# else
++# 	cp -f $(RT28xx_DIR)/os/linux/rt$(MODULE)sta.ko /tftpboot 2>/dev/null || :
++# endif
++# ifeq ($(OSABL),YES)
++# ifneq ($(findstring 7601,$(CHIPSET)),)
++# 	cp -f $(RT28xx_DIR)/os/linux/mtutil$(MODULE)sta.ko /tftpboot 2>/dev/null || :
++# 	cp -f $(RT28xx_DIR)/os/linux/mtnet$(MODULE)sta.ko /tftpboot 2>/dev/null || :
++# else
++# 	cp -f $(RT28xx_DIR)/os/linux/rtutil$(MODULE)sta.ko /tftpboot 2>/dev/null || :
++# 	cp -f $(RT28xx_DIR)/os/linux/rtnet$(MODULE)sta.ko /tftpboot 2>/dev/null || :
++# endif
++# endif
++# ifeq ($(PLATFORM),MT85XX)
++# 	cp -f $(RT28xx_DIR)/os/linux/rtsta.ko $(RT28xx_DIR)/../../../../../BDP_Generic/build_linux_ko/src/driver/wlan/
++# endif
++# endif
++# endif
+ endif
+ 
+ 
+diff -ur DPO_MT7601U_LinuxSTA_3.0.0.4_20130913/include/os/rt_linux.h DPO_MT7601U_LinuxSTA_3.0.0.4_20130913-snake/include/os/rt_linux.h
+--- DPO_MT7601U_LinuxSTA_3.0.0.4_20130913/include/os/rt_linux.h	2013-09-12 07:27:14.000000000 +0200
++++ DPO_MT7601U_LinuxSTA_3.0.0.4_20130913-snake/include/os/rt_linux.h	2015-02-12 16:36:27.214277895 +0100
+@@ -1285,7 +1285,7 @@
+ #define RtmpUsbBulkOutRTSFrameComplete			RTUSBBulkOutRTSFrameComplete
+ #define RtmpUsbBulkOutPsPollComplete			RTUSBBulkOutPsPollComplete
+ #define RtmpUsbBulkRxComplete					RTUSBBulkRxComplete
+-#define RTUSBBulkCmdRspEventComplete(Status, pURB, pt_regs)	 	 RTUSBBulkCmdRspEventComplete(pURB)
++//#define RTUSBBulkCmdRspEventComplete(Status, pURB, pt_regs)	 	 RTUSBBulkCmdRspEventComplete(pURB)
+ 												
+ #if ((LINUX_VERSION_CODE < KERNEL_VERSION(2, 5, 51)) || (LINUX_VERSION_CODE > KERNEL_VERSION(2, 6, 18))) 
+ #define RTUSBBulkOutDataPacketComplete(Status, pURB, pt_regs)    RTUSBBulkOutDataPacketComplete(pURB)
+diff -ur DPO_MT7601U_LinuxSTA_3.0.0.4_20130913/os/linux/config.mk DPO_MT7601U_LinuxSTA_3.0.0.4_20130913-snake/os/linux/config.mk
+--- DPO_MT7601U_LinuxSTA_3.0.0.4_20130913/os/linux/config.mk	2013-09-12 08:05:55.000000000 +0200
++++ DPO_MT7601U_LinuxSTA_3.0.0.4_20130913-snake/os/linux/config.mk	2015-02-12 16:31:36.424447156 +0100
+@@ -1086,6 +1086,14 @@
+ 	export CFLAGS        
+ endif
+ 
++
++ifeq ($(PLATFORM),CNS21XX)
++	CFLAGS := -v -D__KERNEL__ -DMODULE -I$(LINUX_SRC)/include -I$(RT28xx_DIR)/include -Wall -Wno-trigraphs -O2 -fno-strict-aliasing -fno-common -Uarm -fno-common -pipe -march=armv4 -malignment-traps -msoft-float $(WFLAGS)
++        EXTRA_CFLAGS := -v $(WFLAGS) -I$(RT28xx_DIR)/include
++	export CFLAGS
++endif
++
++
+ ifeq ($(PLATFORM),SMDK)
+         EXTRA_CFLAGS := $(WFLAGS) 
+ endif
+diff -ur DPO_MT7601U_LinuxSTA_3.0.0.4_20130913/os/linux/rt_linux.c DPO_MT7601U_LinuxSTA_3.0.0.4_20130913-snake/os/linux/rt_linux.c
+--- DPO_MT7601U_LinuxSTA_3.0.0.4_20130913/os/linux/rt_linux.c	2013-09-12 07:27:14.000000000 +0200
++++ DPO_MT7601U_LinuxSTA_3.0.0.4_20130913-snake/os/linux/rt_linux.c	2015-02-13 00:32:32.752296836 +0100
+@@ -1663,7 +1663,8 @@
+ #endif
+ 	int ret;
+ 
+-	 ret = rtnl_trylock();
++	//ret = rtnl_trylock();
++	ret = rtnl_shlock_nowait();
+ 
+ 	unregister_netdevice(pNetDev);
+ 
+Only in DPO_MT7601U_LinuxSTA_3.0.0.4_20130913/os/linux: rt_linux.c~
+diff -ur DPO_MT7601U_LinuxSTA_3.0.0.4_20130913/os/linux/usb_main_dev.c DPO_MT7601U_LinuxSTA_3.0.0.4_20130913-snake/os/linux/usb_main_dev.c
+--- DPO_MT7601U_LinuxSTA_3.0.0.4_20130913/os/linux/usb_main_dev.c	2013-09-12 07:27:14.000000000 +0200
++++ DPO_MT7601U_LinuxSTA_3.0.0.4_20130913-snake/os/linux/usb_main_dev.c	2015-02-12 16:44:10.824570759 +0100
+@@ -375,7 +375,7 @@
+ 	suspend:	rt2870_suspend,
+ 	resume:		rt2870_resume,
+ #endif /* CONFIG_PM */
+-	.supports_autosuspend = 1,
++	//.supports_autosuspend = 1,
+ 	};
+ 
+ #ifdef CONFIG_PM
+Binary files DPO_MT7601U_LinuxSTA_3.0.0.4_20130913/tools/bin2h and DPO_MT7601U_LinuxSTA_3.0.0.4_20130913-snake/tools/bin2h differ

@@ -20,6 +20,17 @@ rt5370-src/os/linux/rt5370sta.ko: linux-src/arch/arm/boot/zImage rt5370-src
 	make -C rt5370-src LINUX_SRC=$(CURDIR)/linux-src/ CHIPSET=5370
 
 
+mt7601u-src:
+	-rm -r mt7601u-tmp
+	cp -r mt7601u-orig mt7601u-tmp
+	cd mt7601u-tmp; patch -p1 < ../mt7601u-snake.patch
+	mv mt7601u-tmp mt7601u-src
+
+mt7601u-src/os/linux/mt7601Usta.ko: linux-src/arch/arm/boot/zImage mt7601u-src
+	make -C mt7601u-src LINUX_SRC=$(CURDIR)/linux-src/
+
+
+
 rtl8192cu-src:
 	-rm -r rtl8192cu-tmp
 	cp -r rtl8192cu-orig rtl8192cu-tmp
@@ -31,7 +42,7 @@ rtl8192cu-src/8192cu.ko: linux-src/arch/arm/boot/zImage rtl8192cu-src
 
 
 wpa_supplicant-src:
-	wget http://hostap.epitest.fi/releases/wpa_supplicant-2.1.tar.gz -O $@.tar.gz
+	wget http://hostap.epitest.fi/releases/wpa_supplicant-2.3.tar.gz -O $@.tar.gz
 	sha1sum -c $@.tar.gz.sha1
 	mkdir $@
 	tar -xf $@.tar.gz --strip-components=1 -C $@
@@ -40,13 +51,15 @@ wpa_supplicant-src/wpa_supplicant/.config: wpa_supplicant-src
 	cp wpa_supplicant.conf $@
 
 wpa_supplicant-src/wpa_supplicant/wpa_supplicant: wpa_supplicant-src/wpa_supplicant/.config
-	CC=arm-linux-gcc make -C wpa_supplicant-src/wpa_supplicant
+	CC=arm-linux-gcc CFLAGS="${CFLAGS_COMMON} -MMD" make -C wpa_supplicant-src/wpa_supplicant
 
-snakeos-wifi.opk: rt5370-src/os/linux/rt5370sta.ko rtl8192cu-src/8192cu.ko wpa_supplicant-src/wpa_supplicant/wpa_supplicant
+snakeos-wifi.opk: rt5370-src/os/linux/rt5370sta.ko mt7601u-src/os/linux/mt7601Usta.ko rtl8192cu-src/8192cu.ko wpa_supplicant-src/wpa_supplicant/wpa_supplicant
 	cp wpa_supplicant-src/wpa_supplicant/wpa_supplicant data/bin/
 
 	cp rt5370-src/RT2870STA.dat data/share/wifi/
 	cp rt5370-src/os/linux/rt5370sta.ko data/share/wifi/
+
+	cp mt7601u-src/os/linux/mt7601Usta.ko data/share/wifi/
 
 	cp rtl8192cu-src/8192cu.ko data/share/wifi/
 

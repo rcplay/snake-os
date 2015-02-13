@@ -39,6 +39,8 @@ then
 
             set_opkg_service_config wifi psk "${FORM_psk}"
 
+	    sync
+
 	    /opt/etc/init.d/00wifi start > /dev/null
 	    sleep 2
 	fi
@@ -103,6 +105,7 @@ function setRead(obj){
       <TR><TH>Driver:</TH><TD> <select name="driver">
     <%
     OPTIONS="<option value="rt5370" $(get_driver_sel rt5370)>Ralink RT5370</option>"
+    OPTIONS=${OPTIONS}"<option value="mt7601u" $(get_driver_sel mt7601u)>MediaTek MT7601U</option>"
     OPTIONS=${OPTIONS}"<option value="rtl8192cu" $(get_driver_sel rtl8192cu)>Realtek RTL8192CU</option>"
     echo ${OPTIONS}
     %>
